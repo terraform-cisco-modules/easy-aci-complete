@@ -1,0 +1,85 @@
+---
+defaults:
+  admin:
+    authentication:
+      console:
+        login_domain: ''
+        realm: local
+      default:
+        fallback_domain_avialability: false
+        login_domain: ''
+        realm: local
+      icmp_reachability:
+        retries: 1
+        timeout: 5
+        use_icmp_reachable_providers_only: true
+      remote_user_login_policy: no-login
+    configuration_backups:
+      description: ''
+      # Import/Export > Export Policies > Configuration
+      format: json
+      include_secure_fields: false
+      max_snapshot_count: 0
+      snapshot: false
+      start_now: false
+      # Import/Export > Remote Locations
+      authentication_type: usePassword
+      management_epg: default
+      protocol: sftp
+      remote_hosts: []
+      remote_path: /tmp
+      remote_port: 22
+      username: admin
+      # Schedulers > Fabric: One-Time/Recuring Windows
+      delay_between_node_upgrades: 0 # Only applicable if the maximum concurrent node count is 1.
+      maximum_concurrent_nodes: 0
+      maximum_running_time: 0
+      processing_break: none
+      processing_size_capacity: 0
+      schedule:
+        days: every-day
+        hour: 23
+        minute: 45
+      window_type: recurring
+    radius:
+      authorization_protocol: pap
+      hosts: []
+      management_epg: defualt
+      port: 1812
+      retries: 1
+      server_monitoring:
+        admin_state: false
+        username: default
+      timeout: 5
+      type: radius
+    security:
+      lockout_user:
+        enable_lockout: 'disable'
+        lockout_duration: 60
+        max_failed_attempts: 5
+        max_failed_attempts_window: 5
+      maximum_validity_period: 24
+      no_change_interval: 24
+      password_change_interval: 48
+      password_change_interval_enforce: 'enable'
+      password_changes_within_interval: 2
+      password_expiration_warn_time: 15
+      password_strength_check: true
+      user_passwords_to_store_count: 5
+      web_session_idle_timeout: 1200
+      web_token_timeout: 600
+    tacacs:
+      accounting_include:
+        audit_logs: true
+        events: false
+        faults: false
+        session_logs: true
+      authorization_protocol: 'pap'
+      hosts: []
+      management_epg: defualt
+      port: 49
+      retries: 1
+      server_monitoring:
+        admin_state: false
+        username: 'default'
+      timeout: 5

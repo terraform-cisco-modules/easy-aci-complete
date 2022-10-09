@@ -54,37 +54,9 @@ variable "privateKey" {
 Configuration Backups - Admin > Import/Export Policies
 _______________________________________________________________________________________________________________________
 */
-variable "remote_password_1" {
+variable "remote_password" {
   default     = ""
-  description = "Remote Host Password 1."
-  sensitive   = true
-  type        = string
-}
-
-variable "remote_password_2" {
-  default     = ""
-  description = "Remote Host Password 2."
-  sensitive   = true
-  type        = string
-}
-
-variable "remote_password_3" {
-  default     = ""
-  description = "Remote Host Password 3."
-  sensitive   = true
-  type        = string
-}
-
-variable "remote_password_4" {
-  default     = ""
-  description = "Remote Host Password 4."
-  sensitive   = true
-  type        = string
-}
-
-variable "remote_password_5" {
-  default     = ""
-  description = "Remote Host Password 5."
+  description = "Remote Host Password for Configuration Backups."
   sensitive   = true
   type        = string
 }
@@ -109,72 +81,16 @@ variable "ssh_key_passphrase" {
 RADIUS — Variables
 _______________________________________________________________________________________________________________________
 */
-variable "radius_key_1" {
+variable "radius_key" {
   default     = ""
-  description = "RADIUS Key 1."
+  description = "RADIUS Key."
   sensitive   = true
   type        = string
 }
 
-variable "radius_key_2" {
+variable "radius_monitoring_password" {
   default     = ""
-  description = "RADIUS Key 2."
-  sensitive   = true
-  type        = string
-}
-
-variable "radius_key_3" {
-  default     = ""
-  description = "RADIUS Key 3."
-  sensitive   = true
-  type        = string
-}
-
-variable "radius_key_4" {
-  default     = ""
-  description = "RADIUS Key 4."
-  sensitive   = true
-  type        = string
-}
-
-variable "radius_key_5" {
-  default     = ""
-  description = "RADIUS Key 5."
-  sensitive   = true
-  type        = string
-}
-
-variable "radius_monitoring_password_1" {
-  default     = ""
-  description = "RADIUS Monitoring Password 1."
-  sensitive   = true
-  type        = string
-}
-
-variable "radius_monitoring_password_2" {
-  default     = ""
-  description = "RADIUS Monitoring Password 2."
-  sensitive   = true
-  type        = string
-}
-
-variable "radius_monitoring_password_3" {
-  default     = ""
-  description = "RADIUS Monitoring Password 3."
-  sensitive   = true
-  type        = string
-}
-
-variable "radius_monitoring_password_4" {
-  default     = ""
-  description = "RADIUS Monitoring Password 4."
-  sensitive   = true
-  type        = string
-}
-
-variable "radius_monitoring_password_5" {
-  default     = ""
-  description = "RADIUS Monitoring Password 5."
+  description = "RADIUS Monitoring Password."
   sensitive   = true
   type        = string
 }
@@ -185,72 +101,16 @@ variable "radius_monitoring_password_5" {
 TACACS+ — Variables
 _______________________________________________________________________________________________________________________
 */
-variable "tacacs_key_1" {
+variable "tacacs_key" {
   default     = ""
-  description = "TACACS Key 1."
+  description = "TACACS Key."
   sensitive   = true
   type        = string
 }
 
-variable "tacacs_key_2" {
+variable "tacacs_monitoring_password" {
   default     = ""
-  description = "TACACS Key 2."
-  sensitive   = true
-  type        = string
-}
-
-variable "tacacs_key_3" {
-  default     = ""
-  description = "TACACS Key 3."
-  sensitive   = true
-  type        = string
-}
-
-variable "tacacs_key_4" {
-  default     = ""
-  description = "TACACS Key 4."
-  sensitive   = true
-  type        = string
-}
-
-variable "tacacs_key_5" {
-  default     = ""
-  description = "TACACS Key 5."
-  sensitive   = true
-  type        = string
-}
-
-variable "tacacs_monitoring_password_1" {
-  default     = ""
-  description = "TACACS Monitoring Password 1."
-  sensitive   = true
-  type        = string
-}
-
-variable "tacacs_monitoring_password_2" {
-  default     = ""
-  description = "TACACS Monitoring Password 2."
-  sensitive   = true
-  type        = string
-}
-
-variable "tacacs_monitoring_password_3" {
-  default     = ""
-  description = "TACACS Monitoring Password 3."
-  sensitive   = true
-  type        = string
-}
-
-variable "tacacs_monitoring_password_4" {
-  default     = ""
-  description = "TACACS Monitoring Password 4."
-  sensitive   = true
-  type        = string
-}
-
-variable "tacacs_monitoring_password_5" {
-  default     = ""
-  description = "TACACS Monitoring Password 5."
+  description = "TACACS Monitoring Password."
   sensitive   = true
   type        = string
 }

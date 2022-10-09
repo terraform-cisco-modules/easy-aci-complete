@@ -1,88 +1,10 @@
 ---
 defaults:
-  admin:
-    authentication:
-      console:
-        login_domain: ''
-        realm: local
-      default:
-        fallback_domain_avialability: false
-        login_domain: ''
-        realm: local
-      icmp_reachability:
-        retries: 1
-        timeout: 5
-        use_icmp_reachable_providers_only: true
-      remote_user_login_policy: no-login
-    configuration_backups:
-      configuration_export:
-        authentication_type: usePassword
-        description: ''
-        format: json
-        include_secure_fields: false
-        management_epg: default
-        management_epg_type: oob
-        max_snapshot_count: 0
-        password: 1
-        protocol: sftp
-        remote_hosts: [fileserver.example.com]
-        remote_path: /tmp
-        remote_port: 22
-        snapshot: false
-        start_now: false
-        username: admin
-      recurring_window:
-        delay_between_node_upgrades: 0 # Only applicable if the maximum concurrent node count is 1.
-        description: ''
-        maximum_concurrent_nodes: 0
-        maximum_running_time: 0
-        processing_break: none
-        processing_size_capacity: 0
-        schedule:
-          days: every-day
-          hour: 23
-          minute: 45
-        window_type: recurring
-    radius:
-      authorization_protocol: pap
-      port: 1812
-      retries: 1
-      server_monitoring:
-        admin_state: disabled
-        password: 0
-        username: default
-      timeout: 5
-      type: radius
-    security:
-      lockout_user:
-        enable_lockout: 'disable'
-        lockout_duration: 60
-        max_failed_attempts: 5
-        max_failed_attempts_window: 5
-      maximum_validity_period: 24
-      no_change_interval: 24
-      password_change_interval: 48
-      password_change_interval_enforce: 'enable'
-      password_changes_within_interval: 2
-      password_expiration_warn_time: 15
-      password_strength_check: true
-      user_passwords_to_store_count: 5
-      web_session_idle_timeout: 1200
-      web_token_timeout: 600
-    tacacs:
-      accounting_include:
-        audit_logs: true
-        events: false
-        faults: false
-        session_logs: true
-      authorization_protocol: 'pap'
-      port: 49
-      retries: 1
-      server_monitoring:
-        admin_state: 'disabled'
-        password: 0
-        username: 'default'
-      timeout: 5
   annotation: easy-aci:1.0.1
-  management_epg: default
-  management_epg_type: oob
+  management_epgs:
+    - name: default
+      type: oob
+    - name: inband
+      type: inb
+    - name: ooband
+      type: oob
