@@ -6,18 +6,16 @@ content: |-
   [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
   [![Developed by: Cisco](https://img.shields.io/badge/Developed%20by-Cisco-blue)](https://developer.cisco.com)
 
-  # Easy IMM - Comprehensive example for Intersight
+  # Easy ACI - Comprehensive example for ACI & NDO
 
   ## Environment Variables
 
   ### Terraform Cloud/Enterprise - Workspace Variables
-  - Add variable apikey with the value of [your-api-key]
-  - Add variable secretkey with the value of [your-secret-file-content]
+  - Add variable apicPass with the value of [your-apic-password]
 
   ### Linux and Windows
   ```bash
-  export TF_VAR_apikey="<your-api-key>"
-  export TF_VAR_secretkeyfile="<secret-key-file-location>"
+  export TF_VAR_apicPass="<your-apic-password>"
   ```
 
   ## Auto-completion Notes:
@@ -35,7 +33,7 @@ content: |-
 
   Configure the following in `yaml.schemas`
   ```bash
-    "https://raw.githubusercontent.com/terraform-cisco-modules/easy-imm-comprehensive-example/main/schemas/pools.json": "pools.yaml"
+    "https://raw.githubusercontent.com/terraform-cisco-modules/easy-aci-complete/main/schemas/pools.json": "pools.yaml"
   ```
 
   {{ .Requirements }}
@@ -54,119 +52,6 @@ content: |-
 
   ## Terraform Registry
 
-  ### Policies
-
-  [*Adapter Configuration*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-adapter-configuration/intersight/latest)
-
-  [*BIOS*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-bios/intersight/latest)
-
-  [*Boot Order*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-boot-order/intersight/latest)
-
-  [*Certificate Management*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-certificate-management/intersight/latest)
-
-  [*Device Connector*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-device-connector/intersight/latest)
-
-  [*Ethernet Adapter*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-ethernet-adapter/intersight/latest)
-
-  [*Ethernet Network*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-ethernet-network/intersight/latest)
-
-  [*Ethernet Network Control*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-ethernet-network-control/intersight/latest)
-
-  [*Ethernet Network Group*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-ethernet-network-group/intersight/latest)
-
-  [*Ethernet QoS*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-ethernet-qos/intersight/latest)
-
-  [*FC Zone*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-fc-zone/intersight/latest)
-
-  [*Fibre-Channel Adapter*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-fibre-channel-adapter/intersight/latest)
-
-  [*Fibre-Channel Network*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-fibre-channel-network/intersight/latest)
-
-  [*Fibre-Channel QoS*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-fibre-channel-qos/intersight/latest)
-
-  [*Flow Control*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-flow-control/intersight/latest)
-
-  [*IMC Access*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-imc-access/intersight/latest)
-
-  [*IPMI over LAN*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-ipmi-over-lan/intersight/latest)
-
-  [*iSCSI Adapter*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-iscsi-adapter/intersight/latest)
-
-  [*iSCSI Boot*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-iscsi-boot/intersight/latest)
-
-  [*iSCSI Static Target*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-iscsi-static-target/intersight/latest)
-
-  [*LAN Connectivity*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-lan-connectivity/intersight/latest)
-
-  [*LDAP*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-ldap/intersight/latest)
-
-  [*Link Aggregation*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-link-aggregation/intersight/latest)
-
-  [*Link Control*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-link-control/intersight/latest)
-
-  [*Local User*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-local-user/intersight/latest)
-
-  [*Multicast*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-multicast/intersight/latest)
-
-  [*Network Connectivity*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-network-connectivity/intersight/latest)
-
-  [*NTP*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-ntp/intersight/latest)
-
-  [*Persistent Memory*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-persistent-memory/intersight/latest)
-
-  [*Port*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-port/intersight/latest)
-
-  [*Power*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-power/intersight/latest)
-
-  [*SAN Connectivity*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-san-connectivity/intersight/latest)
-
-  [*SD Card*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-sd-card/intersight/latest)
-
-  [*Serial over LAN*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-serial-over-lan/intersight/latest)
-
-  [*SMTP*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-smtp/intersight/latest)
-
-  [*SNMP*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-snmp/intersight/latest)
-
-  [*SSH*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-ssh/intersight/latest)
-
-  [*Storage*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-storage/intersight/latest)
-
-  [*Switch Control*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-switch-control/intersight/latest)
-
-  [*Syslog*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-syslog/intersight/latest)
-
-  [*Thermal*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-thermal/intersight/latest)
-
-  [*Virtual KVM*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-virtual-kvm/intersight/latest)
-
-  [*Virtual Media*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-virtual-media/intersight/latest)
-
-  [*VLAN*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-vlan/intersight/latest)
-
-  [*VSAN*](https://registry.terraform.io/modules/terraform-cisco-modules/policies-vsan/intersight/latest)
-
-  ### Pools
-
-  [*Fibre-Channel*](https://registry.terraform.io/modules/terraform-cisco-modules/pools-fc/intersight/latest)
-
-  [*IP*](https://registry.terraform.io/modules/terraform-cisco-modules/pools-ip/intersight/latest)
-
-  [*IQN*](https://registry.terraform.io/modules/terraform-cisco-modules/pools-iqn/intersight/latest)
-
-  [*MAC*](https://registry.terraform.io/modules/terraform-cisco-modules/pools-mac/intersight/latest)
-
-  [*Resource*](https://registry.terraform.io/modules/terraform-cisco-modules/pools-resource/intersight/latest)
-
-  [*UUID*](https://registry.terraform.io/modules/terraform-cisco-modules/pools-uuid/intersight/latest)
-
-  ### Profiles
-
-  [*Chassis*](https://registry.terraform.io/modules/terraform-cisco-modules/profiles-chassis/intersight/latest)
-
-  [*Domain*](https://registry.terraform.io/modules/terraform-cisco-modules/profiles-domain/intersight/latest)
-
-  [*Server*](https://registry.terraform.io/modules/terraform-cisco-modules/profiles-server/intersight/latest)
 
 output:
   file: README.md
