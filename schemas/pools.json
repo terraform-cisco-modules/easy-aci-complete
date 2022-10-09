@@ -1,0 +1,437 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "title": "YAML Schema for Pools.",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "intersight": {
+            "type": "object",
+            "description": "Intersight Top Level Object",
+            "properties": {
+                "pools": {
+                    "type": "object",
+                    "description": "Pool Types to Create in Intersight.",
+                    "properties": {
+                        "ip": {
+                            "type": "array",
+                            "description": "List of IP Pools to create in Intersight.",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "assignment_order": {
+                                        "type": "string",
+                                        "description": "Assignment order decides the order in which the next identifier is allocated.\n* `sequential` - Identifiers are assigned in a sequential order.\n* `default` - Assignment order is decided by the system.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Description for the Pool.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "ipv4_blocks": {
+                                        "description": "List of IPv4 Blocks to Assign to the IP Pool.",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "from": {
+                                                    "description": "Starting IPv4 Address.  Example `198.18.0.10`.",
+                                                    "type": "string"
+                                                },
+                                                "size": {
+                                                    "description": "Size of the IPv4 Address Pool.  Example `240`.",
+                                                    "type": "number"
+                                                },
+                                                "to": {
+                                                    "description": "Ending IPv4 Address.  Example `198.18.0.250`.",
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                            "description_kind": "plain",
+                                            "optional": true
+                                    },
+                                    "ipv4_config": {
+                                        "description": "Netmask, Gateway and DNS settings for IPv4 addresses.",
+                                        "description_kind": "plain",
+                                        "optional": true,
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "gateway": {
+                                                    "description": "IPv4 Address of the default gateway for the IPv4 Blocks.  Example `198.18.0.1`.",
+                                                    "type": "string"
+                                                },
+                                                "netmask": {
+                                                    "description": "Netmask for the IPv4 Blocks.  Example `255.255.255.0`.",
+                                                    "type": "string"
+                                                },
+                                                "primary_dns": {
+                                                    "description": "Primary DNS Server to Assign to the Pool.  Example `208.67.220.220`.",
+                                                    "type": "string"
+                                                },
+                                                "secondary_dns": {
+                                                    "description": "Secondary DNS Server to Assign to the Pool.  Example `208.67.220.220`",
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "ipv6_blocks": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "additional_properties": { "type": "string" },
+                                                "class_id": { "type": "string" },
+                                                "from": { "type": "string" },
+                                                "object_type": { "type": "string" },
+                                                "size": { "type": "number" },
+                                                "to": { "type": "string" }
+                                            }
+                                        },
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "ipv6_config": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "additional_properties": { "type": "string" },
+                                                "class_id": { "type": "string" },
+                                                "gateway": { "type": "string" },
+                                                "object_type": { "type": "string" },
+                                                "prefix": { "type": "number" },
+                                                "primary_dns": { "type": "string" },
+                                                "secondary_dns": { "type": "string" }
+                                            }
+                                        },
+                                        "description": "Netmask, Gateway and DNS settings for IPv6 addresses.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name of the IP Pool.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "organization": {
+                                        "type": "string",
+                                        "description": "The Name of an Intersight Organization.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "additional_properties": { "type": "string" },
+                                                "key": { "type": "string" },
+                                                "value": { "type": "string" }
+                                            }
+                                        },
+                                        "description_kind": "plain",
+                                        "optional": true,
+                                        "computed": true
+                                    }
+                                }
+                            }
+                        },
+                        "mac": {
+                            "type": "array",
+                            "description": "List of MAC Pools to create in Intersight.",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "assignment_order": {
+                                        "type": "string",
+                                        "description": "Assignment order decides the order in which the next identifier is allocated.\n* `sequential` - Identifiers are assigned in a sequential order.\n* `default` - Assignment order is decided by the system.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Description for the Pool.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "mac_blocks": {
+                                        "description": "List of MAC Blocks to Assign to the MAC Pool.",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "from": {
+                                                    "description": "Starting MAC Address.  Example `00:25:B5:00:00:00`.",
+                                                    "type": "string"
+                                                },
+                                                "size": {
+                                                    "description": "Size of the MAC Address Pool.  Example `1000`.",
+                                                    "type": "number"
+                                                },
+                                                "to": {
+                                                    "description": "Ending MAC Address.  Example `00:25:B5:00:03:E7`.",
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                            "description_kind": "plain",
+                                            "optional": true
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name of the Pool.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "organization": {
+                                        "type": "string",
+                                        "description": "The Name of an Intersight Organization.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "additional_properties": { "type": "string" },
+                                                "key": { "type": "string" },
+                                                "value": { "type": "string" }
+                                            }
+                                        },
+                                        "description_kind": "plain",
+                                        "optional": true,
+                                        "computed": true
+                                    }
+                                }
+                            }
+                        },
+                        "uuid": {
+                            "type": "array",
+                            "description": "List of UUID Pools to create in Intersight.",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "assignment_order": {
+                                        "type": "string",
+                                        "description": "Assignment order decides the order in which the next identifier is allocated.\n* `sequential` - Identifiers are assigned in a sequential order.\n* `default` - Assignment order is decided by the system.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Description for the Pool.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "uuid_blocks": {
+                                        "description": "List of UUID's Suffix(s), with their Parameters, to Assign to the UUID Pool.",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "from": {
+                                                    "description": "Starting UUID Address.  Example `0000-000000000000`.",
+                                                    "type": "string"
+                                                },
+                                                "size": {
+                                                    "description": "Size of the UUID Address Pool.  Example `1000`.",
+                                                    "type": "number"
+                                                },
+                                                "to": {
+                                                    "description": "Ending UUID Address.  Example `0000-0000000003E7`.",
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                            "description_kind": "plain",
+                                            "optional": true
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name of the Pool.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "organization": {
+                                        "type": "string",
+                                        "description": "The Name of an Intersight Organization.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "prefix": {
+                                        "type": "string",
+                                        "description": "Prefix to assign to the UUID Pool.  Example: `000025B5-0000-0000`.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "additional_properties": { "type": "string" },
+                                                "key": { "type": "string" },
+                                                "value": { "type": "string" }
+                                            }
+                                        },
+                                        "description_kind": "plain",
+                                        "optional": true,
+                                        "computed": true
+                                    }
+                                }
+                            }
+                        },
+                        "wwnn": {
+                            "type": "array",
+                            "description": "List of WWNN Pools to create in Intersight.",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "assignment_order": {
+                                        "type": "string",
+                                        "description": "Assignment order decides the order in which the next identifier is allocated.\n* `sequential` - Identifiers are assigned in a sequential order.\n* `default` - Assignment order is decided by the system.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Description for the Pool.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "id_blocks": {
+                                        "description": "List of WWNN Blocks to Assign to the WWNN Pool.",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "from": {
+                                                    "description": "Starting WWNN Address.  Example `20:00:00:25:B5:00:00:00`.",
+                                                    "type": "string"
+                                                },
+                                                "size": {
+                                                    "description": "Size of the WWNN Address Pool.  Example `1000`.",
+                                                    "type": "number"
+                                                },
+                                                "to": {
+                                                    "description": "Ending WWNN Address.  Example `20:00:00:25:B5:00:03:E7`.",
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                            "description_kind": "plain",
+                                            "optional": true
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name of the Pool.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "organization": {
+                                        "type": "string",
+                                        "description": "The Name of an Intersight Organization.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "additional_properties": { "type": "string" },
+                                                "key": { "type": "string" },
+                                                "value": { "type": "string" }
+                                            }
+                                        },
+                                        "description_kind": "plain",
+                                        "optional": true,
+                                        "computed": true
+                                    }
+                                }
+                            }
+                        },
+                        "wwpn": {
+                            "type": "array",
+                            "description": "List of WWPN Pools to create in Intersight.",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "assignment_order": {
+                                        "type": "string",
+                                        "description": "Assignment order decides the order in which the next identifier is allocated.\n* `sequential` - Identifiers are assigned in a sequential order.\n* `default` - Assignment order is decided by the system.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Description for the Pool.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "id_blocks": {
+                                        "description": "List of WWPN Blocks to Assign to the WWPN Pool.",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "from": {
+                                                    "description": "Starting WWPN Address.  Example `20:00:00:25:B5:00:00:00`.",
+                                                    "type": "string"
+                                                },
+                                                "size": {
+                                                    "description": "Size of the WWPN Address Pool.  Example `1000`.",
+                                                    "type": "number"
+                                                },
+                                                "to": {
+                                                    "description": "Ending WWPN Address.  Example `20:00:00:25:B5:00:03:E7`.",
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                            "description_kind": "plain",
+                                            "optional": true
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name of the Pool.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "organization": {
+                                        "type": "string",
+                                        "description": "The Name of an Intersight Organization.",
+                                        "description_kind": "plain",
+                                        "optional": true
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "additional_properties": { "type": "string" },
+                                                "key": { "type": "string" },
+                                                "value": { "type": "string" }
+                                            }
+                                        },
+                                        "description_kind": "plain",
+                                        "optional": true,
+                                        "computed": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

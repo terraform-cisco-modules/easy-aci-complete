@@ -1,0 +1,25 @@
+---
+admin:
+    authentication:
+      - remote_user_login_policy: no-login
+        default:
+          login_domain: TACACS
+          realm: tacacs
+    radius:
+      - login_domain: RADIUS
+        radius_providers:
+          - host: 198.18.18.12
+            key: 1
+            management_epg: default
+            management_epg_type: oob
+            order: 0
+    security:
+      - web_session_idle_timeout: 65525
+    tacacs:
+      - login_domain: TACACS
+        tacacs_providers:
+          - host: 198.18.0.49
+            key: 1
+            management_epg: default
+            management_epg_type: oob
+            order: 0

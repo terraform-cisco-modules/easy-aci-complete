@@ -1,0 +1,40 @@
+---
+intersight:
+    templates:
+      server:
+        - name: Virtualization-M2-pxe
+          #___________________________
+          #
+          # Compute Configuration
+          #___________________________
+          bios_policy: Virtualization-M6
+          boot_order_policy: M2-pxe
+          uuid_pool: uuid
+          power_policy: server
+          virtual_media_policy: vmedia
+          #___________________________
+          #
+          # Management Configuration
+          #___________________________
+          certificate_management_policy: ''
+          imc_access_policy: imc
+          ipmi_over_lan_policy: ipmi
+          local_user_policy: users
+          serial_over_lan_policy: sol
+          snmp_policy: snmp
+          syslog_policy: syslog
+          virtual_kvm_policy: vkvm
+          #___________________________
+          #
+          # Storage Configuration
+          #___________________________
+          sd_card_policy: ''
+          storage_policy: M2
+          #___________________________
+          #
+          # Network Configuration
+          #___________________________
+          lan_connectivity_policy: Virtualization
+          san_connectivity_policy: Virtualization
+          tags: []
+

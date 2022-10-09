@@ -1,0 +1,11 @@
+---
+admin:
+    configuration_backups:
+      - name: config_backups
+        configuration_export:
+          - remote_hosts: [fileserver.example.com]
+        recurring_window:
+          - schedule:
+              days: every-day
+              hour: 0
+              minute: 15
