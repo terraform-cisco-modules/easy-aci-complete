@@ -1,11 +1,12 @@
 ---
 admin:
     authentication:
-        - console:
-            realm: local
-        - default:
-            login_domain: TACACS
-            realm: tacacs
+      - name: default
+        console:
+          realm: local
+        default:
+          login_domain: TACACS
+          realm: tacacs
     configuration_backups:
       - name: daily-backups
         remote_hosts: [fileserver.example.com]
@@ -15,7 +16,8 @@ admin:
         hosts: [198.18.18.12, 198.18.18.13]
         management_epg: ooband
     security:
-      - web_session_idle_timeout: 65525
+      - name: default
+        web_session_idle_timeout: 65525
     tacacs:
       - login_domain: TACACS
         hosts: [198.18.0.49, 198.18.0.50]

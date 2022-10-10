@@ -1,21 +1,6 @@
 ---
 access:
   policies:
-    interface:
-      default_policies:
-        - cdp_interface: true
-        - fibre_channel_interface: true
-        - l2_interface: true
-        - link_level: true
-        - lldp_interface: true
-        - port_channel: true
-        - port_security: true
-        - spanning_tree_interface: true
-      link_level:
-        - name: cl74_fc_fec
-          auto_negotation: on
-          forward_error_correction: cl74-fc-fec
-          speed: 25G
     global:
       default_policies:
         - error_disable_recovery_interval: true
@@ -43,3 +28,18 @@ access:
           epg_type: external_epg
           l3out: asgard-prod
           tenant: common
+    interface:
+      default_policies:
+        - cdp_interface: true
+        - fibre_channel_interface: true
+        - l2_interface: true
+        - link_level: true
+        - lldp_interface: true
+        - port_channel: true
+        - port_security: true
+        - spanning_tree_interface: true
+      link_level:
+        - name: cl74_fc_fec
+          auto_negotation: on
+          forward_error_correction: cl74-fc-fec
+          speed: 25G

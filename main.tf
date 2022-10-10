@@ -4,6 +4,7 @@ locals {
 
 data "utils_yaml_merge" "model" {
   input = concat([
+    for file in fileset(path.module, "access/*.yaml") : file(file)], [
     for file in fileset(path.module, "admin/*.yaml") : file(file)], [
     for file in fileset(path.module, "defaults/*.yaml") : file(file)]
   )
@@ -23,3 +24,6 @@ module "admin" {
   tacacs_key                 = var.tacacs_key
   tacacs_monitoring_password = var.tacacs_monitoring_password
 }
+# output "model" {
+#   value = local.model
+# }
