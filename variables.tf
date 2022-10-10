@@ -122,7 +122,7 @@ ________________________________________________________________________________
 */
 
 variable "aes_passphrase" {
-  description = "Global AES Passphrase."
+  description = "Global AES Passphrase.  The Minimum Length for this is 16 Characters."
   sensitive   = true
   type        = string
 }

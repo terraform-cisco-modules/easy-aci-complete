@@ -32,9 +32,9 @@ module "admin" {
 #   value = local.model
 # }
 
- module "system_settings" {
+module "system_settings" {
   source = "../terraform-aci-admin"
   model  = local.model
   # Global AES Passphrase Encryption Settings
   aes_passphrase = var.aes_passphrase
- }
+}
