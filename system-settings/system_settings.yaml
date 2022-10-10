@@ -1,15 +1,16 @@
 ---
 system_settings:
-  recommended_settings:
-    - best_practice_settings: # If you want to make changes to this modify the defaults
-      coop_group: true
-      fabric_wide_settings: true
-      global_aes_encryption_settings: true # Make sure to set var.aes_passphrase value for this
-      isis_policy: true
-      port_tracking: true
-      ptp_and_latency_measurement: true
   apic_connectivity_preference:
-    - interface_to_use_for_external_connections: inband
-  bgp_route_reflector:
-    - autonomous_system_number: 65501
+    interface_to_use_for_external_connections: inband
+  bgp_route_reflectors:
+    autonomous_system_number: 65501
+    pods:
+    - pod: 1
       route_reflector_nodes: [101, 102]
+  recommended_settings: # If you want to make changes to this modify the defaults
+    coop_group: true
+    fabric_wide_settings: true
+    global_aes_encryption_settings: true # Make sure to set var.aes_passphrase value if true
+    isis_policy: true
+    port_tracking: true
+    ptp_and_latency_measurement: true

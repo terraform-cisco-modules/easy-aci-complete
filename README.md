@@ -49,7 +49,7 @@ Configure the following in `yaml.schemas`
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_admin"></a> [admin](#module\_admin) | ../terraform-aci-admin | n/a |
-| <a name="module_system_settings"></a> [system\_settings](#module\_system\_settings) | ../terraform-aci-admin | n/a |
+| <a name="module_system_settings"></a> [system\_settings](#module\_system\_settings) | ../terraform-aci-system-settings | n/a |
 
 ## NOTE:
 **When the Data is merged from the YAML files, it will run through the modules using for_each loop(s).  Sensitive Variables cannot be added to a for_each loop, instead use the variables below to add sensitive values for policies.**

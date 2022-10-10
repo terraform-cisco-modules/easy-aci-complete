@@ -5,7 +5,10 @@ defaults:
       interface_to_use_for_external_connections: inband
     bgp_route_reflector:
       autonomous_system_number: 65000
-      route_reflector_nodes: [101, 102]
+      # Remember to Test without
+      pods:
+        - pod: 1
+          route_reflector_nodes: [101, 102]
     coop_group:
       type: strict
     endpoint_controls:
