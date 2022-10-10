@@ -1,0 +1,5 @@
+---
+fabric:
+  pods:
+    defaults: # Generate a Default Pod Policy Group and Profile
+      - pods: true

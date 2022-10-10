@@ -1,0 +1,20 @@
+---
+virtual_networking:
+  - name: Asgard
+    controllers:
+      datacenter: Asgard
+      dvs_version: 7.0
+      hostname: asgard-vcenter.rich.ciscolabs.com
+      management_epg: ooband
+      stats_collection: enabled
+      trigger_inventory_sync: untriggered
+    credentials:
+      username: administrator@rich.local
+    domain:
+        enable_tag_collection: true
+        enable_vm_folder_data_retrieval: true
+        vlan_pool: all-vlans
+    vswitch_policy:
+      cdp_interface_policy: cdpEnabled
+      lldp_interface_policy: lldpEnabled
+      port_channel_policy: macPin

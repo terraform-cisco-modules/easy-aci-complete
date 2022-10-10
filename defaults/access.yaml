@@ -231,56 +231,6 @@ defaults:
           lldp_interface_policy: default
           usb_configuration_policy: default
     # VIRTUAL NETWORKING
-    virtual_networking:
-      controllers:
-        annotation: ''
-        datacenter: '**REQUIRED**'
-        dvs_version: 'unmanaged'
-        hostname: '**REQUIRED**'
-        management_epg: 'default'
-        monitoring_policy: 'default'
-        port: 0
-        sequence_number: 0
-        stats_collection: 'disabled'
-        switch_scope: 'vm'
-        trigger_inventory_sync: 'untriggered'
-        vxlan_pool: ''
-      credentials:
-        description: ''
-        username: '**REQUIRED**'
-      domain:
-        access_mode: 'read-write'
-        annotation: ''
-        control_knob: 'epDpVerify'
-        delimiter: ''
-        enable_tag_collection: false
-        enable_vm_folder_data_retrieval: false
-        encapsulation: 'vlan'
-        endpoint_inventory_type: 'on-link'
-        endpoint_retention_time: 0
-        enforcement: 'hw'
-        preferred_encapsulation: 'unspecified'
-        switch_mode: 'default'
-        switch_provider: 'VMware'
-        uplink_names: []
-        vlan_pool: ''
-      vswitch_policy:
-        annotation: ''
-        cdp_interface_policy: ''
-        enhanced_lag_policy:
-          load_balancing_mode: 'src-dst-ip'
-          mode: 'active'
-          name: 'default'
-          number_of_links: 2
-        firewall_policy: 'default'
-        lldp_interface_policy: ''
-        mtu_policy: 'default'
-        port_channel_policy: ''
-        vmm_netflow_export_policy:
-          active_flow_timeout: 60
-          idle_flow_timeout: 15
-          netflow_policy: '**REQUIRED**'
-          sample_rate: 0
   access_policies_interface:
     cdp_interface:
       - name: cdpDisabled

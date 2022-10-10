@@ -4,9 +4,13 @@ locals {
 
 data "utils_yaml_merge" "model" {
   input = concat([
-    for file in fileset(path.module, "access/*.yaml") : file(file)], [
     for file in fileset(path.module, "admin/*.yaml") : file(file)], [
-    for file in fileset(path.module, "defaults/*.yaml") : file(file)]
+    for file in fileset(path.module, "defaults/*.yaml") : file(file)], [
+    for file in fileset(path.module, "fabric:access-policies/*.yaml") : file(file)], [
+    for file in fileset(path.module, "fabric:fabric-policies/*.yaml") : file(file)], [
+    for file in fileset(path.module, "fabric:inventory/*.yaml") : file(file)], [
+    for file in fileset(path.module, "system-settings/*.yaml") : file(file)], [
+    for file in fileset(path.module, "tenants/*/*.yaml") : file(file)]
   )
 }
 
@@ -27,3 +31,10 @@ module "admin" {
 # output "model" {
 #   value = local.model
 # }
+
+ module "system_settings" {
+  source = "../terraform-aci-admin"
+  model  = local.model
+  # Global AES Passphrase Encryption Settings
+  aes_passphrase = var.aes_passphrase
+ }
