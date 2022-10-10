@@ -1,0 +1,92 @@
+---
+access:
+  interfaces:
+    leaf:
+      policy_groups:
+        access:
+          - name: accessPort
+            attachable_entity_profile: accessAep
+            cdp_interface_policy: cdpEnabled
+            description: 'Basic Access Port'
+            interface_policy: access_bpdu
+            link_level_policy: inheritAuto
+            lldp_interface_policy: lldpEnabled
+            mcp_interface_policy: mcpEnabled
+            spanning_tree_interface_policy: bpduFG
+          - name: trunkPort
+            attachable_entity_profile: trunkAep
+            cdp_interface_policy: cdpEnabled
+            description: 'Basic Trunk Port'
+            interface_policy: access_bpdu
+            link_level_policy: inheritAuto
+            lldp_interface_policy: lldpEnabled
+            mcp_interface_policy: mcpEnabled
+            spanning_tree_interface_policy: bpduFG
+          - name: infraPort
+            attachable_entity_profile: infraAep
+            cdp_interface_policy: cdpEnabled
+            description: 'includes infra VLAN'
+            interface_policy: access
+            link_level_policy: inheritAuto
+            lldp_interface_policy: lldpEnabled
+            mcp_interface_policy: mcpEnabled
+        breakout:
+          - name: 100g-2x
+            breakout_map: 100g-2x
+            description: 'Breakup Map for 2 x 100G'
+          - name: 100g-4x
+            breakout_map: 100g-4x
+            description: 'Breakup Map for 4 x 100G'
+          - name: 10g-4x
+            breakout_map: 10g-4x
+            description: 'Breakup Map for 4 x 10G'
+          - name: 25g-4x
+            breakout_map: 25g-4x
+            description: 'Breakup Map for 4 x 25G'
+          - name: 50g-8x
+            breakout_map: 50g-8x
+            description: 'Breakup Map for 8 x 50G'
+        bundle:
+          - names: [
+              vpc001, vpc002, vpc003, vpc004, vpc005, vpc006, vpc007, vpc008, vpc009,
+              vpc010, vpc011, vpc012, vpc013, vpc014, vpc015, vpc016, vpc017, vpc018, vpc019,
+              vpc020, vpc021, vpc022, vpc023, vpc024, vpc025, vpc026, vpc027, vpc028, vpc029,
+              vpc030, vpc031, vpc032, vpc033, vpc034, vpc035, vpc036, vpc037, vpc038, vpc039,
+              vpc040, vpc041, vpc042, vpc043, vpc044, vpc045, vpc046, vpc047, vpc048, vpc049,
+              vpc050, vpc051, vpc052, vpc053, vpc054, vpc055, vpc056, vpc057, vpc058, vpc059,
+              vpc060, vpc061, vpc062, vpc063, vpc064, vpc065, vpc066, vpc067, vpc068, vpc069,
+              vpc070, vpc071, vpc072, vpc073, vpc074, vpc075, vpc076, vpc077, vpc078, vpc079,
+              vpc080, vpc081, vpc082, vpc083, vpc084, vpc085, vpc086, vpc087, vpc088, vpc089,
+              vpc090, vpc091, vpc092, vpc093, vpc094, vpc095, vpc096, vpc097, vpc098, vpc099,
+              vpc100, vpc101, vpc102, vpc103, vpc104, vpc105, vpc106, vpc107, vpc108
+            ]
+            attachable_entity_profile: trunkAep
+            cdp_interface_policy: cdpEnabled
+            description: 'VPC Policy Group for Eth1/#VPC#'
+            interface_policy: access_bpdu
+            link_aggregation_policy: lacpActive
+            link_aggregation_type: vpc
+            link_level_policy: inheritAuto
+            lldp_interface_policy: lldpEnabled
+            mcp_interface_policy: mcpEnabled
+            spanning_tree_interface_policy: bpduFG
+          - names: [l3out]
+            attachable_entity_profile: accessAep
+            cdp_interface_policy: cdpEnabled
+            description: VPC for L3Out
+            interface_policy: access_bpdu
+            link_aggregation_policy: lacpActive
+            link_aggregation_type: vpc
+            link_level_policy: inheritAuto
+            lldp_interface_policy: lldpEnabled
+            mcp_interface_policy: mcpEnabled
+            spanning_tree_interface_policy: bpduFG
+    # SPINE POLICY GROUPS
+    spine:
+      policy_groups:
+        - name: default
+          attachable_entity_profile: accessAep
+          cdp_interface_policy: cdpEnabled
+          link_flap_policy: default
+          link_level_policy: inheritAuto
+          macsec_policy: default

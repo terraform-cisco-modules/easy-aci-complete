@@ -1,0 +1,22 @@
+---
+admin:
+    authentication:
+        - console:
+            realm: local
+        - default:
+            login_domain: TACACS
+            realm: tacacs
+    configuration_backups:
+      - name: daily-backups
+        remote_hosts: [fileserver.example.com]
+        management_epg: ooband
+    radius:
+      - login_domain: RADIUS
+        hosts: [198.18.18.12, 198.18.18.13]
+        management_epg: ooband
+    security:
+      - web_session_idle_timeout: 65525
+    tacacs:
+      - login_domain: TACACS
+        hosts: [198.18.0.49, 198.18.0.50]
+        management_epg: ooband

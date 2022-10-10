@@ -1,0 +1,45 @@
+---
+access:
+  policies:
+    interface:
+      default_policies:
+        - cdp_interface: true
+        - fibre_channel_interface: true
+        - l2_interface: true
+        - link_level: true
+        - lldp_interface: true
+        - port_channel: true
+        - port_security: true
+        - spanning_tree_interface: true
+      link_level:
+        - name: cl74_fc_fec
+          auto_negotation: on
+          forward_error_correction: cl74-fc-fec
+          speed: 25G
+    global:
+      default_policies:
+        - error_disable_recovery_interval: true
+        - mcp_instance_policy: true
+        - qos_class: true
+      attachable_access_entity_profiles:
+        - name: accessAep
+          description: 'Default AAEP'
+          l3_domains: [l3out]
+          physical_domains: [access]
+        - name: infraAep
+          description: 'AAEP for Infra Trunk'
+          infra_vlan: true
+          physical_domains: [access]
+        - name: trunkAep
+          description: 'AAEP for EPG Assignment'
+          physical_domains: [access]
+          vmm_domains: [Asgard]
+      dhcp_relay:
+        - names_addresses: [
+            [ad1, 10.101.128.15],
+            [ad2, 10.101.128.16]
+          ]
+          epg: prod
+          epg_type: external_epg
+          l3out: asgard-prod
+          tenant: common

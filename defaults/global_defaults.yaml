@@ -1,6 +1,7 @@
 ---
 defaults:
   annotation: easy-aci:1.0.1
+  controller_type: apic
   management_epgs:
     - name: default
       type: oob

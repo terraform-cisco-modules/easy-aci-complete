@@ -1,0 +1,15 @@
+---
+access:
+  switches:
+    leaf:
+      policy_groups:
+        - name: default
+          cdp_interface_policy: cdpEnabled
+          description: 'Default Leaf Policy Group'
+          lldp_interface_policy: lldpEnabled
+    spine:
+      policy_groups:
+        - name: default
+          cdp_interface_policy: cdpEnabled
+          description: 'Default Spine Policy Group'
+          lldp_interface_policy: lldpEnabled

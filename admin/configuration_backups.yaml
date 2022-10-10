@@ -1,6 +1,0 @@
----
-admin:
-    configuration_backups:
-      - name: config_backups
-        remote_hosts: [fileserver.example.com]
-        management_epg: ooband
