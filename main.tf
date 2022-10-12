@@ -15,10 +15,16 @@ data "utils_yaml_merge" "model" {
   )
 }
 
-# module "access" {
-#   source = "../terraform-aci-access"
-#   model  = local.model
-# }
+module "access" {
+  source = "../terraform-aci-access"
+  model  = local.model
+  # VMM Domain Credentials Passwords
+  vmm_password_1 = var.vmm_password_1
+  vmm_password_2 = var.vmm_password_2
+  vmm_password_3 = var.vmm_password_3
+  vmm_password_4 = var.vmm_password_4
+  vmm_password_5 = var.vmm_password_5
+}
 
 module "admin" {
   source = "../terraform-aci-admin"
@@ -74,17 +80,6 @@ module "system_settings" {
   model  = local.model
   # Global AES Passphrase Encryption Settings
   aes_passphrase = var.aes_passphrase
-}
-
-module "virtual_networking" {
-  source = "../terraform-aci-virtual-networking"
-  model  = local.model
-  # VMM Domain Credentials Passwords
-  vmm_password_1 = var.vmm_password_1
-  vmm_password_2 = var.vmm_password_2
-  vmm_password_3 = var.vmm_password_3
-  vmm_password_4 = var.vmm_password_4
-  vmm_password_5 = var.vmm_password_5
 }
 
 # output "model" {
