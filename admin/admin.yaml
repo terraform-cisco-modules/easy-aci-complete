@@ -1,24 +1,56 @@
 ---
 admin:
+  aaa:  
     authentication:
-      - name: default
-        console:
-          realm: local
-        default:
-          login_domain: TACACS
-          realm: tacacs
-    configuration_backups:
-      - name: daily-backups
-        remote_hosts: [fileserver.example.com]
-        management_epg: ooband
-    radius:
-      - login_domain: RADIUS
-        hosts: [198.18.18.12, 198.18.18.13]
-        management_epg: ooband
+      aaa:
+        - name: default
+          console:
+            realm: local
+          default:
+            login_domain: TACACS
+            realm: tacacs
+      radius:
+        - login_domain: RADIUS
+          hosts: [198.18.18.12, 198.18.18.13]
+          management_epg: ooband
+      tacacs:
+        - login_domain: TACACS
+          hosts: [198.18.0.49, 198.18.0.50]
+          management_epg: ooband
     security:
       - name: default
         web_session_idle_timeout: 65525
-    tacacs:
-      - login_domain: TACACS
-        hosts: [198.18.0.49, 198.18.0.50]
+  external-data-collectors:
+    smart_callhome:
+      - name: default
+        contact_information: rich-lab@cisco.com
+        customer_contact_email: rich-lab@cisco.com
+        from_email: rich-lab@cisco.com
+        phone_contact: +1 408-555-5555
+        reply_to_email: rich-lab@cisco.com
+        smart_destinations:
+            - email: rich-lab@cisco.com
+        smtp_server:
+            - host: smtp-ext.cisco.com
+              management_epg: ooband
+        street_address: 4125 Highlander Parkway Richfield, OH 44286
+    syslog:
+      - name: default
+        include_types:
+            audit_logs: true
+            events: true
+            faults: true
+            session_logs: true
+        local_file_destination:
+            severity: information
+        remote_destinations:
+          - hosts: [10.101.128.24, 10.101.128.25]
+            management_epg: ooband
+            severity: information
+        show_milliseconds_in_timestamp: true
+        show_time_zone_in_timestamp: true
+  import-export:
+    configuration_backups:
+      - name: daily-backups
+        remote_hosts: [fileserver.example.com]
         management_epg: ooband

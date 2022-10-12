@@ -2,86 +2,102 @@
 defaults:
   fabric:
     pods:
-      # Policy Groups and Profiles
-      annotation: ''
-      bgp_route_reflector_policy: default
-      coop_group_policy: default
-      date_time_policy: default
-      description: ''
-      isis_policy: default
-      macsec_policy: default
-      management_access_policy: default
-      snmp_policy: default
+      policy_group:
+        # Policy Groups and Profiles
+        annotation: ''
+        bgp_route_reflector_policy: default
+        coop_group_policy: default
+        date_time_policy: default
+        description: ''
+        isis_policy: default
+        macsec_policy: default
+        management_access_policy: default
+        snmp_policy: default
+      profile:
+        annotation: ''
+        description: ''
+        pod_selector_type: ALL # ALL or range
+        pods: [1, 2] # Beginning and Ending pod ID's if type is changed to range
     policies:
+      global:
+        dns_profiles:
+          annotation: ''
+          description: ''
+          dns_domains:
+            domain: '**REQUIRED**'
+            default_domain: false
+            description: ''
+          dns_providers:
+            description: ''
+            dns_provider: '**REQUIRED**'
+            preferred: false
+          ip_version_preference: IPv4
+          management_epg: default
+      interface:
+        l3_interface:
+          annotation: ''
+          bfd_isis_policy_configuration: enabled
+          description: ''
       monitoring:
         common_policy:
-          smart_callhome:
-            admin_state: enabled
-            annotation: ''
-            contact_information: ''
-            contract_id: ''
-            customer_contact_email: ''
-            customer_id: ''
+        fabric_node_controls:
+          annotation: ''
+          description: ''
+          enable_dom: Dom
+          feature_selections: telemetry # analytics, netflow, telemetry
+      pod:
+        date_and_time:
+          annotation: ''
+          administrative_state: enabled
+          authentication_keys:
+            authentication_type: sha1
+            key_id: 0
+            trusted: true
+          description: ''
+          display_format: local
+          master_mode: disabled
+          ntp_servers:
+            preferred: false
+            key_id: 0
+          key_id: 0
+          management_epg: default
+          maximum_polling_interval: 6
+          minimum_polling_interval: 5
+          offset_state: enabled
+          server_state: enabled
+          stratum_value: 8
+          time_zone: UTC
+        snmp:
+          admin_state: enabled
+          annotation: ''
+          contact: ''
+          description: ''
+          include_types:
+              audit_logs: false
+              events: false
+              faults: true
+              session_logs: false
+          location: ''
+          snmp_client_groups:
+              clients:
+                address: '**REQUIRED**'
+                name: ''
+              description: ''
+              management_epg: default
+              name: default
+          snmp_communities:
+            community_variable: 0
             description: ''
-            smart_destinations:
-                admin_state: enabled
-                email: admin@example.com
-                format: short-txt # aml|short-txt|xml
-                rfc_compliant: true
-            from_email: ''
-            phone_contact: ''
-            reply_to_email: ''
-            site_id: ''
-            smtp_server:
-                management_epg: default
-                port_number: 25
-                secure_smtp: false
-                smtp_server: relay.example.com
-                username: ''
-            street_address: ''
-          snmp:
-            admin_state: enabled
-            annotation: ''
-            contact: ''
-            description: ''
-            include_types:
-                audit_logs: false
-                events: false
-                faults: true
-                session_logs: false
-            location: ''
-            snmp_client_groups:
-                clients: []
-                description: ''
-                management_epg: default
-                name: default
-            snmp_communities: []
-            snmp_destinations: []
-            users: []
-          syslog:
-            admin_state: enabled
-            annotation: ''
-            console_destination:
-                admin_state: enabled
-                severity: critical
-            description: ''
-            format: aci
-            include_types:
-                audit_logs: false
-                events: false
-                faults: true
-                session_logs: false
-            local_file_destination:
-                admin_state: enabled
-                severity: warnings
-            min_severity: warnings
-            remote_destinations:
-                admin_state: enabled
-                forwarding_facility: local7
-                hosts: []
-                management_epg: default
-                port: 514
-                severity: warnings
-                transport: udp
-            show_milliseconds_in_timestamp: false
-            show_time_zone_in_timestamp: false
+          snmp_destinations:
+            host: '**REQUIRED**'
+            management_epg: default
+            port: 162
+            username: '**REQUIRED**'
+            v3_security_level: auth # auth, noauth, priv
+            version: v3 # v2c, v3
+          users:
+            authorization_key: 1
+            authorization_type: hmac-sha1-96 # hmac-md5-96, hmac-sha1-96, hmac-sha1-224, hmac-sha1-256, hmac-sha1-384, hmac-sha1-512
+            privacy_key: 0
+            privacy_type: none # aes-128, des, none
+            username: '**REQUIRED**'

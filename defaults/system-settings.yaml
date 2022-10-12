@@ -10,6 +10,7 @@ defaults:
         - pod: 1
           route_reflector_nodes: [101, 102]
     coop_group:
+      annotation: ''
       type: strict
     endpoint_controls:
       annotation: ''

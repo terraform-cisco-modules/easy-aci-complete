@@ -3,12 +3,13 @@ system_settings:
   apic_connectivity_preference:
     interface_to_use_for_external_connections: inband
   bgp_route_reflectors:
-    autonomous_system_number: 65501
-    pods:
-    - pod: 1
-      route_reflector_nodes: [101, 102]
+    - autonomous_system_number: 65501
+      pods:
+      - pod: 1
+        route_reflector_nodes: [101, 102]
   recommended_settings: # If you want to make changes to this modify the defaults
     coop_group: true
+    endpoint_controls: true
     fabric_wide_settings: true
     global_aes_encryption_settings: true # Make sure to set var.aes_passphrase value if true
     isis_policy: true

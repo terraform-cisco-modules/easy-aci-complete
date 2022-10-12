@@ -48,8 +48,7 @@ Configure the following in `yaml.schemas`
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_admin"></a> [admin](#module\_admin) | ../terraform-aci-admin | n/a |
-| <a name="module_system_settings"></a> [system\_settings](#module\_system\_settings) | ../terraform-aci-system-settings | n/a |
+| <a name="module_access"></a> [access](#module\_access) | ../terraform-aci-access | n/a |
 
 ## NOTE:
 **When the Data is merged from the YAML files, it will run through the modules using for_each loop(s).  Sensitive Variables cannot be added to a for_each loop, instead use the variables below to add sensitive values for policies.**
@@ -65,19 +64,21 @@ Configure the following in `yaml.schemas`
 | <a name="input_apic_version"></a> [apic\_version](#input\_apic\_version) | The Version of ACI Running in the Environment. | `string` | `"5.2(1g)"` | no |
 | <a name="input_certName"></a> [certName](#input\_certName) | Cisco ACI Certificate Name for SSL Based Authentication | `string` | `""` | no |
 | <a name="input_privateKey"></a> [privateKey](#input\_privateKey) | Cisco ACI Private Key for SSL Based Authentication. | `string` | `""` | no |
-| <a name="input_remote_password"></a> [remote\_password](#input\_remote\_password) | Remote Host Password for Configuration Backups. | `string` | `""` | no |
-| <a name="input_ssh_key_contents"></a> [ssh\_key\_contents](#input\_ssh\_key\_contents) | SSH Private Key Based Authentication Contents. | `string` | `""` | no |
-| <a name="input_ssh_key_passphrase"></a> [ssh\_key\_passphrase](#input\_ssh\_key\_passphrase) | SSH Private Key Based Authentication Passphrase. | `string` | `""` | no |
 | <a name="input_radius_key"></a> [radius\_key](#input\_radius\_key) | RADIUS Key. | `string` | `""` | no |
 | <a name="input_radius_monitoring_password"></a> [radius\_monitoring\_password](#input\_radius\_monitoring\_password) | RADIUS Monitoring Password. | `string` | `""` | no |
 | <a name="input_tacacs_key"></a> [tacacs\_key](#input\_tacacs\_key) | TACACS Key. | `string` | `""` | no |
 | <a name="input_tacacs_monitoring_password"></a> [tacacs\_monitoring\_password](#input\_tacacs\_monitoring\_password) | TACACS Monitoring Password. | `string` | `""` | no |
-| <a name="input_aes_passphrase"></a> [aes\_passphrase](#input\_aes\_passphrase) | Global AES Passphrase.  The Minimum Length for this is 16 Characters. | `string` | n/a | yes |
+| <a name="input_smtp_password"></a> [smtp\_password](#input\_smtp\_password) | Password to use if Secure SMTP is enabled for the Smart CallHome Destination Group Mail Server. | `string` | `""` | no |
+| <a name="input_remote_password"></a> [remote\_password](#input\_remote\_password) | Remote Host Password. | `string` | `""` | no |
+| <a name="input_ssh_key_contents"></a> [ssh\_key\_contents](#input\_ssh\_key\_contents) | SSH Private Key Based Authentication Contents. | `string` | `""` | no |
+| <a name="input_ssh_key_passphrase"></a> [ssh\_key\_passphrase](#input\_ssh\_key\_passphrase) | SSH Private Key Based Authentication Passphrase. | `string` | `""` | no |
+| <a name="input_ntp_key"></a> [ntp\_key](#input\_ntp\_key) | Key Assigned to NTP. | `string` | `""` | no |
+| <a name="input_aes_passphrase"></a> [aes\_passphrase](#input\_aes\_passphrase) | Global AES Passphrase. | `string` | n/a | yes |
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_admin"></a> [admin](#output\_admin) | Domain Profile Outputs: including cluster and switch Moids, policy assignments. |
+| <a name="output_system_settings"></a> [system\_settings](#output\_system\_settings) | System settings module outputs. |
 
 # Sub Modules
 
