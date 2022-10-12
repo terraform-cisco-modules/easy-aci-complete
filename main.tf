@@ -15,66 +15,66 @@ data "utils_yaml_merge" "model" {
   )
 }
 
-# module "access" {
-#   source = "../terraform-aci-access"
-#   model  = local.model
-# }
+module "access" {
+  source = "../terraform-aci-access"
+  model  = local.model
+}
 
-# module "admin" {
-#   source = "../terraform-aci-admin"
-#   model  = local.model
-#   # Configuration Backup Sensitive Variables
-#   remote_password    = var.remote_password
-#   ssh_key_contents   = var.ssh_key_contents
-#   ssh_key_passphrase = var.ssh_key_passphrase
-#   # RADIUS Sensitive Variables
-#   radius_key                 = var.radius_key
-#   radius_monitoring_password = var.radius_monitoring_password
-#   # Smart CallHome - SMTP Password
-#   smtp_password = var.smtp_password
-#   # TACACS Sensitive Variables
-#   tacacs_key                 = var.tacacs_key
-#   tacacs_monitoring_password = var.tacacs_monitoring_password
-# }
+module "admin" {
+  source = "../terraform-aci-admin"
+  model  = local.model
+  # Configuration Backup Sensitive Variables
+  remote_password    = var.remote_password
+  ssh_key_contents   = var.ssh_key_contents
+  ssh_key_passphrase = var.ssh_key_passphrase
+  # RADIUS Sensitive Variables
+  radius_key                 = var.radius_key
+  radius_monitoring_password = var.radius_monitoring_password
+  # Smart CallHome - SMTP Password
+  smtp_password = var.smtp_password
+  # TACACS Sensitive Variables
+  tacacs_key                 = var.tacacs_key
+  tacacs_monitoring_password = var.tacacs_monitoring_password
+}
 
-# module "fabric" {
-#   source = "../terraform-aci-fabric"
-#   model  = local.model
-#   # Date and Time/NTP Sensitive Variables
-#   ntp_key_1 = var.ntp_key_1
-#   ntp_key_2 = var.ntp_key_2
-#   ntp_key_3 = var.ntp_key_3
-#   ntp_key_4 = var.ntp_key_4
-#   ntp_key_5 = var.ntp_key_5
-#   # SNMP Sensitive Variables
-#   snmp_authorization_key_1 = var.snmp_authorization_key_1
-#   snmp_authorization_key_2 = var.snmp_authorization_key_2
-#   snmp_authorization_key_3 = var.snmp_authorization_key_3
-#   snmp_authorization_key_4 = var.snmp_authorization_key_4
-#   snmp_authorization_key_5 = var.snmp_authorization_key_5
-#   snmp_community_1         = var.snmp_community_1
-#   snmp_community_2         = var.snmp_community_2
-#   snmp_community_3         = var.snmp_community_3
-#   snmp_community_4         = var.snmp_community_4
-#   snmp_community_5         = var.snmp_community_5
-#   snmp_privacy_key_1       = var.snmp_privacy_key_1
-#   snmp_privacy_key_2       = var.snmp_privacy_key_2
-#   snmp_privacy_key_3       = var.snmp_privacy_key_3
-#   snmp_privacy_key_4       = var.snmp_privacy_key_4
-#   snmp_privacy_key_5       = var.snmp_privacy_key_5
-# }
+module "fabric" {
+  source = "../terraform-aci-fabric"
+  model  = local.model
+  # Date and Time/NTP Sensitive Variables
+  ntp_key_1 = var.ntp_key_1
+  ntp_key_2 = var.ntp_key_2
+  ntp_key_3 = var.ntp_key_3
+  ntp_key_4 = var.ntp_key_4
+  ntp_key_5 = var.ntp_key_5
+  # SNMP Sensitive Variables
+  snmp_authorization_key_1 = var.snmp_authorization_key_1
+  snmp_authorization_key_2 = var.snmp_authorization_key_2
+  snmp_authorization_key_3 = var.snmp_authorization_key_3
+  snmp_authorization_key_4 = var.snmp_authorization_key_4
+  snmp_authorization_key_5 = var.snmp_authorization_key_5
+  snmp_community_1         = var.snmp_community_1
+  snmp_community_2         = var.snmp_community_2
+  snmp_community_3         = var.snmp_community_3
+  snmp_community_4         = var.snmp_community_4
+  snmp_community_5         = var.snmp_community_5
+  snmp_privacy_key_1       = var.snmp_privacy_key_1
+  snmp_privacy_key_2       = var.snmp_privacy_key_2
+  snmp_privacy_key_3       = var.snmp_privacy_key_3
+  snmp_privacy_key_4       = var.snmp_privacy_key_4
+  snmp_privacy_key_5       = var.snmp_privacy_key_5
+}
 
 # module "switch" {
 #   source = "../terraform-aci-switch"
 #   model  = local.model
 # }
 
-# module "system_settings" {
-#   source = "../terraform-aci-system-settings"
-#   model  = local.model
-#   # Global AES Passphrase Encryption Settings
-#   aes_passphrase = var.aes_passphrase
-# }
+module "system_settings" {
+  source = "../terraform-aci-system-settings"
+  model  = local.model
+  # Global AES Passphrase Encryption Settings
+  aes_passphrase = var.aes_passphrase
+}
 
 module "virtual_networking" {
   source = "../terraform-aci-virtual-networking"
