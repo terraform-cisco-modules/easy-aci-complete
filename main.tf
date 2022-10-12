@@ -15,10 +15,10 @@ data "utils_yaml_merge" "model" {
   )
 }
 
-module "access" {
-  source = "../terraform-aci-access"
-  model  = local.model
-}
+# module "access" {
+#   source = "../terraform-aci-access"
+#   model  = local.model
+# }
 
 module "admin" {
   source = "../terraform-aci-admin"

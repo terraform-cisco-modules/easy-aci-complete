@@ -48,7 +48,6 @@ Configure the following in `yaml.schemas`
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_access"></a> [access](#module\_access) | ../terraform-aci-access | n/a |
 | <a name="module_admin"></a> [admin](#module\_admin) | ../terraform-aci-admin | n/a |
 | <a name="module_fabric"></a> [fabric](#module\_fabric) | ../terraform-aci-fabric | n/a |
 | <a name="module_system_settings"></a> [system\_settings](#module\_system\_settings) | ../terraform-aci-system-settings | n/a |
