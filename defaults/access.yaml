@@ -1,6 +1,7 @@
 ---
 defaults:
   access:
+    # INTERFACES
     interfaces:
       leaf:
         policy_groups:
@@ -73,6 +74,13 @@ defaults:
           global_alias: ''
           link_level_policy: default
           macsec_policy: default
+    physical_and_external_domains:
+      l3_domains:
+        annotation: ''
+        vlan_pool: '**REQUIRED**'
+      physical_domains:
+        annotation: ''
+        vlan_pool: '**REQUIRED**'
     # POLICIES
     policies:
       # GLOBAL POLICIES
@@ -185,7 +193,6 @@ defaults:
           bpdu_guard: disabled
           description: ''
           global_alias: ''
-
       # SWITCH POLICIES
       switches:
         vpc_domain_policies:
@@ -230,8 +237,7 @@ defaults:
           description: ''
           lldp_interface_policy: default
           usb_configuration_policy: default
-    # VIRTUAL NETWORKING
-  access_policies_interface:
+  pre_built_interface_policies:
     cdp_interface:
       - name: cdpDisabled
         description: CDP Disabled Policy

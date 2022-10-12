@@ -8,7 +8,7 @@
 #   value       = module.fabric
 # }
 
-output "system_settings" {
+output "virtual_networking" {
   description = "System settings module outputs."
-  value       = module.system_settings
+  value       = module.virtual_networking
 }

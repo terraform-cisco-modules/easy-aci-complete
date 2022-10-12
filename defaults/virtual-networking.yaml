@@ -16,6 +16,7 @@ defaults:
       vxlan_pool: ''
     credentials:
       description: ''
+      password: 1 # REQUIRED.  Number between 1 and 5
       username: '**REQUIRED**'
     domain:
       access_mode: 'read-write'
@@ -45,7 +46,7 @@ defaults:
       lldp_interface_policy: ''
       mtu_policy: 'default'
       port_channel_policy: ''
-      vmm_netflow_export_policy:
+      vmm_netflow_export_policies:
         active_flow_timeout: 60
         idle_flow_timeout: 15
         netflow_policy: '**REQUIRED**'

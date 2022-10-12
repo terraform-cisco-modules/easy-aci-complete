@@ -1,9 +1,9 @@
 ---
 access:
-  domains:
-    layer3:
+  physical_and_external_domains:
+    l3_domains:
       - name: l3out
         vlan_pool: all-vlans
-    physical:
+    physical_domains:
       - name: access
         vlan_pool: all-vlans

@@ -2,10 +2,10 @@
 access:
   policies:
     global:
-      default_policies:
-        - error_disable_recovery_interval: true
-        - mcp_instance_policy: true
-        - qos_class: true
+      recommended_policies:
+        error_disable_recovery_interval: true
+        mcp_instance_policy: true
+        qos_class: true
       attachable_access_entity_profiles:
         - name: accessAep
           description: 'Default AAEP'
@@ -29,7 +29,7 @@ access:
           l3out: asgard-prod
           tenant: common
     interface:
-      default_policies:
+      create_pre_built_interface_policies:
         - cdp_interface: true
         - fibre_channel_interface: true
         - l2_interface: true

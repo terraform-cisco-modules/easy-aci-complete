@@ -1,9 +1,3 @@
-variable "annotation" {
-  default     = ""
-  description = "workspace tag value."
-  type        = string
-}
-
 #______________________________________________
 #
 # ACI Provider Settings
@@ -25,12 +19,6 @@ variable "apicPass" {
 variable "apicUser" {
   default     = "admin"
   description = "Username for User based Authentication."
-  type        = string
-}
-
-variable "apic_version" {
-  default     = "5.2(1g)"
-  description = "The Version of ACI Running in the Environment."
   type        = string
 }
 
@@ -129,12 +117,151 @@ variable "ssh_key_passphrase" {
 
 /*_____________________________________________________________________________________________________________________
 
-Fabric > Policies > Pod > Date and Time
+Fabric > Policies > Pod > Date and Time - Sensitive Variables
 _______________________________________________________________________________________________________________________
 */
-variable "ntp_key" {
+variable "ntp_key_1" {
   default     = ""
-  description = "Key Assigned to NTP."
+  description = "Key Assigned to NTP id 1."
+  sensitive   = true
+  type        = string
+}
+
+variable "ntp_key_2" {
+  default     = ""
+  description = "Key Assigned to NTP id 2."
+  sensitive   = true
+  type        = string
+}
+
+variable "ntp_key_3" {
+  default     = ""
+  description = "Key Assigned to NTP id 3."
+  sensitive   = true
+  type        = string
+}
+
+variable "ntp_key_4" {
+  default     = ""
+  description = "Key Assigned to NTP id 4."
+  sensitive   = true
+  type        = string
+}
+
+variable "ntp_key_5" {
+  default     = ""
+  description = "Key Assigned to NTP id 5."
+  sensitive   = true
+  type        = string
+}
+
+
+/*_____________________________________________________________________________________________________________________
+
+Fabric > Policies > Pod > SNMP  — Sensitive Variables
+_______________________________________________________________________________________________________________________
+*/
+variable "snmp_authorization_key_1" {
+  default     = ""
+  description = "SNMP Authorization Key 1."
+  sensitive   = true
+  type        = string
+}
+
+variable "snmp_authorization_key_2" {
+  default     = ""
+  description = "SNMP Authorization Key 2."
+  sensitive   = true
+  type        = string
+}
+
+variable "snmp_authorization_key_3" {
+  default     = ""
+  description = "SNMP Authorization Key 3."
+  sensitive   = true
+  type        = string
+}
+
+variable "snmp_authorization_key_4" {
+  default     = ""
+  description = "SNMP Authorization Key 4."
+  sensitive   = true
+  type        = string
+}
+
+variable "snmp_authorization_key_5" {
+  default     = ""
+  description = "SNMP Authorization Key 5."
+  sensitive   = true
+  type        = string
+}
+
+variable "snmp_community_1" {
+  default     = ""
+  description = "SNMP Community 1."
+  sensitive   = true
+  type        = string
+}
+
+variable "snmp_community_2" {
+  default     = ""
+  description = "SNMP Community 2."
+  sensitive   = true
+  type        = string
+}
+
+variable "snmp_community_3" {
+  default     = ""
+  description = "SNMP Community 3."
+  sensitive   = true
+  type        = string
+}
+
+variable "snmp_community_4" {
+  default     = ""
+  description = "SNMP Community 4."
+  sensitive   = true
+  type        = string
+}
+
+variable "snmp_community_5" {
+  default     = ""
+  description = "SNMP Community 5."
+  sensitive   = true
+  type        = string
+}
+
+variable "snmp_privacy_key_1" {
+  default     = ""
+  description = "SNMP Privacy Key 1."
+  sensitive   = true
+  type        = string
+}
+
+variable "snmp_privacy_key_2" {
+  default     = ""
+  description = "SNMP Privacy Key 2."
+  sensitive   = true
+  type        = string
+}
+
+variable "snmp_privacy_key_3" {
+  default     = ""
+  description = "SNMP Privacy Key 3."
+  sensitive   = true
+  type        = string
+}
+
+variable "snmp_privacy_key_4" {
+  default     = ""
+  description = "SNMP Privacy Key 4."
+  sensitive   = true
+  type        = string
+}
+
+variable "snmp_privacy_key_5" {
+  default     = ""
+  description = "SNMP Privacy Key 5."
   sensitive   = true
   type        = string
 }
@@ -146,8 +273,50 @@ System > System Settings: Global AES Encryption Setting — Sensitive Variables
 _______________________________________________________________________________________________________________________
 */
 variable "aes_passphrase" {
+  default     = ""
   description = "Global AES Passphrase."
   sensitive   = true
   type        = string
 }
 
+
+/*_____________________________________________________________________________________________________________________
+
+Virtual Networking > {switch_provider} > {domain_name} > Credentials — Sensitive Variables
+_______________________________________________________________________________________________________________________
+*/
+
+variable "vmm_password_1" {
+  default     = ""
+  description = "Password for VMM Credentials Policy."
+  sensitive   = true
+  type        = string
+}
+
+variable "vmm_password_2" {
+  default     = ""
+  description = "Password for VMM Credentials Policy."
+  sensitive   = true
+  type        = string
+}
+
+variable "vmm_password_3" {
+  default     = ""
+  description = "Password for VMM Credentials Policy."
+  sensitive   = true
+  type        = string
+}
+
+variable "vmm_password_4" {
+  default     = ""
+  description = "Password for VMM Credentials Policy."
+  sensitive   = true
+  type        = string
+}
+
+variable "vmm_password_5" {
+  default     = ""
+  description = "Password for VMM Credentials Policy."
+  sensitive   = true
+  type        = string
+}
