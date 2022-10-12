@@ -50,6 +50,7 @@ Configure the following in `yaml.schemas`
 |------|--------|---------|
 | <a name="module_admin"></a> [admin](#module\_admin) | ../terraform-aci-admin | n/a |
 | <a name="module_fabric"></a> [fabric](#module\_fabric) | ../terraform-aci-fabric | n/a |
+| <a name="module_switch"></a> [switch](#module\_switch) | ../terraform-aci-switch | n/a |
 | <a name="module_system_settings"></a> [system\_settings](#module\_system\_settings) | ../terraform-aci-system-settings | n/a |
 | <a name="module_virtual_networking"></a> [virtual\_networking](#module\_virtual\_networking) | ../terraform-aci-virtual-networking | n/a |
 

@@ -64,10 +64,10 @@ module "fabric" {
   snmp_privacy_key_5       = var.snmp_privacy_key_5
 }
 
-# module "switch" {
-#   source = "../terraform-aci-switch"
-#   model  = local.model
-# }
+module "switch" {
+  source = "../terraform-aci-switch"
+  model  = local.model
+}
 
 module "system_settings" {
   source = "../terraform-aci-system-settings"
