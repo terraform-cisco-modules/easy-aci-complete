@@ -3,9 +3,10 @@ access:
   policies:
     global:
       recommended_policies:
-        error_disable_recovery_interval: true
+        error_disabled_recovery_policy: true
         mcp_instance_policy: true
         qos_class: true
+        vpc_domain: true # VPC Domain is under Switch but for simplicity added here
       attachable_access_entity_profiles:
         - name: accessAep
           description: 'Default AAEP'
@@ -20,7 +21,7 @@ access:
           physical_domains: [access]
           vmm_domains: [Asgard]
       dhcp_relay:
-        - names_addresses: [
+        - name_addr_list: [
             [ad1, 10.101.128.15],
             [ad2, 10.101.128.16]
           ]
@@ -30,14 +31,15 @@ access:
           tenant: common
     interface:
       create_pre_built_interface_policies:
-        - cdp_interface: true
-        - fibre_channel_interface: true
-        - l2_interface: true
-        - link_level: true
-        - lldp_interface: true
-        - port_channel: true
-        - port_security: true
-        - spanning_tree_interface: true
+        cdp_interface: true
+        fibre_channel_interface: true
+        l2_interface: true
+        link_level: true
+        lldp_interface: true
+        mcp_interface: true
+        port_channel: true
+        port_security: true
+        spanning_tree_interface: true
       link_level:
         - name: cl74_fc_fec
           auto_negotation: on

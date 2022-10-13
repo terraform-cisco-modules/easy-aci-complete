@@ -50,7 +50,7 @@ defaults:
             fibre_channel_interface_policy: default
             l2_interface_policy: default
             link_aggregation_policy: default
-            link_aggregation_type: default
+            link_aggregation_type: vpc
             link_flap_policy: default
             link_level_flow_control_policy: default
             link_level_policy: default
@@ -58,12 +58,14 @@ defaults:
             macsec_policy: default
             mcp_interface_policy: default
             monitoring_policy: default
-            netflow_monitor_policies: []
+            netflow_monitor_policies:
+              ip_filter_type: ipv4
             port_security_policy: default
             priority_flow_control_policy: default
             slow_drain_policy: default
             span_destination_groups: []
             span_source_groups: []
+            spanning_tree_interface_policy: default
             storm_control_policy: default
       spine:
         policy_groups:
@@ -94,16 +96,20 @@ defaults:
         dhcp_relay:
           annotation: ''
           description: ''
-          dhcp_relay_providers: []
+          application_profile: default
+          epg: '**REQUIRED**'
+          epg_type: application_epg
+          l3out: ''
           mode: visible
-        error_disabled_recovery_policy:
+          tenant: common
+        error_disabled_recovery:
           annotation: ''
           error_disable_recovery_interval: 300
           events:
             bpdu_guard: true
             frequent_endpoint_move: true
             loop_indication_by_mcp: true
-        mcp_instance_policy:
+        mcp_instance:
           admin_state: enabled
           annotation: ''
           description: ''
@@ -194,11 +200,18 @@ defaults:
           description: ''
           global_alias: ''
       # SWITCH POLICIES
-      switches:
-        vpc_domain_policies:
+      switch:
+        vpc_domain:
           annotation: ''
           dead_interval: 200
           description: ''
+    # Pools -> VLAN
+    pools:
+      vlan:
+        allocation_mode: dynamic
+        annotation: ''
+        description: ''
+        encap_blocks: []
     # SWITCHES
     switches:
       leaf:
@@ -237,181 +250,186 @@ defaults:
           description: ''
           lldp_interface_policy: default
           usb_configuration_policy: default
-  pre_built_interface_policies:
-    cdp_interface:
-      - name: cdpDisabled
-        description: CDP Disabled Policy
-      - name: cdpEnabled
-        admin_state: enabled
-        description: CDP Enabled Policy
-    fibre_channel_interface:
-      - name: FAutoAuto
-        description: F Port, Speed Auto, Trunk Auto
-        trunk_mode: auto
-      - name: FAutoTrunk
-        description: F Port, Speed Auto, Trunk On
-        trunk_mode: trunk-on
-      - name: F32GAuto
-        description: F Port, Speed 32G, Trunk Auto
-        speed: 32G
-      - name: F32GTrunk
-        description: F Port, Speed 32G, Trunk On
-        speed: 32G
-        trunk_mode: trunk-on
-      - name: F16GAuto
-        description: F Port, Speed 16G, Trunk Auto
-        speed: 16G
-        trunk_mode: auto
-      - name: F16GTrunk
-        description: F Port, Speed 16G, Trunk On
-        speed: 16G
-        trunk_mode: trunk-on
-      - name: NPAutoAuto
-        description: NP Port, Speed Auto, Trunk Auto
-        port_mode: np
-        trunk_mode: auto
-      - name: NPAutoTrunk
-        description: NP Port, Speed Auto, Trunk On
-        port_mode: np
-        trunk_mode: trunk-on
-      - name: NP32GAuto
-        description: NP Port, Speed 32G, Trunk Auto
-        port_mode: np
-        speed: 32G
-        trunk_mode: auto
-      - name: NP32GTrunk
-        description: NP Port, Speed 32G, Trunk On
-        port_mode: np
-        speed: 32G
-        trunk_mode: trunk-on
-      - name: NP16GAuto
-        description: NP Port, Speed 16G, Trunk Auto
-        port_mode: np
-        speed: 16G
-        trunk_mode: auto
-      - name: NP16GTrunk
-        description: NP Port, Speed 16G, Trunk On
-        port_mode: np
-        speed: 16G
-        trunk_mode: trunk-on
-    l2_interface:
-      - name: portLocal
-        description: VLAN Scope Local
-        vlan_scope: portlocal
-    link_level:
-      - name: inheritAuto
-        description: Speed Auto Negotiation Auto
-      - name: inheritnoNg
-        auto_negotiation: off
-        description: Speed Auto Negotiation Off
-      - name: 100MAuto
-        description: Speed 100M Negotiation Auto
-        speed: 100M
-      - name: 100MnoNg
-        auto_negotiation: off
-        description: Speed 100M Negotiation Off
-        speed: 100M
-      - name: 1GAuto
-        description: Speed 1G Negotiation Auto
-        speed: 1G
-      - name: 1GnoNg
-        auto_negotiation: off
-        description: Speed 1G Negotiation Off
-        speed: 1G
-      - name: 10GAuto
-        description: Speed 10G Negotiation Auto
-        speed: 10G
-      - name: 10GnoNg
-        auto_negotiation: off
-        description: Speed 10G Negotiation Off
-        speed: 10G
-      - name: 25GAuto
-        description: Speed 25G Negotiation Auto
-        speed: 25G
-      - name: 25GnoNg
-        auto_negotiation: off
-        description: Speed 25G Negotiation Off
-        speed: 25G
-      - name: 40GAuto
-        description: Speed 40G Negotiation Auto
-        speed: 40G
-      - name: 40GnoNg
-        auto_negotiation: off
-        description: Speed 40G Negotiation Off
-        speed: 40G
-      - name: 50GAuto
-        description: Speed 50G Negotiation Auto
-        speed: 50G
-      - name: 50GnoNg
-        auto_negotiation: off
-        description: Speed 50G Negotiation Off
-        speed: 50G
-      - name: 100GAuto
-        description: Speed 100G Negotiation Auto
-        speed: 100G
-      - name: 100GnoNg
-        auto_negotiation: off
-        description: Speed 100G Negotiation Off
-        speed: 100G
-      - name: 200GAuto
-        description: Speed 200G Negotiation Auto
-        speed: 200G
-      - name: 200GnoNg
-        auto_negotiation: off
-        description: Speed 200G Negotiation Off
-        speed: 200G
-      - name: 400GAuto
-        description: Speed 400G Negotiation Auto
-        speed: 400G
-      - name: 400GnoNg
-        auto_negotiation: off
-        description: Speed 400G Negotiation Off
-        speed: 400G
-    lldp_interface:
-      - name: lldpDisabled
-        description: LLDP Both Disabled
-      - name: lldpEnabled
-        description: LLDP Both Enabled
-        receive_state: enabled
-        transmit_state: enabled
-      - name: lldpRx
-        description: LLDP Rx Enabled
-        receive_state: enabled
-      - name: lldpTx
-        description: LLDP Tx Enabled
-        transmit_state: enabled
-    mcp_interface:
-      - name: mcpDisabled
-        description: MCP Disabled
-      - name: mcpEnabled
-        admin_state: enabled
-        description: MCP Enabled
-    port_channel:
-      - name: lacpActive
-        description: LACP Active
-        mode: active
-      - name: lacpPassive
-        description: LACP Passive
-        mode: passive
-      - name: macPin
-        description: MAC Pinning
-        mode: mac-pin
-      - name: macPinNicLoad
-        description: MAC Pin NIC Load
-        mode: mac-pin-nicload
-      - name: static
-        description: Static
-        mode: off
-    spanning_tree_interface:
-      - name: bpduFG
-        description: BPDU Filter and Guard
-        filter: enabled
-        guard: enabled
-      - name: bpduFt
-        description: BPDU Filter
-        filter: enabled
-        guard: disabled
-      - name: bpduGd
-        description: BPDU Guard
-        filter: disabled
-        guard: enabled
+    pre_built_interface_policies:
+      cdp_interface:
+        - name: cdpDisabled
+          description: 'CDP Disabled Policy'
+        - name: cdpEnabled
+          admin_state: enabled
+          description: 'CDP Enabled Policy'
+      fibre_channel_interface:
+        - name: FAutoAuto
+          description: 'F Port, Speed Auto, Trunk Auto'
+          trunk_mode: auto
+        - name: FAutoTrunk
+          description: 'F Port, Speed Auto, Trunk On'
+          trunk_mode: trunk-on
+        - name: F32GAuto
+          description: 'F Port, Speed 32G, Trunk Auto'
+          speed: 32G
+        - name: F32GTrunk
+          description: 'F Port, Speed 32G, Trunk On'
+          speed: 32G
+          trunk_mode: trunk-on
+        - name: F16GAuto
+          description: 'F Port, Speed 16G, Trunk Auto'
+          speed: 16G
+          trunk_mode: auto
+        - name: F16GTrunk
+          description: 'F Port, Speed 16G, Trunk On'
+          speed: 16G
+          trunk_mode: trunk-on
+        - name: NPAutoAuto
+          description: 'NP Port, Speed Auto, Trunk Auto'
+          port_mode: np
+          trunk_mode: auto
+        - name: NPAutoTrunk
+          description: 'NP Port, Speed Auto, Trunk On'
+          port_mode: np
+          trunk_mode: trunk-on
+        - name: NP32GAuto
+          description: 'NP Port, Speed 32G, Trunk Auto'
+          port_mode: np
+          speed: 32G
+          trunk_mode: auto
+        - name: NP32GTrunk
+          description: 'NP Port, Speed 32G, Trunk On'
+          port_mode: np
+          speed: 32G
+          trunk_mode: trunk-on
+        - name: NP16GAuto
+          description: 'NP Port, Speed 16G, Trunk Auto'
+          port_mode: np
+          speed: 16G
+          trunk_mode: auto
+        - name: NP16GTrunk
+          description: 'NP Port, Speed 16G, Trunk On'
+          port_mode: np
+          speed: 16G
+          trunk_mode: trunk-on
+      l2_interface:
+        - name: portLocal
+          description: 'VLAN Scope Local'
+          vlan_scope: portlocal
+      link_level:
+        - name: inheritAuto
+          description: 'Speed Auto Negotiation Auto'
+        - name: inheritnoNg
+          auto_negotiation: off
+          description: 'Speed Auto Negotiation Off'
+        - name: 100MAuto
+          description: 'Speed 100M Negotiation Auto'
+          speed: 100M
+        - name: 100MnoNg
+          auto_negotiation: off
+          description: 'Speed 100M Negotiation Off'
+          speed: 100M
+        - name: 1GAuto
+          description: 'Speed 1G Negotiation Auto'
+          speed: 1G
+        - name: 1GnoNg
+          auto_negotiation: off
+          description: 'Speed 1G Negotiation Off'
+          speed: 1G
+        - name: 10GAuto
+          description: 'Speed 10G Negotiation Auto'
+          speed: 10G
+        - name: 10GnoNg
+          auto_negotiation: off
+          description: 'Speed 10G Negotiation Off'
+          speed: 10G
+        - name: 25GAuto
+          description: 'Speed 25G Negotiation Auto'
+          speed: 25G
+        - name: 25GnoNg
+          auto_negotiation: off
+          description: 'Speed 25G Negotiation Off'
+          speed: 25G
+        - name: 40GAuto
+          description: 'Speed 40G Negotiation Auto'
+          speed: 40G
+        - name: 40GnoNg
+          auto_negotiation: off
+          description: 'Speed 40G Negotiation Off'
+          speed: 40G
+        - name: 50GAuto
+          description: 'Speed 50G Negotiation Auto'
+          speed: 50G
+        - name: 50GnoNg
+          auto_negotiation: off
+          description: 'Speed 50G Negotiation Off'
+          speed: 50G
+        - name: 100GAuto
+          description: 'Speed 100G Negotiation Auto'
+          speed: 100G
+        - name: 100GnoNg
+          auto_negotiation: off
+          description: 'Speed 100G Negotiation Off'
+          speed: 100G
+        - name: 200GAuto
+          description: 'Speed 200G Negotiation Auto'
+          speed: 200G
+        - name: 200GnoNg
+          auto_negotiation: off
+          description: 'Speed 200G Negotiation Off'
+          speed: 200G
+        - name: 400GAuto
+          description: 'Speed 400G Negotiation Auto'
+          speed: 400G
+        - name: 400GnoNg
+          auto_negotiation: off
+          description: 'Speed 400G Negotiation Off'
+          speed: 400G
+      lldp_interface:
+        - name: lldpDisabled
+          description: 'LLDP Both Disabled'
+        - name: lldpEnabled
+          description: 'LLDP Both Enabled'
+          receive_state: enabled
+          transmit_state: enabled
+        - name: lldpRx
+          description: 'LLDP Rx Enabled'
+          receive_state: enabled
+        - name: lldpTx
+          description: 'LLDP Tx Enabled'
+          transmit_state: enabled
+      mcp_interface:
+        - name: mcpDisabled
+          description: 'MCP Disabled'
+        - name: mcpEnabled
+          admin_state: enabled
+          description: 'MCP Enabled'
+      port_channel:
+        - name: lacpActive
+          description: 'LACP Active'
+          mode: active
+        - name: lacpPassive
+          description: 'LACP Passive'
+          mode: passive
+        - name: macPin
+          description: 'MAC Pinning'
+          mode: mac-pin
+        - name: macPinNicLoad
+          description: 'MAC Pin NIC Load'
+          mode: mac-pin-nicload
+        - name: static
+          description: 'Static'
+          mode: off
+      port_security:
+        - name: default
+          description: 'Default Port Security Policy'
+          maximum_endpoints: 0
+          port_security_timeout: 60
+      spanning_tree_interface:
+        - name: bpduFG
+          description: 'BPDU Filter and Guard'
+          filter: enabled
+          guard: enabled
+        - name: bpduFt
+          description: 'BPDU Filter'
+          filter: enabled
+          guard: disabled
+        - name: bpduGd
+          description: 'BPDU Guard'
+          filter: disabled
+          guard: enabled

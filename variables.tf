@@ -39,6 +39,18 @@ variable "privateKey" {
 
 /*_____________________________________________________________________________________________________________________
 
+Access > Policies > Global > MCP Instance Policy — Sensitive Variables
+_______________________________________________________________________________________________________________________
+*/
+variable "mcp_instance_key" {
+  description = "The key or password to uniquely identify the MCP packets within this fabric."
+  sensitive   = true
+  type        = string
+}
+
+
+/*_____________________________________________________________________________________________________________________
+
 Admin > AAA > Authentication: RADIUS — Sensitive Variables
 _______________________________________________________________________________________________________________________
 */
