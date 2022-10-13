@@ -211,7 +211,11 @@ defaults:
         allocation_mode: dynamic
         annotation: ''
         description: ''
-        encap_blocks: []
+        encap_blocks:
+          allocation_mode: inherit
+          description: ''
+          role: external
+          vlan_range: '**REQUIRED**'
     # SWITCHES
     switches:
       leaf:

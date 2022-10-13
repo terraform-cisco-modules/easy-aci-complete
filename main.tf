@@ -18,6 +18,8 @@ data "utils_yaml_merge" "model" {
 module "access" {
   source = "../terraform-aci-access"
   model  = local.model
+  # APIC Version
+  apic_version = var.apic_version
   # MCP Instance Policy
   mcp_instance_key = var.mcp_instance_key
   # VMM Domain Credentials Passwords

@@ -32,7 +32,7 @@ access:
     interface:
       create_pre_built_interface_policies:
         cdp_interface: true
-        fibre_channel_interface: true
+        fibre_channel_interface: false
         l2_interface: true
         link_level: true
         lldp_interface: true
