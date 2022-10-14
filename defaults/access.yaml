@@ -94,6 +94,7 @@ defaults:
           physical_domains: []
           vmm_domains: []
         dhcp_relay:
+          name_addr_list: ['**REQUIRED**']
           annotation: ''
           description: ''
           application_profile: default

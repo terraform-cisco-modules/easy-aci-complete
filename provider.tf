@@ -10,6 +10,10 @@ terraform {
       source  = "CiscoDevNet/aci"
       version = ">= 2.1.0"
     }
+    ndo = {
+      source  = "CiscoDevNet/mso"
+      version = ">= 0.7.0"
+    }
     utils = {
       source  = "netascode/utils"
       version = ">= 0.1.2"
@@ -25,4 +29,13 @@ provider "aci" {
   url         = "https://${var.apicHostname}"
   username    = var.apicUser
   insecure    = true
+}
+
+provider "ndo" {
+  domain   = var.ndoDomain
+  insecure = true
+  password = var.ndoPass
+  platform = "nd"
+  url      = "https://${var.ndoHostname}"
+  username = var.ndoUser
 }

@@ -26,7 +26,7 @@ fabric:
           annotation: ''
           management_epg: ooband
           ntp_servers: [
-            #             # Comma Seperate List with Hostname, Preferred Status, Key ID (Key ID is optional)
+            # Comma Seperate List with Hostname, Preferred Status, Key ID (Key ID is optional)
             [10.101.128.15, false],
             [10.101.128.16, true]
           ]

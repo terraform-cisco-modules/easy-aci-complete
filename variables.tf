@@ -42,12 +42,52 @@ variable "apic_version" {
   type        = string
 }
 
+
+/*_____________________________________________________________________________________________________________________
+
+Nexus Dashboard Orchestrator Provider Settings
+_______________________________________________________________________________________________________________________
+*/
+variable "ndoDomain" {
+  default     = "local"
+  description = "Authentication Domain for Nexus Dashboard Orchestrator Authentication."
+  sensitive   = true
+  type        = string
+}
+
+variable "ndoHostname" {
+  default     = "ndo.example.com"
+  description = "Cisco Nexus Dashboard Orchestrator Hostname"
+  type        = string
+}
+
+variable "ndoPass" {
+  default     = ""
+  description = "Password for Nexus Dashboard Orchestrator Authentication."
+  sensitive   = true
+  type        = string
+}
+
+variable "ndoUser" {
+  default     = "admin"
+  description = "Username for Nexus Dashboard Orchestrator Authentication."
+  type        = string
+}
+
+variable "ndo_version" {
+  default     = "5.2(1g)"
+  description = "The Version of Nexus Dashboard Orchestrator Running in the Environment."
+  type        = string
+}
+
+
 /*_____________________________________________________________________________________________________________________
 
 Access > Policies > Global > MCP Instance Policy — Sensitive Variables
 _______________________________________________________________________________________________________________________
 */
 variable "mcp_instance_key" {
+  default     = ""
   description = "The key or password to uniquely identify the MCP packets within this fabric."
   sensitive   = true
   type        = string
