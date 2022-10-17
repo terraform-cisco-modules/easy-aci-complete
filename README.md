@@ -38,7 +38,7 @@ Configure the following in `yaml.schemas`
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
 | <a name="requirement_aci"></a> [aci](#requirement\_aci) | >= 2.1.0 |
-| <a name="requirement_ndo"></a> [ndo](#requirement\_ndo) | >= 0.7.0 |
+| <a name="requirement_mso"></a> [mso](#requirement\_mso) | >= 0.7.0 |
 | <a name="requirement_utils"></a> [utils](#requirement\_utils) | >= 0.1.2 |
 ## Providers
 
@@ -49,11 +49,7 @@ Configure the following in `yaml.schemas`
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_access"></a> [access](#module\_access) | ../terraform-aci-access | n/a |
-| <a name="module_admin"></a> [admin](#module\_admin) | ../terraform-aci-admin | n/a |
-| <a name="module_fabric"></a> [fabric](#module\_fabric) | ../terraform-aci-fabric | n/a |
-| <a name="module_switch"></a> [switch](#module\_switch) | ../terraform-aci-switch | n/a |
-| <a name="module_system_settings"></a> [system\_settings](#module\_system\_settings) | ../terraform-aci-system-settings | n/a |
+| <a name="module_tenants"></a> [tenants](#module\_tenants) | ../terraform-aci-tenants | n/a |
 
 ## NOTE:
 **When the Data is merged from the YAML files, it will run through the modules using for_each loop(s).  Sensitive Variables cannot be added to a for_each loop, instead use the variables below to add sensitive values for policies.**
@@ -129,11 +125,7 @@ Configure the following in `yaml.schemas`
 
 | Name | Description |
 |------|-------------|
-| <a name="output_access"></a> [access](#output\_access) | Access module outputs. |
-| <a name="output_admin"></a> [admin](#output\_admin) | Admin module outputs. |
-| <a name="output_fabric"></a> [fabric](#output\_fabric) | Fabric module outputs. |
-| <a name="output_switch"></a> [switch](#output\_switch) | Switch module outputs. |
-| <a name="output_system_settings"></a> [system\_settings](#output\_system\_settings) | System Settings module outputs. |
+| <a name="output_tenants"></a> [tenants](#output\_tenants) | Tenants module outputs. |
 
 # Sub Modules
 

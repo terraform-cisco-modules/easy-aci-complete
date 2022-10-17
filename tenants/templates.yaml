@@ -6,8 +6,8 @@ templates:
       contracts: []
       description: prod management
       domains:
-        - domain: access
-        - domain: Asgard
+        - name: access
+        - name: Asgard
           allow_micro_segmentation: false
           delimiter: '|'
           deploy_immediacy: immediate

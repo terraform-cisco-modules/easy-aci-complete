@@ -35,6 +35,7 @@ defaults:
       annotation: ''
       annotations: []
       description: ''
+      global_alias: ''
       monitoring_policy: default
       qos_class: unspecified
       template: ''
@@ -51,8 +52,9 @@ defaults:
             contract_type: consumed # consumed|contract_interface|intra_epg|provided|taboo
             name: '**REQUIRED**'
             qos_class: unspecified
-            schema: '' # If in NDO and Not the Same Schema
-            template: '' # If in NDO and Not the Same Template
+            ndo:
+              schema: '' # If in NDO and Not the Same Schema
+              template: '' # If in NDO and Not the Same Template
             tenant: '' # If not in EPG Tenant
         custom_qos_policy: ''
         data_plane_policer: ''
@@ -104,11 +106,6 @@ defaults:
           vlans: [1] # For VLAN and VXLAN this is a list of One.  For micro_seg and qinq this is a list of Two.
         useg_epg: false
         vlan: null # This is just used for the Inband Management EPG
-        vrf:
-          name: default
-          schema: '' # If in NDO and Not the Same Schema
-          template: '' # If in NDO and Not the Same Template
-          tenant: '' # If Undefined the EPG Tenant will be used.
         vzGraphCont: ''
     #=============================
     # Contracts
@@ -484,135 +481,140 @@ defaults:
     # Policies
     #=============================
     policies:
-      bfd_interface:
-        admin_state: enabled
-        annotation: ''
-        description: ''
-        detection_multiplier: 3
-        echo_admin_state: enabled
-        echo_recieve_interval: 50
-        enable_sub_interface_optimization: false
-        minimum_recieve_interval: 50
-        minimum_transmit_interval: 50
-      bgp_address_family_context:
-        annotation: ''
-        description: ''
-        ebgp_distance: 20
-        ebgp_max_ecmp: 16
-        enable_host_route_leak: false
-        ibgp_distance: 200
-        ibgp_max_ecmp: 16
-        local_distance: 220
-      bgp_best_path:
-        annotation: ''
-        description: ''
-        relax_as_path_restriction: false
-      bgp_peer_prefix:
-        action: reject
-        annotation: ''
-        description: ''
-        maximum_number_of_prefixes: 20000
-        restart_time: 65535
-        threshold: 75
-      bgp_route_summarization:
-        annotation: ''
-        description: ''
-        generate_as_set_information: false
-      bgp_timers:
-        annotation: ''
-        description: ''
-        graceful_restart_helper: true
-        hold_interval: 180
-        keepalive_interval: 60
-        maximum_as_limit: 0
-        name: default
-        stale_interval: 300
-      dhcp_option:
-        annotation: ''
-        description: ''
-        options: []
-      dhcp_relay:
-        name_addr_list: ['**REQUIRED**']
-        annotation: ''
-        description: ''
-        application_profile: default
-        epg: '**REQUIRED**'
-        epg_type: application_epg
-        l3out: ''
-        mode: visible
-      endpoint_retention:
-        annotation: ''
-        bounce_entry_aging_interval: 630
-        bounce_trigger: protocol
-        description: ''
-        hold_interval: 300
-        local_endpoint_aging_interval: 900
-        move_frequency: 256
-        remote_endpoint_aging_interval: 300
-      hsrp_group:
-        annotation: ''
-        description: ''
-        enable_preemption_for_the_group: false
-        hello_interval: 3000
-        hold_interval: 10000
-        key: cisco
-        max_seconds_to_prevent_preemption: 0
-        min_preemption_delay: 0
-        preemption_delay_after_reboot: 0
-        priority: 100
-        timeout: 0
-      hsrp_interface:
-        annotation: ''
-        description: ''
-        control:
-          enable_bidirectional_forwarding_detection: false
-          use_burnt_in_mac_address_of_the_interface: false
-        delay: 0
-        reload_delay: 0
-      ospf_interface:
-        annotation: ''
-        cost_of_interface: 0
-        dead_interval: 40
-        description: ''
-        hello_interval: 10
-        interface_controls:
-          advertise_subnet: true
-          bfd: true
-          mtu_ignore: false
-          passive_participation: false
-        network_type: bcast
-        priority: 1
-        retransmit_interval: 5
-        transmit_delay: 1
-      ospf_route_summarization:
-        annotation: ''
-        cost: 0
-        description: ''
-        inter_area_enabled: false
-      ospf_timers:
-        annotation: ''
-        admin_distance_preference: 110
-        bandwidth_reference: 400000
-        control_knobs:
-          enable_name_lookup_for_router_ids: false
-          prefix_suppress: false
-        description: ''
-        graceful_restart_helper: true
-        initial_spf_scheduled_delay_interval: 200
-        lsa_group_pacing_interval: 10
-        lsa_generation_throttle_hold_interval: 5000
-        lsa_generation_throttle_maximum_interval: 5000
-        lsa_generation_throttle_start_wait_interval: 0
-        lsa_maximum_action: reject
-        lsa_threshold: 75
-        maximum_ecmp: 8
-        maximum_lsa_reset_interval: 10
-        maximum_lsa_sleep_count: 5
-        maximum_lsa_sleep_interval: 5
-        maximum_number_of_not_self_generated_lsas: 20000
-        minimum_hold_time_between_spf_calculations: 1000
-        minimum_interval_between_arrival_of_a_lsa: 1000
-        maximum_wait_time_between_spf_calculations: 5000
+      protocol:
+        bfd_interface:
+          admin_state: enabled
+          annotation: ''
+          description: ''
+          detection_multiplier: 3
+          echo_admin_state: enabled
+          echo_recieve_interval: 50
+          enable_sub_interface_optimization: false
+          minimum_recieve_interval: 50
+          minimum_transmit_interval: 50
+        bgp:
+          bgp_address_family_context:
+            annotation: ''
+            description: ''
+            ebgp_distance: 20
+            ebgp_max_ecmp: 16
+            enable_host_route_leak: false
+            ibgp_distance: 200
+            ibgp_max_ecmp: 16
+            local_distance: 220
+          bgp_best_path:
+            annotation: ''
+            description: ''
+            relax_as_path_restriction: false
+          bgp_peer_prefix:
+            action: reject
+            annotation: ''
+            description: ''
+            maximum_number_of_prefixes: 20000
+            restart_time: 65535
+            threshold: 75
+          bgp_route_summarization:
+            annotation: ''
+            description: ''
+            generate_as_set_information: false
+          bgp_timers:
+            annotation: ''
+            description: ''
+            graceful_restart_helper: true
+            hold_interval: 180
+            keepalive_interval: 60
+            maximum_as_limit: 0
+            name: default
+            stale_interval: 300
+        dhcp:
+          option_policies:
+            annotation: ''
+            description: ''
+            options: []
+          relay_policies:
+            name_addr_list: ['**REQUIRED**']
+            annotation: ''
+            description: ''
+            application_profile: default
+            epg: '**REQUIRED**'
+            epg_type: application_epg
+            l3out: ''
+            mode: visible
+        endpoint_retention:
+          annotation: ''
+          bounce_entry_aging_interval: 630
+          bounce_trigger: protocol
+          description: ''
+          hold_interval: 300
+          local_endpoint_aging_interval: 900
+          move_frequency: 256
+          remote_endpoint_aging_interval: 300
+        hsrp:
+          group_policies:
+            annotation: ''
+            description: ''
+            enable_preemption_for_the_group: false
+            hello_interval: 3000
+            hold_interval: 10000
+            key: cisco
+            max_seconds_to_prevent_preemption: 0
+            min_preemption_delay: 0
+            preemption_delay_after_reboot: 0
+            priority: 100
+            timeout: 0
+          interface_policies:
+            annotation: ''
+            description: ''
+            control:
+              enable_bidirectional_forwarding_detection: false
+              use_burnt_in_mac_address_of_the_interface: false
+            delay: 0
+            reload_delay: 0
+        ospf:
+          ospf_interface:
+            annotation: ''
+            cost_of_interface: 0
+            dead_interval: 40
+            description: ''
+            hello_interval: 10
+            interface_controls:
+              advertise_subnet: true
+              bfd: true
+              mtu_ignore: false
+              passive_participation: false
+            network_type: bcast
+            priority: 1
+            retransmit_interval: 5
+            transmit_delay: 1
+          ospf_route_summarization:
+            annotation: ''
+            cost: 0
+            description: ''
+            inter_area_enabled: false
+          ospf_timers:
+            annotation: ''
+            admin_distance_preference: 110
+            bandwidth_reference: 400000
+            control_knobs:
+              enable_name_lookup_for_router_ids: false
+              prefix_suppress: false
+            description: ''
+            graceful_restart_helper: true
+            initial_spf_scheduled_delay_interval: 200
+            lsa_group_pacing_interval: 10
+            lsa_generation_throttle_hold_interval: 5000
+            lsa_generation_throttle_maximum_interval: 5000
+            lsa_generation_throttle_start_wait_interval: 0
+            lsa_maximum_action: reject
+            lsa_threshold: 75
+            maximum_ecmp: 8
+            maximum_lsa_reset_interval: 10
+            maximum_lsa_sleep_count: 5
+            maximum_lsa_sleep_interval: 5
+            maximum_number_of_not_self_generated_lsas: 20000
+            minimum_hold_time_between_spf_calculations: 1000
+            minimum_interval_between_arrival_of_a_lsa: 1000
+            maximum_wait_time_between_spf_calculations: 5000
       route_map_match_rules:
         annotation: ''
         description: ''

@@ -22,7 +22,7 @@
 #   description = "System Settings module outputs."
 #   value       = module.system_settings
 # }
- 
+
 output "tenants" {
   description = "Tenants module outputs."
   value       = module.tenants
