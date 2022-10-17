@@ -1,6 +1,9 @@
 ---
 defaults:
   annotation: easy-aci:1.0.1
+  annotations:
+    - key: easy-aci
+      value: 1.0.1
   apic_version: 5.2(3g)
   controller_type: apic
   management_epgs:

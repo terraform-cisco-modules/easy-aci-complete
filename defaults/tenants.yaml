@@ -8,13 +8,25 @@ defaults:
     description: ''
     global_alias: ''
     monitoring_policy: default
-    schema: # REQUIRED FOR NDO
-      templates:
+    policy_tenant: 'common'
+    ndo:
+      schema: # REQUIRED FOR NDO
+        name: '**REQUIRED**'
+        templates:
           name: '**REQUIRED**'
           sites: []
-    sites: [] # REQUIRED FOR NDO
-    users: [] # REQUIRED FOR NDO
-    template: '**REQUIRED FOR NDO**'
+      sites:
+        aws_access_key_id: ''
+        aws_account_id: ''
+        azure_access_type: managed # credentials, managed, shared
+        azure_active_directory_id: '' # REQUIRED for access_type credentials
+        azure_application_id: '' # REQUIRED for access_type credentials
+        azure_shared_account_id: '' # REQUIRED for access_type shared
+        azure_subscription_id: ''
+        is_aws_account_trusted: true
+        name: '**REQUIRED**'
+        vendor: cisco # azure, aws, cisco
+      users: [] # REQUIRED FOR NDO
     #=============================
     # Application Profiles
     #=============================
@@ -23,8 +35,9 @@ defaults:
       annotation: ''
       annotations: []
       description: ''
-      monitoring_policy: ''
+      monitoring_policy: default
       qos_class: unspecified
+      template: ''
       #=============================
       # Application EPGs
       #=============================
@@ -96,69 +109,69 @@ defaults:
           schema: '' # If in NDO and Not the Same Schema
           template: '' # If in NDO and Not the Same Template
           tenant: '' # If Undefined the EPG Tenant will be used.
-        policy_source_tenant: '' # If Policies are consumed from the common tenant
         vzGraphCont: ''
     #=============================
     # Contracts
     #=============================
     contracts:
-      alias: ''
-      annotation: ''
-      annotations: []
-      contract_type: standard # oob|taboo
-      controller_type: apic
-      description: ''
-      global_alias: ''
-      log: false
-      qos_class: unspecified
-      scope: context # application-profile|context|global|tenant
-      subjects:
-        action: permit
-        apply_both_directions: true
-        description: ''
-        directives:
-            enable_policy_compression: false
-            log: false
-        filters: []
-        label_match_criteria: AtleastOne
-        name: '**REQUIRED**'
-        qos_class: unspecified
-        target_dscp: unspecified
-      target_dscp: unspecified
-    #=============================
-    # Filters
-    #=============================
-    filters:
-      alias: ''
-      annotation: ''
-      annotations: []
-      description: ''
-      filter_entries:
+      contract:
         alias: ''
         annotation: ''
         annotations: []
-        arp_flag: unspecified
+        contract_type: standard # oob|taboo
+        controller_type: apic
         description: ''
-        destination_port_from: unspecified
-        destination_port_to: unspecified
-        ethertype: unspecified
-        icmpv4_type: unspecified
-        icmpv6_type: unspecified
-        ip_protocol: unspecified
         global_alias: ''
-        match_dscp: unspecified
-        match_only_fragments: false
-        name: default
-        source_port_from: unspecified
-        source_port_to: unspecified
-        stateful: false
-        tcp_session_rules:
-            acknowledgement: false
-            established: false
-            finish: false
-            reset: false
-            synchronize: false
-      global_alias: ''
+        log: false
+        qos_class: unspecified
+        scope: context # application-profile|context|global|tenant
+        subjects:
+          action: permit
+          apply_both_directions: true
+          description: ''
+          directives:
+              enable_policy_compression: false
+              log: false
+          filters: []
+          label_match_criteria: AtleastOne
+          name: '**REQUIRED**'
+          qos_class: unspecified
+          target_dscp: unspecified
+        target_dscp: unspecified
+      #=============================
+      # Filters
+      #=============================
+      filters:
+        alias: ''
+        annotation: ''
+        annotations: []
+        description: ''
+        filter_entries:
+          alias: ''
+          annotation: ''
+          annotations: []
+          arp_flag: unspecified
+          description: ''
+          destination_port_from: unspecified
+          destination_port_to: unspecified
+          ethertype: unspecified
+          icmpv4_type: unspecified
+          icmpv6_type: unspecified
+          ip_protocol: unspecified
+          global_alias: ''
+          match_dscp: unspecified
+          match_only_fragments: false
+          name: default
+          source_port_from: unspecified
+          source_port_to: unspecified
+          stateful: false
+          tcp_session_rules:
+              acknowledgement: false
+              established: false
+              finish: false
+              reset: false
+              synchronize: false
+        global_alias: ''
     networking:
       #=============================
       # Bridge Domains
@@ -223,10 +236,14 @@ defaults:
           intersite_bum_traffic_allow: false
           intersite_l2_stretch: false
           monitoring_policy: ''
-          netflow_monitor_policies: []
+          netflow_monitor_policies:
+            filter_type: ipv4 # ipv4, ipv6
+            netflow_policy: '**REQUIRED**'
           optimize_wan_bandwidth: false
           rogue_coop_exception_list: []
-        policy_source_tenant: ''
+        ndo:
+          template:
+          sites: []
       #=============================
       # L3Outs
       #=============================
@@ -282,7 +299,6 @@ defaults:
         l3_domain: ''
         pim: false
         pimv6: false
-        policy_source_tenant: local.first_tenant
         provider_label: ''
         ospf_external_profile:
           ospf_area_cost: 1
@@ -337,7 +353,6 @@ defaults:
                 bidirectional_forwarding_detection: false
                 disable_connected_check: false
               peer_level: interface
-              policy_source_tenant: ''
               private_as_control:
                 remove_all_private_as: false
                 remove_private_as: false
@@ -415,7 +430,6 @@ defaults:
               route_control_bfd: false
               track_policy: ''
           target_dscp: unspecified
-          policy_source_tenant: local.first_tenant
       #=============================
       # VRFs
       #=============================
@@ -432,7 +446,14 @@ defaults:
         eigrp_timers_per_address_family: []
         endpoint_retention_policy: default
         epg_esg_collection_for_vrfs:
-          contracts: []
+          contracts:
+            name: '**REQUIRED**'
+            contract_type: provider
+            ndo:
+              schema: '' 
+              template: ''
+            qos_class: unspecified
+            tenant: ''
           label_match_criteria: AtleastOne
         global_alias: ''
         ip_data_plane_learning: enabled
@@ -442,8 +463,10 @@ defaults:
         ospf_timers_per_address_family: []
         policy_control_enforcement_direction: ingress  # egress
         policy_control_enforcement_preference: enforced # unenforced
-        policy_source_tenant: '' # Used if Policies are pulled from the common tenant
         preferred_group: false
+        ndo:
+          sites: []
+          template: ''
         transit_route_tag_policy: ''
     #=============================
     # APIC Inband MGMT Address

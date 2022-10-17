@@ -1,0 +1,8 @@
+---
+tenants:
+  - name: common
+    networking:
+      vrfs:
+        - name: prod
+          description: 'prod VRF'
+          preferred_group_member: true

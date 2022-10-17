@@ -1,0 +1,26 @@
+---
+tenants:
+  - name: prod
+    application_profiles:
+      - name: nets
+        description: "Default Network Centric Application Profile"
+    networking:
+      bridge_domains:
+        - name: 10.92.101.0
+          template: prod_optimize
+          epg:
+            template: preferred_group
+            epg_to_aaeps:
+              vlans: [1101]
+          subnets:
+            - address: 10.92.101.1/24
+              template: advertise_external
+        - name: 10.92.102.0
+          template: prod_optimize
+          epg:
+            template: preferred_group
+            epg_to_aaeps:
+              vlans: [1102]
+          subnets:
+            - address: 10.92.102.1/24
+              template: advertise_external
