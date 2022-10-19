@@ -615,48 +615,71 @@ defaults:
             minimum_hold_time_between_spf_calculations: 1000
             minimum_interval_between_arrival_of_a_lsa: 1000
             maximum_wait_time_between_spf_calculations: 5000
-      route_map_match_rules:
+      route_map_match_rules: # UI Just shows 'Match Rules'
+        alias: ''
         annotation: ''
         description: ''
-        name_alias: ''
-        rules:
-          community: ''
-          community_type: regular
+        name: '**REQUIRED**'
+        match_community_terms:
           description: ''
-          greater_than: 0
-          less_than: 0
-          network: 198.18.0.0/24
-          regex: ''
-          type: match_prefix
-      route_map_set_rules:
+          name: '**REQUIRED**'
+          match_community_factors:
+            community: '**REQUIRED**' # e.g., regular:as2-nn2:4:15, e.g., extended:as4-nn2:5:16, e.g., no-export, e.g., no-advertise
+            description: ''
+            scope: 'transitive' # transitive, non-transitive
+        match_regex_community_terms:
+          community_type: regular # extended and regular
+          description: ''
+          name: '**REQUIRED**'
+          regular_expression: '**REQUIRED**'
+        match_route_destination_rule:
+          description: ''
+          greater_than_mask: 0
+          ip: '**REQUIRED**'
+          less_than_mask: 0
+      route_map_set_rules: # UI Just shows 'Set Rules'
+        alias: ''
         annotation: ''
         description: ''
-        name_alias: ''
-        rules:
-          address: 198.18.0.1
-          asns: []
-          communities:
-            community: ''
-            description: ''
-            set_criteria: append # append|none|replace
+        name: '**REQUIRED**'
+        additional_communities:
+          community: '**REQUIRED**'
+            # e.g., regular:as2-nn2:4:15, e.g., extended:as4-nn2:5:16, e.g., no-export, e.g., no-advertise
+          description: ''
+        multipath: false
+        next_hop_propegation: false
+        set_as_path:
           criteria: prepend # prepend|prepend-last-as
-          half_life: 15
-          last_as_count: 0
-          max_suprress_time: 60
-          metric: 100
-          metric_type: ospf-type1 # ospf-type1|ospf-type2
-          preference: 100
-          reuse_limit: 750
-          suppress_limit: 2000
-          route_tag: 1
-          type: set_metric
-          weight: 0
+          autonomous_systems: [] # Used when criteria is prepend
+          last_as_count: 0 # Used when criteria is prepend-last-as
+        set_communities:
+          criteria: none # append|none|replace
+          community: '' # REQUIRED for append and replace.  
+            # e.g., regular:as2-nn2:4:15, e.g., extended:as4-nn2:5:16, e.g., no-export, e.g., no-advertise
+        set_dampening:
+          half_life: 15 # 15 1-60
+          max_suprress_time: 60 # 60 1-255
+          reuse_limit: 750 # 750 1-20000
+          suppress_limit: 2000 # 2000 1-20000
+        set_external_epg:
+          external_epg: '**REQUIRED**'
+          l3out: '**REQUIRED**'
+          tenant: '**REQUIRED**'
+        set_metric: 0
+        set_metric_type: '' # ospf-type1|ospf-type2
+        set_next_hop_address: ''
+        set_preference: 0
+        set_route_tag: 0
+        set_weight: 0
       route_maps_for_route_control:
         annotation: ''
         description: ''
-        match_rules:
-            action: permit
-            description: ''
-            name: default
-            order: 0
-            set_rule: ''
+        contexts:
+          action: permit # deny, permit
+          description: ''
+          match_rules:
+          name: default
+          set_rule: ''
+        name: '**REQUIRED**'
+        type: combinable # combinable or global
+
