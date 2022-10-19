@@ -312,7 +312,10 @@ defaults:
           address_family: ipv4
           route_map: '**REQUIRED**'
         route_profile_for_interleak: ''
-        route_profiles_for_redistribution: []
+        route_profiles_for_redistribution:
+          l3out: ''
+          route_map: '**REQUIRED**'
+          source: static # 
         target_dscp: unspecified
         vrf: default
         logical_node_profiles:
@@ -321,7 +324,14 @@ defaults:
           annotations: []
           color_tag: yellow-green
           description: ''
-          interface_profiles:
+          name: '**REQUIRED**'
+          nodes:
+            node_ids: [201] # REQUIRED
+            router_ids: ['**REQUIRED**']
+            use_router_id_as_loopback: true
+          pod_id: 1
+          target_dscp: unspecified
+          logical_interface_profiles:
             arp_policy: ''
             auto_state: disabled
             bgp_peers:
@@ -403,16 +413,9 @@ defaults:
             qos_class: unspecified
             secondary_addresses: []
             svi_addresses:
-                link_local_address: '::'
-                primary_preferred_address: 198.18.1.1/24
+                link_local_addresses: ['::', '::']
+                primary_preferred_addresses: [198.18.1.1/24, 198.18.1.2/24]
                 secondary_addresses: []
-                side: A # A or B
-          name: '**REQUIRED**'
-          nodes:
-            node_id: null # REQUIRED
-            router_id: '**REQUIRED**'
-            use_router_id_as_loopback: true
-          pod_id: 1
           static_routes:
               description: ''
               fallback_preference: 1
@@ -426,7 +429,6 @@ defaults:
               prefixes: ['**REQUIRED**']
               route_control_bfd: false
               track_policy: ''
-          target_dscp: unspecified
       #=============================
       # VRFs
       #=============================
@@ -682,4 +684,3 @@ defaults:
           set_rule: ''
         name: '**REQUIRED**'
         type: combinable # combinable or global
-
