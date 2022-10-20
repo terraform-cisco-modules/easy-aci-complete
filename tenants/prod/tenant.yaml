@@ -4,23 +4,30 @@ tenants:
     application_profiles:
       - name: nets
         description: "Default Network Centric Application Profile"
+        application_epgs:
+          - name: 10.92.103.0
+            epg_to_aaep_vlans: [103]
+            template: preferred_group
     networking:
       bridge_domains:
         - name: 10.92.101.0
-          template: prod_optimize
-          epg:
+          application_epg:
             template: preferred_group
-            epg_to_aaeps:
-              vlans: [1101]
+            epg_to_aaep_vlans: [1101]
           subnets:
             - address: 10.92.101.1/24
               template: advertise_external
-        - name: 10.92.102.0
           template: prod_optimize
-          epg:
+        - name: 10.92.102.0
+          application_epg:
             template: preferred_group
-            epg_to_aaeps:
-              vlans: [1102]
+            epg_to_aaep_vlans: [1102]
           subnets:
             - address: 10.92.102.1/24
               template: advertise_external
+          template: prod_optimize
+        - name: 10.92.103.0
+          subnets:
+            - address: 10.92.103.1/24
+              template: advertise_external
+          template: prod_optimize

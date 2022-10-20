@@ -2,7 +2,107 @@
 tenants:
   - name: common
     networking:
+      l3outs:
+        - name: asgard-dmz
+          description: 'Asgard DMZ L3Out'
+          enable_bgp: true
+          external_epgs:
+            - name: dmz
+              description: 'Asgard DMZ'
+              subnets:
+                - subnets: [
+                    0.0.0.0/1,
+                    128.0.0.0/1
+                  ]
+          l3_domain: l3out
+          logical_node_profiles:
+            - name: asgard-leaf201-202
+              description: 'Asgard DMZ LNP'
+              interface_profiles:
+                - name: Vlan12
+                  bgp_peers:
+                    - peer_addresses: [10.92.2.3, 10.92.2.4]
+                      peer_asn: 64701
+                      peer_controls:
+                          bidirectional_forwarding_detection: true
+                  description: '142b-core01-02-l3out-vl12'
+                  encap_scope: local
+                  encap_vlan: 12
+                  interface_or_policy_group: l3out
+                  interface_type: ext-svi
+                  mode: trunk
+                  mtu: inherit
+                  svi_addresses:
+                    - primary_preferred_addresses: [10.92.2.1/29, 10.92.2.2/29]
+              nodes:
+                - node_ids: [201, 202]
+                  router_ids: [10.92.2.201, 10.92.2.202]
+                  use_router_id_as_loopback: true
+              pod_id: 1
+          vrf: dmz
+        - name: asgard-prod
+          description: 'Asgard Prod L3Out'
+          enable_bgp: true
+          external_epgs:
+            - name: prod
+              description: 'Asgard Prod'
+              preferred_group_member: false
+              subnets:
+                - subnets: [
+                    0.0.0.0/1,
+                    128.0.0.0/1
+                  ]
+          l3_domain: l3out
+          logical_node_profiles:
+            - name: asgard-leaf201-202
+              description: 'Asgard Prod LNP'
+              interface_profiles:
+                - name: Vlan13
+                  bgp_peers:
+                    - peer_addresses: [10.92.3.3, 10.92.3.4]
+                      peer_asn: 64701
+                      peer_controls:
+                          bidirectional_forwarding_detection: true
+                  description: '142b-core01-02-l3out-vl13'
+                  encap_scope: local
+                  encap_vlan: 13
+                  interface_or_policy_group: l3out
+                  interface_type: ext-svi
+                  mode: trunk
+                  mtu: inherit
+                  svi_addresses:
+                    - primary_preferred_addresses: [10.92.3.1/29, 10.92.3.2/29]
+              nodes:
+                - node_ids: [201, 202]
+                  router_ids: [10.92.3.201, 10.92.3.202]
+                  use_router_id_as_loopback: true
+              pod_id: 1
+          vrf: prod
       vrfs:
         - name: prod
           description: 'prod VRF'
           preferred_group_member: true
+        - name: dmz
+          description: 'dmz VRF'
+          epg_esg_collection_for_vrfs:
+            contracts:
+              - name: default
+                contract_type: consumed
+              - name: default
+                contract_type: provided
+    policies:
+      ospf:
+        ospf_interface:
+          - name: point-to-point
+            advertise_subnet: true
+            bfd: true
+            cost_of_interface: 0
+            dead_interval: 40
+            description: 'Point-to-Point Policy'
+            hello_interval: 10
+            mtu_ignore: true
+            network_type: "p2p"
+            passive_interface: false
+            priority: 1
+            retransmit_interval: 5
+            transmit_delay: 1

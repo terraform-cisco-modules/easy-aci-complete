@@ -1,7 +1,7 @@
 ---
 templates:
   application_epgs:
-    - name: preferred_group
+    - template_name: preferred_group
       application_profile: nets
       contracts: []
       description: prod management
@@ -23,7 +23,7 @@ templates:
           switch_provider: VMware
           vlan_mode: dynamic
       epg_to_aaeps:
-          aaep: trunkAep
+        - aaep: trunkAep
           mode: trunk
       epg_type: standard
       flood_in_encapsulation: disabled
@@ -37,6 +37,75 @@ templates:
       tenant: prod
       useg_epg: false
   bridge_domains:
+    - template_name: dmz_optimize
+      dhcp_relay_labels:
+        - names: [ad1, ad2]
+          scope: infra
+      general:
+        advertise_host_routes: false
+        arp_flooding: false
+        endpoint_retention_policy: default
+        igmp_interface_policy: default
+        igmp_snooping_policy: default
+        ipv6_l3_unknown_multicast: flood
+        l2_unknown_unicast: proxy
+        l3_unknown_multicast_flooding: flood
+        limit_ip_learn_to_subnets: true
+        mld_snoop_policy: default
+        multi_destionation_flooding: bd-flood
+        pim: false
+        pimv6: false
+        type: regular
+        vrf:
+          name: dmz
+          tenant: common
+      l3_configurations:
+        associated_l3outs:
+            - l3outs: [asgard-dmz]
+              tenant: common
+        ep_move_detection_mode: false
+        nd_policy: default
+        unicast_routing: true
+      advanced/troubleshooting:
+        disable_ip_data_plane_learning_for_pbr: false
+        endpoint_clear: false
+        intersite_bum_traffic_allow: false
+        intersite_l2_stretch: false
+        monitoring_policy: default
+        optimize_wan_bandwidth: false
+    - template_name: inband_optimize
+      general:
+        advertise_host_routes: false
+        arp_flooding: false
+        endpoint_retention_policy: default
+        igmp_interface_policy: default
+        igmp_snooping_policy: default
+        ipv6_l3_unknown_multicast: flood
+        l2_unknown_unicast: proxy
+        l3_unknown_multicast_flooding: flood
+        limit_ip_learn_to_subnets: true
+        mld_snoop_policy: default
+        multi_destionation_flooding: bd-flood
+        pim: false
+        pimv6: false
+        type: regular
+        vrf:
+          name: inb
+          tenant: mgmt
+      l3_configurations:
+        associated_l3outs:
+            - l3outs: [inband]
+              tenant: mgmt
+        ep_move_detection_mode: false
+        nd_policy: default
+        unicast_routing: true
+      advanced/troubleshooting:
+        disable_ip_data_plane_learning_for_pbr: false
+        endpoint_clear: false
+        intersite_bum_traffic_allow: false
+        intersite_l2_stretch: false
+        monitoring_policy: default
+        optimize_wan_bandwidth: false
     - template_name: prod_optimize
       dhcp_relay_labels:
         - names: [ad1, ad2]
@@ -73,9 +142,6 @@ templates:
         intersite_l2_stretch: false
         monitoring_policy: default
         optimize_wan_bandwidth: false
-    - template_name: bd_template2
-      general:
-        advertise_host_routes: false
   subnets:
     - template_name: advertise_external
       ip_data_plane_learning: enabled

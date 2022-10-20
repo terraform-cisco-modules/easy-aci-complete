@@ -49,6 +49,11 @@ Configure the following in `yaml.schemas`
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_access"></a> [access](#module\_access) | ../terraform-aci-access | n/a |
+| <a name="module_admin"></a> [admin](#module\_admin) | ../terraform-aci-admin | n/a |
+| <a name="module_fabric"></a> [fabric](#module\_fabric) | ../terraform-aci-fabric | n/a |
+| <a name="module_switch"></a> [switch](#module\_switch) | ../terraform-aci-switch | n/a |
+| <a name="module_system_settings"></a> [system\_settings](#module\_system\_settings) | ../terraform-aci-system-settings | n/a |
 | <a name="module_tenants"></a> [tenants](#module\_tenants) | ../terraform-aci-tenants | n/a |
 
 ## NOTE:
@@ -125,6 +130,11 @@ Configure the following in `yaml.schemas`
 
 | Name | Description |
 |------|-------------|
+| <a name="output_access"></a> [access](#output\_access) | Access module outputs. |
+| <a name="output_admin"></a> [admin](#output\_admin) | Admin module outputs. |
+| <a name="output_fabric"></a> [fabric](#output\_fabric) | Fabric module outputs. |
+| <a name="output_switch"></a> [switch](#output\_switch) | Switch module outputs. |
+| <a name="output_system_settings"></a> [system\_settings](#output\_system\_settings) | System Settings module outputs. |
 | <a name="output_tenants"></a> [tenants](#output\_tenants) | Tenants module outputs. |
 
 # Sub Modules

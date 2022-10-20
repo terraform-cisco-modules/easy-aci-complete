@@ -47,7 +47,7 @@ defaults:
         annotation: ''
         annotations: []
         bridge_domain: default
-        contract_exception_tag: null
+        contract_exception_tag: 0
         contracts:
             contract_type: consumed # consumed|contract_interface|intra_epg|provided|taboo
             name: '**REQUIRED**'
@@ -61,7 +61,7 @@ defaults:
         description: ''
         domains:
           annotation: ''
-          allow_microsegmentation: false
+          allow_micro_segmentation: false
           delimiter: '|'
           deploy_immediacy: on-demand
           domain: '**REQUIRED**' # Name of the Domain
@@ -105,7 +105,7 @@ defaults:
           pod: 1
           vlans: [1] # For VLAN and VXLAN this is a list of One.  For micro_seg and qinq this is a list of Two.
         useg_epg: false
-        vlan: null # This is just used for the Inband Management EPG
+        vlan: 0 # This is just used for the Inband Management EPG
         vzGraphCont: ''
     #=============================
     # Contracts
@@ -262,7 +262,6 @@ defaults:
             template: ''
             tenant: '' # Required if Contract is not in the same Tenant
           description: ''
-          epg_type: standard # standard or oob
           flood_on_encapsulation: disabled
           label_match_criteria: AtleastOne
           name: default
@@ -294,6 +293,9 @@ defaults:
           target_dscp: unspecified
         global_alias: ''
         l3_domain: ''
+        ndo:
+          sites: ''
+          template: ''
         pim: false
         pimv6: false
         provider_label: ''
@@ -306,7 +308,6 @@ defaults:
           ospf_area_id: 0.0.0.0
           ospf_area_type: regular # nssa, regular, stub
         route_control_enforcement:
-          export: true
           import: false
         route_control_for_dampening:
           address_family: ipv4
@@ -353,7 +354,7 @@ defaults:
               bgp_peer_prefix_policy: ''
               description: ''
               ebgp_multihop_ttl: 1
-              local_as_number: null
+              local_as_number: 0
               local_as_number_config: none
               password: 0
               peer_controls:

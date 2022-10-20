@@ -1,0 +1,93 @@
+---
+tenants:
+  - name: infra
+    networking:
+      l3outs:
+        - name: intersite
+          description: 'Multi-Site L3Out'
+          enable_bgp: true
+          external_epgs:
+            - name: intersiteInstP
+              description: 'Multi-Site'
+          l3_domain: l3out
+          logical_node_profiles:
+            - name: asgard-spine101
+              description: 'asgard-spine101 Multi-Site'
+              interface_profiles:
+                - name: Eth1-29.4
+                  description: '142b-core01-Eth1/23'
+                  encap_scope: local
+                  encap_vlan: 4
+                  interface_or_policy_group: eth1/29
+                  interface_type: sub-interface
+                  mode: trunk
+                  mtu: 9150
+                  ospf_interface_profile:
+                    - name: intersite
+                      description: 'OSPF Multi-Site Profile'
+                      ospf_interface_policy: point-to-point
+                  primary_preferred_address: 10.92.4.0/31
+                - name: Eth1-30.4
+                  description: '142b-core02-Eth1/23'
+                  encap_scope: local
+                  encap_vlan: 4
+                  interface_or_policy_group: eth1/30
+                  interface_type: sub-interface
+                  mode: trunk
+                  mtu: 9150
+                  ospf_interface_profile:
+                    - name: intersite
+                      description: 'OSPF Multi-Site Profile'
+                      ospf_interface_policy: point-to-point
+                  primary_preferred_address: 10.92.4.2/31
+              nodes:
+                - node_ids: [101]
+                  router_ids: [10.92.4.101]
+                  use_router_id_as_loopback: true
+              pod_id: 1
+            - name: asgard-spine102
+              description: 'asgard-spine102 Multi-Site'
+              interface_profiles:
+                - name: Eth1-29.4
+                  description: '142b-core01-Eth1/24'
+                  encap_scope: local
+                  encap_vlan: 4
+                  interface_or_policy_group: eth1/29
+                  interface_type: sub-interface
+                  mode: trunk
+                  mtu: 9150
+                  ospf_interface_profile:
+                    - name: intersite
+                      description: 'OSPF Multi-Site Profile'
+                      ospf_interface_policy: point-to-point
+                  primary_preferred_address: 10.92.4.4/31
+                - name: Eth1-30.4
+                  description: '142b-core02-Eth1/24'
+                  encap_scope: local
+                  encap_vlan: 4
+                  interface_or_policy_group: eth1/30
+                  interface_type: sub-interface
+                  mode: trunk
+                  mtu: 9150
+                  ospf_interface_profile:
+                    - name: intersite
+                      description: 'OSPF Multi-Site Profile'
+                      ospf_interface_policy: point-to-point
+                  primary_preferred_address: 10.92.4.6/31
+              nodes:
+                - node_ids: [102]
+                  router_ids: [10.92.4.102]
+                  use_router_id_as_loopback: true
+              pod_id: 1
+          ospf_external_profile:
+            - ospf_area_id: 0.0.0.0
+              ospf_area_cost: 1
+              ospf_area_control:
+                send_redistribution_lsas_into_nssa_area: true
+                originate_summary_lsa: true
+                suppress_forwarding_address: false
+              ospf_area_type: regular # nssa, regular, stub
+          vrf: overlay-1
+      vrfs:
+        - name: overlay-1
+          description: 'Built-In infra VRF'
