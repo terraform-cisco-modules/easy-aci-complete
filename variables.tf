@@ -10,7 +10,7 @@ variable "apicHostname" {
 }
 
 variable "apicPass" {
-  default     = ""
+  default     = "dummydummy"
   description = "Password for User based Authentication."
   sensitive   = true
   type        = string
@@ -37,7 +37,7 @@ variable "privateKey" {
 }
 
 variable "apic_version" {
-  default     = ""
+  default     = "5.2(4e)"
   description = "The Version of ACI Running in the Environment."
   type        = string
 }
@@ -62,7 +62,7 @@ variable "ndoHostname" {
 }
 
 variable "ndoPass" {
-  default     = ""
+  default     = "dummydummy"
   description = "Password for Nexus Dashboard Orchestrator Authentication."
   sensitive   = true
   type        = string
@@ -78,6 +78,67 @@ variable "ndo_version" {
   default     = "5.2(1g)"
   description = "The Version of Nexus Dashboard Orchestrator Running in the Environment."
   type        = string
+}
+
+/*_____________________________________________________________________________________________________________________
+
+Global Shared Variables
+_______________________________________________________________________________________________________________________
+*/
+
+
+variable "annotation" {
+  default     = "orchestrator:terraform:easy-aci-v2.0"
+  description = "The Version of this Script."
+  type        = string
+}
+
+variable "annotations" {
+  default = [
+    {
+      key   = "orchestrator"
+      value = "terraform:easy-aci:v2.0"
+    }
+  ]
+  description = "The Version of this Script."
+  type = list(object(
+    {
+      key   = string
+      value = string
+    }
+  ))
+}
+
+variable "controller_type" {
+  default     = "apic"
+  description = <<-EOT
+    The Type of Controller for this Site.
+    - apic
+    - ndo
+  EOT
+  type        = string
+}
+
+variable "management_epgs" {
+  default = [
+    {
+      name = "default"
+      type = "oob"
+    }
+  ]
+  description = <<-EOT
+    The Management EPG's that will be used by the script.
+    - name: Name of the EPG
+    - type: Type of EPG
+      * inb
+      * oob
+  EOT
+  type = list(object(
+    {
+      name = string
+      type = string
+    }
+  ))
 }
 
 

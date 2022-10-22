@@ -4,7 +4,6 @@ templates:
     - template_name: preferred_group
       application_profile: nets
       contracts: []
-      description: prod management
       domains:
         - name: access
         - name: Asgard

@@ -17,10 +17,14 @@ data "utils_yaml_merge" "model" {
 }
 
 module "access" {
-  source = "../terraform-aci-access"
-  model  = local.model
-  # APIC Version
-  apic_version = var.apic_version
+  source          = "../terraform-aci-access"
+  annotation      = var.annotation
+  annotations     = var.annotations
+  apic_version    = var.apic_version
+  controller_type = var.controller_type
+  management_epgs = var.management_epgs
+  model           = local.model
+  # Sensitive Variables for Access Policies
   # MCP Instance Policy
   mcp_instance_key = var.mcp_instance_key
   # VMM Domain Credentials Passwords
@@ -32,8 +36,12 @@ module "access" {
 }
 
 module "admin" {
-  source = "../terraform-aci-admin"
-  model  = local.model
+  source          = "../terraform-aci-admin"
+  annotation      = var.annotation
+  annotations     = var.annotations
+  management_epgs = var.management_epgs
+  model           = local.model
+  # Sensitive Variables for Admin Policies
   # Configuration Backup Sensitive Variables
   remote_password    = var.remote_password
   ssh_key_contents   = var.ssh_key_contents
@@ -49,8 +57,12 @@ module "admin" {
 }
 
 module "fabric" {
-  source = "../terraform-aci-fabric"
-  model  = local.model
+  source          = "../terraform-aci-fabric"
+  annotation      = var.annotation
+  annotations     = var.annotations
+  management_epgs = var.management_epgs
+  model           = local.model
+  # Sensitive Variables for Fabric Policies
   # Date and Time/NTP Sensitive Variables
   ntp_key_1 = var.ntp_key_1
   ntp_key_2 = var.ntp_key_2
@@ -76,22 +88,31 @@ module "fabric" {
 }
 
 module "switch" {
-  source = "../terraform-aci-switch"
-  model  = local.model
+  source      = "../terraform-aci-switch"
+  annotation  = var.annotation
+  annotations = var.annotations
+  model       = local.model
 }
 
 module "system_settings" {
-  source = "../terraform-aci-system-settings"
-  model  = local.model
+  source       = "../terraform-aci-system-settings"
+  annotation   = var.annotation
+  annotations  = var.annotations
+  apic_version = var.apic_version
+  model        = local.model
   # Global AES Passphrase Encryption Settings
   aes_passphrase = var.aes_passphrase
 }
 
 module "tenants" {
-  source   = "../terraform-aci-tenants"
-  for_each = { for v in lookup(local.model, "tenants", []) : v.name => v }
-  model    = local.model
-  tenant   = each.key
+  source          = "../terraform-aci-tenants"
+  for_each        = { for v in lookup(local.model, "tenants", []) : v.name => v }
+  annotation      = var.annotation
+  annotations     = var.annotations
+  controller_type = var.controller_type
+  model           = local.model
+  tenant          = each.key
+  # Sensitive Variables for Tenant Policies
   # AWS Secret Key - NDO
   aws_secret_key = var.aws_secret_key
   # Azure Client Secret - NDO

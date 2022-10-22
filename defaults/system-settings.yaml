@@ -3,11 +3,12 @@ defaults:
   system_settings:
     apic_connectivity_preference:
       interface_to_use_for_external_connections: inband
-    bgp_route_reflector:
+    bgp:
       autonomous_system_number: 65000
+    bgp_route_reflector:
       # Remember to Test without
       pods:
-        - pod: 1
+        - pod_id: 1
           route_reflector_nodes: [101, 102]
     coop_group:
       annotation: ''

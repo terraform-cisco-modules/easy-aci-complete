@@ -6,6 +6,7 @@ tenants:
         description: "Default Network Centric Application Profile"
         application_epgs:
           - name: 10.92.103.0
+            bridge_domain: 10.92.103.0
             epg_to_aaep_vlans: [103]
             template: preferred_group
     networking:
