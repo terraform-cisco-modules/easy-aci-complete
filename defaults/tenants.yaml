@@ -465,7 +465,6 @@ defaults:
         policy_control_enforcement_preference: enforced # unenforced
         preferred_group: false
         ndo:
-          sites: []
           template: ''
         transit_route_tag_policy: ''
     #=============================
