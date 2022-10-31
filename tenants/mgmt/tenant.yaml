@@ -21,7 +21,7 @@ tenants:
             domains:
               - name: access
             epg_type: inb
-            vlan: 100
+            vlans: [100]
           - name: ooband
             contracts:
               - name: ooband_in

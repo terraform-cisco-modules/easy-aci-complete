@@ -32,7 +32,7 @@ defaults:
       preferred_encapsulation: 'unspecified'
       switch_mode: 'default'
       switch_provider: 'VMware'
-      uplink_names: []
+      uplink_names: ["uplink1", "uplink2"]
       vlan_pool: ''
     vswitch_policy:
       annotation: ''

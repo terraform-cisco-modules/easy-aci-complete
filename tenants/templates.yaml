@@ -2,7 +2,6 @@
 templates:
   application_epgs:
     - template_name: preferred_group
-      application_profile: nets
       contracts: []
       domains:
         - name: access
@@ -33,7 +32,6 @@ templates:
       policy_source_tenant: common
       preferred_group_member: true
       qos_class: unspecified
-      tenant: prod
       useg_epg: false
   bridge_domains:
     - template_name: dmz_optimize

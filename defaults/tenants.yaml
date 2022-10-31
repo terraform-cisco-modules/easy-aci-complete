@@ -111,7 +111,7 @@ defaults:
     # Contracts
     #=============================
     contracts:
-      contract:
+      contracts:
         alias: ''
         annotation: ''
         annotations: []
