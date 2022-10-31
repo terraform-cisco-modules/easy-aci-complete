@@ -28,11 +28,7 @@ module "access" {
   # MCP Instance Policy
   mcp_instance_key = var.mcp_instance_key
   # VMM Domain Credentials Passwords
-  vmm_password_1 = var.vmm_password_1
-  vmm_password_2 = var.vmm_password_2
-  vmm_password_3 = var.vmm_password_3
-  vmm_password_4 = var.vmm_password_4
-  vmm_password_5 = var.vmm_password_5
+  vmm_password = var.vmm_password
 }
 
 module "admin" {
