@@ -108,11 +108,7 @@ Configure the following in `yaml.schemas`
 | <a name="input_snmp_privacy_key_4"></a> [snmp\_privacy\_key\_4](#input\_snmp\_privacy\_key\_4) | SNMP Privacy Key 4. | `string` | `""` | no |
 | <a name="input_snmp_privacy_key_5"></a> [snmp\_privacy\_key\_5](#input\_snmp\_privacy\_key\_5) | SNMP Privacy Key 5. | `string` | `""` | no |
 | <a name="input_aes_passphrase"></a> [aes\_passphrase](#input\_aes\_passphrase) | Global AES Passphrase. | `string` | `""` | no |
-| <a name="input_vmm_password_1"></a> [vmm\_password\_1](#input\_vmm\_password\_1) | Password for VMM Credentials Policy. | `string` | `""` | no |
-| <a name="input_vmm_password_2"></a> [vmm\_password\_2](#input\_vmm\_password\_2) | Password for VMM Credentials Policy. | `string` | `""` | no |
-| <a name="input_vmm_password_3"></a> [vmm\_password\_3](#input\_vmm\_password\_3) | Password for VMM Credentials Policy. | `string` | `""` | no |
-| <a name="input_vmm_password_4"></a> [vmm\_password\_4](#input\_vmm\_password\_4) | Password for VMM Credentials Policy. | `string` | `""` | no |
-| <a name="input_vmm_password_5"></a> [vmm\_password\_5](#input\_vmm\_password\_5) | Password for VMM Credentials Policy. | `string` | `""` | no |
+| <a name="input_vmm_password"></a> [vmm\_password](#input\_vmm\_password) | Password for VMM Credentials Policy. | `string` | `""` | no |
 | <a name="input_aws_secret_key"></a> [aws\_secret\_key](#input\_aws\_secret\_key) | AWS Secret Key Id. It must be provided if the AWS account is not trusted. This parameter will only have effect with vendor = aws. | `string` | `""` | no |
 | <a name="input_azure_client_secret"></a> [azure\_client\_secret](#input\_azure\_client\_secret) | Azure Client Secret. It must be provided when azure\_access\_type to credentials. This parameter will only have effect with vendor = azure. | `string` | `"1"` | no |
 | <a name="input_bgp_password_1"></a> [bgp\_password\_1](#input\_bgp\_password\_1) | BGP Password 1. | `string` | `""` | no |
