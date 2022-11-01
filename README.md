@@ -49,12 +49,12 @@ Configure the following in `yaml.schemas`
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_access"></a> [access](#module\_access) | ../terraform-aci-access | n/a |
-| <a name="module_admin"></a> [admin](#module\_admin) | ../terraform-aci-admin | n/a |
-| <a name="module_fabric"></a> [fabric](#module\_fabric) | ../terraform-aci-fabric | n/a |
-| <a name="module_switch"></a> [switch](#module\_switch) | ../terraform-aci-switch | n/a |
-| <a name="module_system_settings"></a> [system\_settings](#module\_system\_settings) | ../terraform-aci-system-settings | n/a |
-| <a name="module_tenants"></a> [tenants](#module\_tenants) | ../terraform-aci-tenants | n/a |
+| <a name="module_access"></a> [access](#module\_access) | terraform-cisco-modules/access/aci | >= 1.0.1 |
+| <a name="module_admin"></a> [admin](#module\_admin) | terraform-cisco-modules/admin/aci | >= 1.0.1 |
+| <a name="module_fabric"></a> [fabric](#module\_fabric) | terraform-cisco-modules/fabric/aci | >= 1.0.1 |
+| <a name="module_switch"></a> [switch](#module\_switch) | terraform-cisco-modules/switch/aci | >= 1.0.1 |
+| <a name="module_system_settings"></a> [system\_settings](#module\_system\_settings) | terraform-cisco-modules/system_settings/aci | >= 1.0.1 |
+| <a name="module_tenants"></a> [tenants](#module\_tenants) | terraform-cisco-modules/tenants/aci | >= 1.0.1 |
 
 ## NOTE:
 **When the Data is merged from the YAML files, it will run through the modules using for_each loop(s).  Sensitive Variables cannot be added to a for_each loop, instead use the variables below to add sensitive values for policies.**

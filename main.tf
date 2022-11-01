@@ -17,7 +17,9 @@ data "utils_yaml_merge" "model" {
 }
 
 module "access" {
-  source          = "../terraform-aci-access"
+  source  = "terraform-cisco-modules/access/aci"
+  version = ">= 1.0.1"
+
   annotation      = var.annotation
   annotations     = var.annotations
   apic_version    = var.apic_version
@@ -32,7 +34,9 @@ module "access" {
 }
 
 module "admin" {
-  source          = "../terraform-aci-admin"
+  source  = "terraform-cisco-modules/admin/aci"
+  version = ">= 1.0.1"
+
   annotation      = var.annotation
   annotations     = var.annotations
   management_epgs = var.management_epgs
@@ -53,7 +57,9 @@ module "admin" {
 }
 
 module "fabric" {
-  source          = "../terraform-aci-fabric"
+  source  = "terraform-cisco-modules/fabric/aci"
+  version = ">= 1.0.1"
+
   annotation      = var.annotation
   annotations     = var.annotations
   management_epgs = var.management_epgs
@@ -84,14 +90,18 @@ module "fabric" {
 }
 
 module "switch" {
-  source      = "../terraform-aci-switch"
+  source  = "terraform-cisco-modules/switch/aci"
+  version = ">= 1.0.1"
+
   annotation  = var.annotation
   annotations = var.annotations
   model       = local.model
 }
 
 module "system_settings" {
-  source       = "../terraform-aci-system-settings"
+  source  = "terraform-cisco-modules/system_settings/aci"
+  version = ">= 1.0.1"
+
   annotation   = var.annotation
   annotations  = var.annotations
   apic_version = var.apic_version
@@ -101,7 +111,9 @@ module "system_settings" {
 }
 
 module "tenants" {
-  source          = "../terraform-aci-tenants"
+  source  = "terraform-cisco-modules/tenants/aci"
+  version = ">= 1.0.1"
+
   for_each        = { for v in lookup(local.model, "tenants", []) : v.name => v }
   annotation      = var.annotation
   annotations     = var.annotations
