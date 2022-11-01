@@ -5,6 +5,7 @@ defaults:
     alias: ''
     annotation: ''
     annotations: []
+    create_tenant: true
     description: ''
     global_alias: ''
     monitoring_policy: default
@@ -34,6 +35,7 @@ defaults:
       alias: ''
       annotation: ''
       annotations: []
+      create_app: true
       description: ''
       global_alias: ''
       monitoring_policy: default
