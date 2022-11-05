@@ -99,7 +99,7 @@ module "switch" {
 }
 
 module "system_settings" {
-  source  = "terraform-cisco-modules/system_settings/aci"
+  source  = "terraform-cisco-modules/system-settings/aci"
   version = ">= 1.0.1"
 
   annotation   = var.annotation
