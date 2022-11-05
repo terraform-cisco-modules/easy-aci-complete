@@ -17,6 +17,9 @@ data "utils_yaml_merge" "model" {
 }
 
 module "access" {
+  depends_on = [
+    module.system_settings
+  ]
   source  = "terraform-cisco-modules/access/aci"
   version = ">= 1.0.1"
 
@@ -34,6 +37,9 @@ module "access" {
 }
 
 module "admin" {
+  depends_on = [
+    module.built_in_tenants
+  ]
   source  = "terraform-cisco-modules/admin/aci"
   version = ">= 1.0.1"
 
@@ -56,7 +62,51 @@ module "admin" {
   tacacs_monitoring_password = var.tacacs_monitoring_password
 }
 
+module "built_in_tenants" {
+  depends_on = [
+    module.access
+  ]
+  source  = "terraform-cisco-modules/tenants/aci"
+  version = ">= 1.0.1"
+
+  for_each = {
+    for v in lookup(local.model, "tenants", []) : v.name => v if length(
+      regexall("^(common|infra|mgmt)$", v.name)
+    ) > 0
+  }
+  annotation      = var.annotation
+  annotations     = var.annotations
+  controller_type = var.controller_type
+  model           = local.model
+  tenant          = each.key
+  # Sensitive Variables for Tenant Policies
+  # AWS Secret Key - NDO
+  aws_secret_key = var.aws_secret_key
+  # Azure Client Secret - NDO
+  azure_client_secret = var.azure_client_secret
+  # L3Out Routing Protocol Security
+  bgp_password_1 = var.bgp_password_1
+  bgp_password_2 = var.bgp_password_2
+  bgp_password_3 = var.bgp_password_3
+  bgp_password_4 = var.bgp_password_4
+  bgp_password_5 = var.bgp_password_5
+  ospf_key_1     = var.ospf_key_1
+  ospf_key_2     = var.ospf_key_2
+  ospf_key_3     = var.ospf_key_3
+  ospf_key_4     = var.ospf_key_4
+  ospf_key_5     = var.ospf_key_5
+  # VRF SNMP Context Communities
+  vrf_snmp_community_1 = var.vrf_snmp_community_1
+  vrf_snmp_community_2 = var.vrf_snmp_community_2
+  vrf_snmp_community_3 = var.vrf_snmp_community_3
+  vrf_snmp_community_4 = var.vrf_snmp_community_4
+  vrf_snmp_community_5 = var.vrf_snmp_community_5
+}
+
 module "fabric" {
+  depends_on = [
+    module.built_in_tenants
+  ]
   source  = "terraform-cisco-modules/fabric/aci"
   version = ">= 1.0.1"
 
@@ -90,6 +140,9 @@ module "fabric" {
 }
 
 module "switch" {
+  depends_on = [
+    module.built_in_tenants
+  ]
   source  = "terraform-cisco-modules/switch/aci"
   version = ">= 1.0.1"
 
@@ -111,10 +164,17 @@ module "system_settings" {
 }
 
 module "tenants" {
+  depends_on = [
+    module.built_in_tenants
+  ]
   source  = "terraform-cisco-modules/tenants/aci"
   version = ">= 1.0.1"
 
-  for_each        = { for v in lookup(local.model, "tenants", []) : v.name => v }
+  for_each = {
+    for v in lookup(local.model, "tenants", []) : v.name => v if length(
+      regexall("^(common|infra|mgmt)$", v.name)
+    ) == 0
+  }
   annotation      = var.annotation
   annotations     = var.annotations
   controller_type = var.controller_type

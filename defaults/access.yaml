@@ -49,7 +49,6 @@ defaults:
             description: ''
             fibre_channel_interface_policy: default
             l2_interface_policy: default
-            link_aggregation_policy: default
             link_aggregation_type: vpc
             link_flap_policy: default
             link_level_flow_control_policy: default
@@ -60,6 +59,7 @@ defaults:
             monitoring_policy: default
             netflow_monitor_policies:
               ip_filter_type: ipv4
+            port_channel_policy: default
             port_security_policy: default
             priority_flow_control_policy: default
             slow_drain_policy: default
