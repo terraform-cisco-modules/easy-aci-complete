@@ -37,8 +37,8 @@ Configure the following in `yaml.schemas`
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
-| <a name="requirement_aci"></a> [aci](#requirement\_aci) | >= 2.1.0 |
-| <a name="requirement_mso"></a> [mso](#requirement\_mso) | >= 0.7.0 |
+| <a name="requirement_aci"></a> [aci](#requirement\_aci) | >= 2.5.2 |
+| <a name="requirement_mso"></a> [mso](#requirement\_mso) | >= 0.7.1 |
 | <a name="requirement_utils"></a> [utils](#requirement\_utils) | >= 0.1.2 |
 ## Providers
 
@@ -49,12 +49,13 @@ Configure the following in `yaml.schemas`
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_access"></a> [access](#module\_access) | terraform-cisco-modules/access/aci | >= 1.0.1 |
-| <a name="module_admin"></a> [admin](#module\_admin) | terraform-cisco-modules/admin/aci | >= 1.0.1 |
-| <a name="module_fabric"></a> [fabric](#module\_fabric) | terraform-cisco-modules/fabric/aci | >= 1.0.1 |
-| <a name="module_switch"></a> [switch](#module\_switch) | terraform-cisco-modules/switch/aci | >= 1.0.1 |
-| <a name="module_system_settings"></a> [system\_settings](#module\_system\_settings) | terraform-cisco-modules/system_settings/aci | >= 1.0.1 |
-| <a name="module_tenants"></a> [tenants](#module\_tenants) | terraform-cisco-modules/tenants/aci | >= 1.0.1 |
+| <a name="module_access"></a> [access](#module\_access) | terraform-cisco-modules/access/aci | >= 1.0.2 |
+| <a name="module_admin"></a> [admin](#module\_admin) | terraform-cisco-modules/admin/aci | >= 1.0.2 |
+| <a name="module_built_in_tenants"></a> [built\_in\_tenants](#module\_built\_in\_tenants) | terraform-cisco-modules/tenants/aci | >= 1.0.2 |
+| <a name="module_fabric"></a> [fabric](#module\_fabric) | terraform-cisco-modules/fabric/aci | >= 1.0.2 |
+| <a name="module_switch"></a> [switch](#module\_switch) | terraform-cisco-modules/switch/aci | >= 1.0.2 |
+| <a name="module_system_settings"></a> [system\_settings](#module\_system\_settings) | terraform-cisco-modules/system-settings/aci | >= 1.0.2 |
+| <a name="module_tenants"></a> [tenants](#module\_tenants) | terraform-cisco-modules/tenants/aci | >= 1.0.2 |
 
 ## NOTE:
 **When the Data is merged from the YAML files, it will run through the modules using for_each loop(s).  Sensitive Variables cannot be added to a for_each loop, instead use the variables below to add sensitive values for policies.**
@@ -132,6 +133,7 @@ Configure the following in `yaml.schemas`
 |------|-------------|
 | <a name="output_access"></a> [access](#output\_access) | Access module outputs. |
 | <a name="output_admin"></a> [admin](#output\_admin) | Admin module outputs. |
+| <a name="output_built_in_tenants"></a> [built\_in\_tenants](#output\_built\_in\_tenants) | Built-In Tenants module outputs (common\|infra\|mgmt). |
 | <a name="output_fabric"></a> [fabric](#output\_fabric) | Fabric module outputs. |
 | <a name="output_switch"></a> [switch](#output\_switch) | Switch module outputs. |
 | <a name="output_system_settings"></a> [system\_settings](#output\_system\_settings) | System Settings module outputs. |
