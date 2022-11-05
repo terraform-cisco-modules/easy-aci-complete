@@ -4,10 +4,10 @@ locals {
 
 data "utils_yaml_merge" "model" {
   input = concat([
+    for file in fileset(path.module, "access-policies/*.yaml") : file(file)], [
     for file in fileset(path.module, "admin/*.yaml") : file(file)], [
     for file in fileset(path.module, "defaults/*.yaml") : file(file)], [
-    for file in fileset(path.module, "fabric:access-policies/*.yaml") : file(file)], [
-    for file in fileset(path.module, "fabric:fabric-policies/*.yaml") : file(file)], [
+    for file in fileset(path.module, "fabric-policies/*.yaml") : file(file)], [
     for file in fileset(path.module, "switches/*.yaml") : file(file)], [
     for file in fileset(path.module, "system-settings/*.yaml") : file(file)], [
     for file in fileset(path.module, "tenants/*.yaml") : file(file)], [
