@@ -107,7 +107,7 @@ defaults:
           pod: 1
           vlans: [1] # For VLAN and VXLAN this is a list of One.  For micro_seg and qinq this is a list of Two.
         useg_epg: false
-        vlan: 0 # This is just used for the Inband Management EPG
+        vlans: [] # This is just used for the Inband Management EPG
         vzGraphCont: ''
     #=============================
     # Contracts
