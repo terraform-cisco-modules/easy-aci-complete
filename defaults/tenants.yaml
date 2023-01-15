@@ -5,13 +5,14 @@ defaults:
     alias: ''
     annotation: ''
     annotations: []
-    create_tenant: true
+    create: true
     description: ''
     global_alias: ''
     monitoring_policy: default
     policy_tenant: 'common'
     ndo:
-      schema: # REQUIRED FOR NDO
+      schemas: # REQUIRED FOR NDO
+        create: true
         name: '**REQUIRED**'
         templates:
           name: '**REQUIRED**'
@@ -35,7 +36,7 @@ defaults:
       alias: ''
       annotation: ''
       annotations: []
-      create_app: true
+      create: true
       description: ''
       global_alias: ''
       monitoring_policy: default
@@ -77,6 +78,7 @@ defaults:
             allow_promiscuous: reject # accept, reject
             forged_transmits: reject # accept, reject
             mac_changes: reject # accept, reject
+          sites: []
           switch_provider: VMware # CloudFoundry, Kubernetes, Microsoft, OpenShift, OpenStack, Redhat, VMware
           vlan_mode: dynamic # dynamic, static
           vlans: [] # ONly for vlan_mode static.  The list should contain One VLAN for typical deployments, encapsulation VLAN.  If doing micro-segmentation/private-vlan then the list should contain two vlans with the first VLAN for encapsulation and the second VLAN for primary encapsulation.
@@ -102,7 +104,7 @@ defaults:
           encapsulation_type: vlan # micro_seg, qinq, vlan, vxlan
           mode: trunk # access, dot1p, trunk
           names: [1/1] # A List of ports/policy_groups to configure with this encapsulation
-          nodes: [201] # A List of one node for physical and port-channels, two for vpc's. 
+          nodes: [201] # A List of one node for physical and port-channels, two for vpc's.
           path_type: port # pc, port, vpc
           pod: 1
           vlans: [1] # For VLAN and VXLAN this is a list of One.  For micro_seg and qinq this is a list of Two.
@@ -444,6 +446,7 @@ defaults:
         bgp_timers_per_address_family: []
         communities: []
         controller_type: apic
+        create: true
         description: ''
         eigrp_timers_per_address_family: []
         endpoint_retention_policy: default
@@ -452,7 +455,7 @@ defaults:
             name: '**REQUIRED**'
             contract_type: provider
             ndo:
-              schema: '' 
+              schema: ''
               template: ''
             qos_class: unspecified
             tenant: ''
@@ -574,6 +577,44 @@ defaults:
               use_burnt_in_mac_address_of_the_interface: false
             delay: 0
             reload_delay: 0
+        ip_sla:
+          ip_sla_monitoring_policies:
+            annotation: ''
+            detect_multiplier: 3 # 1-100
+            http_uri: ''
+            http_version: 1.0 # 1.0 or 1.1
+            operation_timeout: 900 # 0-604800000 (milliseconds)
+            request_data_size: 28 # 0-17512
+            sla_frequency: 60 # 1-300 (seconds)
+            sla_port: 443 # Required when sla_type is tcp
+            sla_type: icmp # http, icmp, l2ping, tcp
+            threshold: 900 # 0-604800000 (milliseconds)
+            traffic_class_value: 0 # 0-255 QoS for IPv6
+            type_of_service: 0 # 0-255 QoS for IPv4
+        l4-l7_policy-based_redirect:
+          annotation: ''
+          anycast_enabled: false
+          description: ''
+          destination_type: L3 # L1, L2, L3
+          destinations:
+            additional_ipv4_ipv6: '0.0.0.0' # Optional if destination type is L3
+            ip: '' # REQUIRED if destination type is L3
+            mac: '' # REQUIRED if destination type is L1 or L2
+            pod_id: 1
+            redirect_health_group: '' # REQUIRED if IP SLA Monitoring Policy is enabled in the Top Policy
+          enable_pod_id_aware_redirection: false
+          hashing_algorithm: sip-dip-prototype # dip,sip, sip-dip-prototype
+          ip_sla_monitoring_policy: ''
+          name: '**REQUIRED**'
+          max_threshold_percentage: 0 # 1-100
+          min_threshold_percentage: 0 # 1-100
+          resilient_hashing_enabled: false
+          threshold_enable: false
+          threshold_down_action: permit # bypass, deny, permit
+        l4-l7_redirect_health_groups:
+          annotation: ''
+          description: ''
+          name: '**REQUIRED**'
         ospf:
           ospf_interface:
             annotation: ''
@@ -619,70 +660,70 @@ defaults:
             minimum_hold_time_between_spf_calculations: 1000
             minimum_interval_between_arrival_of_a_lsa: 1000
             maximum_wait_time_between_spf_calculations: 5000
-      route_map_match_rules: # UI Just shows 'Match Rules'
-        alias: ''
-        annotation: ''
-        description: ''
-        name: '**REQUIRED**'
-        match_community_terms:
+        route_maps_for_route_control:
+          annotation: ''
           description: ''
-          name: '**REQUIRED**'
-          match_community_factors:
-            community: '**REQUIRED**' # e.g., regular:as2-nn2:4:15, e.g., extended:as4-nn2:5:16, e.g., no-export, e.g., no-advertise
+          contexts:
+            action: permit # deny, permit
             description: ''
-            scope: 'transitive' # transitive, non-transitive
-        match_regex_community_terms:
-          community_type: regular # extended and regular
+            match_rules:
+            name: default
+            set_rule: ''
+          name: '**REQUIRED**'
+          type: combinable # combinable or global
+        route_map_match_rules: # UI Just shows 'Match Rules'
+          alias: ''
+          annotation: ''
           description: ''
           name: '**REQUIRED**'
-          regular_expression: '**REQUIRED**'
-        match_route_destination_rule:
+          match_community_terms:
+            description: ''
+            name: '**REQUIRED**'
+            match_community_factors:
+              community: '**REQUIRED**' # e.g., regular:as2-nn2:4:15, e.g., extended:as4-nn2:5:16, e.g., no-export, e.g., no-advertise
+              description: ''
+              scope: 'transitive' # transitive, non-transitive
+          match_regex_community_terms:
+            community_type: regular # extended and regular
+            description: ''
+            name: '**REQUIRED**'
+            regular_expression: '**REQUIRED**'
+          match_route_destination_rule:
+            description: ''
+            greater_than_mask: 0
+            ip: '**REQUIRED**'
+            less_than_mask: 0
+        route_map_set_rules: # UI Just shows 'Set Rules'
+          alias: ''
+          annotation: ''
           description: ''
-          greater_than_mask: 0
-          ip: '**REQUIRED**'
-          less_than_mask: 0
-      route_map_set_rules: # UI Just shows 'Set Rules'
-        alias: ''
-        annotation: ''
-        description: ''
-        name: '**REQUIRED**'
-        additional_communities:
-          community: '**REQUIRED**'
-            # e.g., regular:as2-nn2:4:15, e.g., extended:as4-nn2:5:16, e.g., no-export, e.g., no-advertise
-          description: ''
-        multipath: false
-        next_hop_propegation: false
-        set_as_path:
-          criteria: prepend # prepend|prepend-last-as
-          autonomous_systems: [] # Used when criteria is prepend
-          last_as_count: 0 # Used when criteria is prepend-last-as
-        set_communities:
-          criteria: none # append|none|replace
-          community: '' # REQUIRED for append and replace.  
-            # e.g., regular:as2-nn2:4:15, e.g., extended:as4-nn2:5:16, e.g., no-export, e.g., no-advertise
-        set_dampening:
-          half_life: 15 # 15 1-60
-          max_suprress_time: 60 # 60 1-255
-          reuse_limit: 750 # 750 1-20000
-          suppress_limit: 2000 # 2000 1-20000
-        set_external_epg:
-          external_epg: '**REQUIRED**'
-          l3out: '**REQUIRED**'
-          tenant: '**REQUIRED**'
-        set_metric: 0
-        set_metric_type: '' # ospf-type1|ospf-type2
-        set_next_hop_address: ''
-        set_preference: 0
-        set_route_tag: 0
-        set_weight: 0
-      route_maps_for_route_control:
-        annotation: ''
-        description: ''
-        contexts:
-          action: permit # deny, permit
-          description: ''
-          match_rules:
-          name: default
-          set_rule: ''
-        name: '**REQUIRED**'
-        type: combinable # combinable or global
+          name: '**REQUIRED**'
+          additional_communities:
+            community: '**REQUIRED**'
+              # e.g., regular:as2-nn2:4:15, e.g., extended:as4-nn2:5:16, e.g., no-export, e.g., no-advertise
+            description: ''
+          multipath: false
+          next_hop_propegation: false
+          set_as_path:
+            criteria: prepend # prepend|prepend-last-as
+            autonomous_systems: [] # Used when criteria is prepend
+            last_as_count: 0 # Used when criteria is prepend-last-as
+          set_communities:
+            criteria: none # append|none|replace
+            community: '' # REQUIRED for append and replace.
+              # e.g., regular:as2-nn2:4:15, e.g., extended:as4-nn2:5:16, e.g., no-export, e.g., no-advertise
+          set_dampening:
+            half_life: 15 # 15 1-60
+            max_suprress_time: 60 # 60 1-255
+            reuse_limit: 750 # 750 1-20000
+            suppress_limit: 2000 # 2000 1-20000
+          set_external_epg:
+            external_epg: '**REQUIRED**'
+            l3out: '**REQUIRED**'
+            tenant: '**REQUIRED**'
+          set_metric: 0
+          set_metric_type: '' # ospf-type1|ospf-type2
+          set_next_hop_address: ''
+          set_preference: 0
+          set_route_tag: 0
+          set_weight: 0
