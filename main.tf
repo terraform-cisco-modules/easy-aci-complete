@@ -21,7 +21,7 @@ module "access" {
     module.system_settings
   ]
   source  = "terraform-cisco-modules/access/aci"
-  version = "1.0.5"
+  version = "1.0.8"
 
   annotation      = var.annotation
   annotations     = var.annotations
@@ -108,7 +108,7 @@ module "fabric" {
     module.built_in_tenants
   ]
   source  = "terraform-cisco-modules/fabric/aci"
-  version = "1.0.4"
+  version = "1.0.5"
 
   annotation      = var.annotation
   annotations     = var.annotations
