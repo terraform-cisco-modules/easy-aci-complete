@@ -67,7 +67,7 @@ module "built_in_tenants" {
     module.access
   ]
   source  = "terraform-cisco-modules/tenants/aci"
-  version = "1.0.3"
+  version = "1.0.4"
 
   for_each = {
     for v in lookup(local.model, "tenants", []) : v.name => v if length(
@@ -168,7 +168,7 @@ module "tenants" {
     module.built_in_tenants
   ]
   source  = "terraform-cisco-modules/tenants/aci"
-  version = "1.0.3"
+  version = "1.0.4"
 
   for_each = {
     for v in lookup(local.model, "tenants", []) : v.name => v if length(
