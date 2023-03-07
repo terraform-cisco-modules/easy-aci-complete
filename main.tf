@@ -108,7 +108,7 @@ module "fabric" {
     module.built_in_tenants
   ]
   source  = "terraform-cisco-modules/fabric/aci"
-  version = "1.0.5"
+  version = "1.0.4"
 
   annotation      = var.annotation
   annotations     = var.annotations
