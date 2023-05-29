@@ -11,6 +11,8 @@ defaults:
         ipv6_address: ''
         ipv6_gateway: ''
         management_epg: default
+      interface_profiles_prefix: ''
+      interface_profiles_suffix: ''
       interfaces:
         description: ''
         interface: 1/1
@@ -18,6 +20,8 @@ defaults:
         policy_group: ''
         policy_group_type: access
         sub_port: false
+      leaf_profiles_prefix: ''
+      leaf_profiles_suffix: ''
       monitoring_policy: default
       name: '**REQUIRED**'
       node_type: leaf
@@ -31,6 +35,8 @@ defaults:
       pod_id: 1
       role: unspecified
       serial_number: '**REQUIRED**'
+      spine_profiles_prefix: ''
+      spine_profiles_suffix: ''
       two_slot_leaf: false
     vpc_domains:
       annotation: ''
