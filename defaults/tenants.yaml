@@ -529,7 +529,12 @@ defaults:
           bgp_route_summarization:
             annotation: ''
             description: ''
-            generate_as_set_information: false
+            control_state:
+              do_not_advertise_more_specifics: false
+              generate_as_set_information: false
+            address_type_controls:
+              af_mcast: false
+              af_ucast: true
           bgp_timers:
             annotation: ''
             description: ''
