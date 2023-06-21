@@ -88,7 +88,7 @@ ________________________________________________________________________________
 
 
 variable "annotation" {
-  default     = "orchestrator:terraform:easy-aci-v2.0"
+  default     = "orchestrator:terraform"
   description = "The Version of this Script."
   type        = string
 }

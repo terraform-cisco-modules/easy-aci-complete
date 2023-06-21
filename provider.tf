@@ -8,11 +8,11 @@ terraform {
   required_providers {
     aci = {
       source  = "CiscoDevNet/aci"
-      version = ">= 2.5.2"
+      version = "2.8.0"
     }
     mso = {
       source  = "CiscoDevNet/mso"
-      version = ">= 0.7.1"
+      version = "0.10.0"
     }
     utils = {
       source  = "netascode/utils"

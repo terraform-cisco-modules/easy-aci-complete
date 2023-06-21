@@ -25,7 +25,9 @@ defaults:
             macsec_policy: default
             mcp_interface_policy: default
             monitoring_policy: default
-            netflow_monitor_policies: []
+            netflow_monitor_policies:
+              ip_filter_type: ipv4
+              netflow_monitor_policy: '**REQUIRED**'
             poe_interface_policy: default
             port_security_policy: default
             priority_flow_control_policy: default
@@ -59,6 +61,7 @@ defaults:
             monitoring_policy: default
             netflow_monitor_policies:
               ip_filter_type: ipv4
+              netflow_monitor_policy: '**REQUIRED**'
             port_channel_policy: default
             port_security_policy: default
             priority_flow_control_policy: default

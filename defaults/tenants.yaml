@@ -50,6 +50,7 @@ defaults:
         annotation: ''
         annotations: []
         bridge_domain: default
+        combine_description: false
         contract_exception_tag: 0
         contracts:
             contract_type: consumed # consumed|contract_interface|intra_epg|provided|taboo
@@ -181,10 +182,13 @@ defaults:
       # Bridge Domains
       #=============================
       bridge_domains:
+        combine_description: false
         dhcp_relay_labels:
           dhcp_option_policy: ''
+          dhcp_option_policy_version: 1 # Used by NDO
           names: [default]
           scope: infra
+          version: 1 # Used by NDO
         general:
           advertise_host_routes: false
           alias: ''
@@ -303,45 +307,12 @@ defaults:
           target_dscp: unspecified
         global_alias: ''
         l3_domain: ''
-        ndo:
-          sites: ''
-          template: ''
-        pim: false
-        pimv6: false
-        provider_label: ''
-        ospf_external_profile:
-          ospf_area_cost: 1
-          ospf_area_control:
-            send_redistribution_lsas_into_nssa_area: true
-            originate_summary_lsa: true
-            suppress_forwarding_address: false
-          ospf_area_id: 0.0.0.0
-          ospf_area_type: regular # nssa, regular, stub
-        route_control_enforcement:
-          import: false
-        route_control_for_dampening:
-          address_family: ipv4
-          route_map: '**REQUIRED**'
-        route_profile_for_interleak: ''
-        route_profiles_for_redistribution:
-          l3out: ''
-          route_map: '**REQUIRED**'
-          source: static # 
-        target_dscp: unspecified
-        vrf: default
         logical_node_profiles:
           alias: ''
           annotation: ''
           annotations: []
           color_tag: yellow-green
           description: ''
-          name: '**REQUIRED**'
-          nodes:
-            node_ids: [201] # REQUIRED
-            router_ids: ['**REQUIRED**']
-            use_router_id_as_loopback: true
-          pod_id: 1
-          target_dscp: unspecified
           logical_interface_profiles:
             arp_policy: ''
             auto_state: disabled
@@ -427,19 +398,58 @@ defaults:
                 link_local_addresses: ['::', '::']
                 primary_preferred_addresses: [198.18.1.1/24, 198.18.1.2/24]
                 secondary_addresses: []
+          name: '**REQUIRED**'
+          nodes:
+            node_id: 201 # REQUIRED
+            router_id: '**REQUIRED**'
+            use_router_id_as_loopback: true
           static_routes:
+              aggregate: false
+              alias: ''
+              annotation: ''
               description: ''
               fallback_preference: 1
               next_hop_addresses:
+                  alias: ''
+                  annotation: ''
                   description: ''
                   preference: 0
-                  next_hop_ip: '**REQUIRED**'
+                  next_hop_ips: ['**REQUIRED**']
                   next_hop_type: prefix
-                  ip_sla_policy: ''
-                  track_policy: ''
+                  track_list: ''
+                  track_member: []
               prefixes: ['**REQUIRED**']
-              route_control_bfd: false
-              track_policy: ''
+              route_control:
+                bfd: false
+              track_list: ''
+          pod_id: 1
+          target_dscp: unspecified
+        ndo:
+          sites: ''
+          template: ''
+        pim: false
+        pimv6: false
+        provider_label: ''
+        ospf_external_profile:
+          ospf_area_cost: 1
+          ospf_area_control:
+            send_redistribution_lsas_into_nssa_area: true
+            originate_summary_lsa: true
+            suppress_forwarding_address: false
+          ospf_area_id: 0.0.0.0
+          ospf_area_type: regular # nssa, regular, stub
+        route_control_enforcement:
+          import: false
+        route_control_for_dampening:
+          address_family: ipv4
+          route_map: '**REQUIRED**'
+        route_profile_for_interleak: ''
+        route_profiles_for_redistribution:
+          l3out: ''
+          route_map: '**REQUIRED**'
+          source: static # 
+        target_dscp: unspecified
+        vrf: default
       #=============================
       # VRFs
       #=============================
