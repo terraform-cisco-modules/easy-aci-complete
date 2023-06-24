@@ -28,7 +28,7 @@ access:
           epg: prod
           epg_type: external_epg
           l3out: asgard-prod
-          tenant: common
+          tenant: 'infra'
     interface:
       create_pre_built_interface_policies:
         cdp_interface: true
@@ -42,6 +42,6 @@ access:
         spanning_tree_interface: true
       link_level:
         - name: cl74_fc_fec
-          auto_negotation: on
-          forward_error_correction: cl74-fc-fec
+          auto_negotiation: on
+          forwarding_error_correction: cl74-fc-fec
           speed: 25G

@@ -8,16 +8,17 @@ access:
             attachable_entity_profile: accessAep
             cdp_interface_policy: cdpEnabled
             description: 'Basic Access Port'
-            interface_policy: access_bpdu
             link_level_policy: inheritAuto
             lldp_interface_policy: lldpEnabled
             mcp_interface_policy: mcpEnabled
+            span_destination_groups:
+              - abcd
+              - efgh
             spanning_tree_interface_policy: bpduFG
           - name: trunkPort
             attachable_entity_profile: trunkAep
             cdp_interface_policy: cdpEnabled
             description: 'Basic Trunk Port'
-            interface_policy: access_bpdu
             link_level_policy: inheritAuto
             lldp_interface_policy: lldpEnabled
             mcp_interface_policy: mcpEnabled
@@ -26,7 +27,6 @@ access:
             attachable_entity_profile: infraAep
             cdp_interface_policy: cdpEnabled
             description: 'includes infra VLAN'
-            interface_policy: access
             link_level_policy: inheritAuto
             lldp_interface_policy: lldpEnabled
             mcp_interface_policy: mcpEnabled
@@ -63,23 +63,21 @@ access:
             attachable_entity_profile: trunkAep
             cdp_interface_policy: cdpEnabled
             description: 'VPC Policy Group for Eth1/#VPC#'
-            interface_policy: access_bpdu
-            link_aggregation_policy: lacpActive
             link_aggregation_type: vpc
             link_level_policy: inheritAuto
             lldp_interface_policy: lldpEnabled
             mcp_interface_policy: mcpEnabled
+            port_channel_policy: lacpActive
             spanning_tree_interface_policy: bpduFG
           - names: [l3out]
             attachable_entity_profile: accessAep
             cdp_interface_policy: cdpEnabled
             description: VPC for L3Out
-            interface_policy: access_bpdu
-            link_aggregation_policy: lacpActive
             link_aggregation_type: vpc
             link_level_policy: inheritAuto
             lldp_interface_policy: lldpEnabled
             mcp_interface_policy: mcpEnabled
+            port_channel_policy: lacpActive
             spanning_tree_interface_policy: bpduFG
     # SPINE POLICY GROUPS
     spine:
@@ -87,6 +85,5 @@ access:
         - name: default
           attachable_entity_profile: accessAep
           cdp_interface_policy: cdpEnabled
-          link_flap_policy: default
           link_level_policy: inheritAuto
           macsec_policy: default

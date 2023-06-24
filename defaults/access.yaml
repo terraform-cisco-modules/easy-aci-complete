@@ -25,6 +25,7 @@ defaults:
             macsec_policy: default
             mcp_interface_policy: default
             monitoring_policy: default
+            name: '**REQUIRED**'
             netflow_monitor_policies:
               ip_filter_type: ipv4
               netflow_monitor_policy: '**REQUIRED**'
@@ -41,6 +42,7 @@ defaults:
             annotation: ''
             breakout_map: 10g-4x
             description: ''
+            name: '**REQUIRED**'
           bundle:
             annotation: ''
             attachable_entity_profile: '**REQUIRED**'
@@ -59,6 +61,7 @@ defaults:
             macsec_policy: default
             mcp_interface_policy: default
             monitoring_policy: default
+            name: '**REQUIRED**'
             netflow_monitor_policies:
               ip_filter_type: ipv4
               netflow_monitor_policy: '**REQUIRED**'
@@ -79,12 +82,15 @@ defaults:
           global_alias: ''
           link_level_policy: default
           macsec_policy: default
+          name: '**REQUIRED**'
     physical_and_external_domains:
       l3_domains:
         annotation: ''
+        name: '**REQUIRED**'
         vlan_pool: '**REQUIRED**'
       physical_domains:
         annotation: ''
+        name: '**REQUIRED**'
         vlan_pool: '**REQUIRED**'
     # POLICIES
     policies:
@@ -94,6 +100,7 @@ defaults:
           annotation: ''
           description: ''
           l3_domains: []
+          name: '**REQUIRED**'
           physical_domains: []
           vmm_domains: []
         dhcp_relay:
@@ -105,7 +112,7 @@ defaults:
           epg_type: application_epg
           l3out: ''
           mode: visible
-          tenant: common
+          tenant: infra
         error_disabled_recovery:
           annotation: ''
           error_disable_recovery_interval: 300
@@ -113,6 +120,7 @@ defaults:
             bpdu_guard: true
             frequent_endpoint_move: true
             loop_indication_by_mcp: true
+          name: default
         mcp_instance:
           admin_state: enabled
           annotation: ''
@@ -121,6 +129,7 @@ defaults:
           initial_delay: 180
           loop_detect_multiplication_factor: 3
           loop_protect_action: true
+          name: default
           transmission_frequency:
             seconds: 2
             msec: 0
@@ -135,6 +144,7 @@ defaults:
           fabric_flush_state: false
           micro_burst_spine_queues: 0
           micro_burst_leaf_queues: 0
+          name: default
           preserve_cos: true
       # INTERFACE POLICIES
       interface:
@@ -143,11 +153,13 @@ defaults:
           annotation: ''
           description: ''
           global_alias: ''
+          name: '**REQUIRED**'
         fibre_channel_interface:
           annotation: ''
           auto_max_speed: 32G
           description: ''
-          fill_pattern: ARBFF
+          fill_pattern: IDLE
+          name: '**REQUIRED**'
           port_mode: f
           receive_buffer_credit: 64
           speed: auto
@@ -155,6 +167,7 @@ defaults:
         l2_interface:
           annotation: ''
           description: ''
+          name: '**REQUIRED**'
           qinq: disabled
           reflective_relay: disabled
           vlan_scope: global
@@ -166,6 +179,7 @@ defaults:
           forwarding_error_correction: inherit
           global_alias: ''
           link_debounce_interval: 100
+          name: '**REQUIRED**'
           physical_media_type: auto
           port_delay_when_coming_up: 0
           speed: inherit
@@ -173,12 +187,14 @@ defaults:
           annotation: ''
           description: ''
           global_alias: ''
+          name: '**REQUIRED**'
           receive_state: disabled
           transmit_state: disabled
         mcp_interface:
           admin_state: disabled
           annotation: ''
           description: ''
+          name: '**REQUIRED**'
         port_channel:
           annotation: ''
           control:
@@ -191,11 +207,13 @@ defaults:
           global_alias: ''
           maximum_number_of_links: 16
           minimum_number_of_links: 1
-          mode: off
+          mode: active
+          name: '**REQUIRED**'
         port_security:
           annotation: ''
           description: ''
           maximum_endpoints: 0
+          name: '**REQUIRED**'
           port_security_timeout: 60
         spanning_tree_interface:
           annotation: ''
@@ -203,6 +221,7 @@ defaults:
           bpdu_guard: disabled
           description: ''
           global_alias: ''
+          name: '**REQUIRED**'
       # SWITCH POLICIES
       switch:
         vpc_domain:

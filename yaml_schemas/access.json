@@ -1,0 +1,2452 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/AccessWelcome",
+    "definitions": {
+        "AccessWelcome": {
+            "type": "object",
+            "description": "Access => Access Policies.",
+            "additionalProperties": false,
+            "properties": {
+                "access": {
+                    "$ref": "#/definitions/Access"
+                }
+            },
+            "required": [
+                "access"
+            ],
+            "title": "access"
+        },
+        "Access": {
+            "type": "object",
+            "description": "Object Types are:\n  * interfaces\n  * physical_and_external_domains\n  * policies\n  * pools\n  * switches",
+            "additionalProperties": false,
+            "properties": {
+                "interfaces": {
+                    "$ref": "#/definitions/Interfaces"
+                },
+                "physical_and_external_domains": {
+                    "$ref": "#/definitions/PhysicalAndExternalDomains"
+                },
+                "policies": {
+                    "$ref": "#/definitions/Policies"
+                },
+                "pools": {
+                    "$ref": "#/definitions/Pools"
+                },
+                "switches": {
+                    "$ref": "#/definitions/Switches"
+                }
+            },
+            "title": "Access => Access Policies"
+        },
+        "Domain": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the Domain.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "vlan_pool": {
+                    "type": "string",
+                    "description": "Name of the VLAN Pool to Associate to the Domain.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                }
+            },
+            "required": [
+                "name",
+                "vlan_pool"
+            ],
+            "title": "L3 and Physical Domains"
+        },
+        "Interfaces": {
+            "type": "object",
+            "description": "Object Types are:\n  * leaf\n  * spine",
+            "additionalProperties": false,
+            "properties": {
+                "leaf": {
+                    "$ref": "#/definitions/Interfaces:LeafInterfaces"
+                },
+                "spine": {
+                    "$ref": "#/definitions/Interfaces:SpineInterfaces"
+                }
+            },
+            "title": "interfaces - Access => Access Policies => Interfaces"
+        },
+        "Interfaces:LeafInterfaces": {
+            "type": "object",
+            "description": "Object Types are:\n  * policy_groups",
+            "additionalProperties": false,
+            "properties": {
+                "policy_groups": {
+                    "$ref": "#/definitions/Interfaces:LeafInterfaces:PolicyGroups"
+                }
+            },
+            "required": [
+                "policy_groups"
+            ],
+            "title": "leaf - Access=> Access Policies => Interfaces => Leaf Interfaces"
+        },
+        "Interfaces:LeafInterfaces:LeafAccessPort": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "attachable_entity_profile": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Global Attachable Entity Profile.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "cdp_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the CDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "copp_interface_policy": {
+                    "type": "string",
+                    "description": "The Name of the CoPP Interafce Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "data_plane_policing_egress": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Egress Data Plane Policing Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "data_plane_policing_ingress": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Ingress Data Plane Policing Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "dot1x_port_authentication_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the 802.1X Port Authentication Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "dwdm_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Ingress Data Plane Policing Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "fibre_channel_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Ingress Data Plane Policing Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "global_alias": {
+                    "type": "string",
+                    "description": "A label, unique within the fabric, that can serve as a substitute for an object's Distinguished Name (DN).  A global alias must be unique accross the fabric.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "l2_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Layer2 Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "link_flap_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Link Flap Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "link_level_flow_control_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Link Level Flow Control Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "link_level_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Link Level Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "lldp_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the LLDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "macsec_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the MACSec Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "mcp_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Mis-Cabling Protocol Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "monitoring_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Monitoring Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "netflow_monitor_policies": {
+                    "type": "array",
+                    "description": "Map of Objects to assign Netflow Monitor Policies to the Policy Group.",
+                    "items": {
+                        "$ref": "#/definitions/NetflowMonitorPolicies"
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the Leaf Interface - Access Policy Group.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "poe_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the PoE Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "port_security_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Port Security Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "priority_flow_control_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Priority Flow Control Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "slow_drain_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Slow Drain Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "span_destination_groups": {
+                    "type": "array",
+                    "description": "An Array of Span Destination Groups.",
+                    "items": {
+                        "type": "string",
+                        "description": "The Name of the Span Destination Group.",
+                        "minLength": 1,
+                        "maxLength": 64,
+                        "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                        "optional": false
+                    }
+                },
+                "span_source_groups": {
+                    "type": "array",
+                    "description": "An Array of Span Source Groups.",
+                    "items": {
+                        "type": "string",
+                        "description": "The Name of the Span Source Group.",
+                        "minLength": 1,
+                        "maxLength": 64,
+                        "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                        "optional": false
+                    }
+                },
+                "spanning_tree_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Spanning Tree Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "storm_control_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Storm Control Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "synce_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the SyncE Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                }
+            },
+            "required": [
+                "attachable_entity_profile",
+                "name"
+            ],
+            "title": "access - Leaf Access Port Attributes"
+        },
+        "Interfaces:LeafInterfaces:LeafBreakoutPortGroup": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "breakout_map": {
+                    "default": "25g-4x",
+                    "description": "Enable the port as a breakout port with one of the following options:\n  * 10g-4x\n  * 25g-4x\n  * 50g-8x\n  * 100g-2x\n  * 100g-4x",
+                    "enum": [
+                        "10g-4x",
+                        "25g-4x",
+                        "50g-8x",
+                        "100g-2x",
+                        "100g-4x"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the Leaf Breakout Policy Group.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                }
+            },
+            "title": "breakout - Leaf Breakout Port Group Attributes"
+        },
+        "Interfaces:LeafInterfaces:LeafBundleInterface": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * annotation\n  * cdp_interface_policy\n  * copp_interface_policy\n  * data_plane_policing_egress\n  * data_plane_policing_ingress\n  * description\n  * fibre_channel_interface_policy\n  * l2_interface_policy\n  * link_aggregation_type\n  * link_flap_policy\n  * link_level_flow_control_policy\n  * link_level_policy\n  * lldp_interface_policy\n  * macsec_policy\n  * mcp_interface_policy\n  * monitoring_policy\n  * netflow_monitor_policies\n  * port_channel_policy\n  * port_security_policy\n  * priority_flow_control_policy\n  * slow_drain_policy\n  * span_destination_groups\n  * span_source_groups\n  * spanning_tree_interface_policy\n  * storm_control_policy",
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "attachable_entity_profile": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Global Attachable Entity Profile.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "cdp_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the CDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "copp_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the CoPP Interafce Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "data_plane_policing_egress": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Egress Data Plane Policing Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "data_plane_policing_ingress": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Ingress Data Plane Policing Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "fibre_channel_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Ingress Data Plane Policing Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "l2_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Layer2 Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "link_aggregation_type": {
+                    "default": "vpc",
+                    "description": "The Type of Link Aggregation.  Options are:",
+                    "enum": [
+                        "pc",
+                        "vpc"
+                    ]
+                },
+                "link_flap_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Link Flap Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "link_level_flow_control_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Link Level Flow Control Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "link_level_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Link Level Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "lldp_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the LLDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "macsec_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the MACSec Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "mcp_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Mis-Cabling Protocol Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "monitoring_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Monitoring Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "netflow_monitor_policies": {
+                    "type": "array",
+                    "description": "Map of Objects to assign Netflow Monitor Policies to the Policy Group.",
+                    "items": {
+                        "$ref": "#/definitions/NetflowMonitorPolicies"
+                    }
+                },
+                "names": {
+                    "description": "List of Names for the Leaf Interface - Bundle Policy Group.",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Name of the Leaf Interface - Bundle Policy Group.",
+                        "minLength": 1,
+                        "maxLength": 64,
+                        "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                        "optional": false
+                    }
+                },
+                "port_channel_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Port Channel Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "port_security_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Port Security Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "priority_flow_control_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Priority Flow Control Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "slow_drain_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Slow Drain Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "span_destination_groups": {
+                    "type": "array",
+                    "description": "An Array of Span Destination Groups.",
+                    "items": {
+                        "type": "string",
+                        "description": "The Name of the Span Destination Group.",
+                        "minLength": 1,
+                        "maxLength": 64,
+                        "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                        "optional": false
+                    }
+                },
+                "span_source_groups": {
+                    "type": "array",
+                    "description": "An Array of Span Source Groups.",
+                    "items": {
+                        "type": "string",
+                        "description": "The Name of the Span Source Group.",
+                        "minLength": 1,
+                        "maxLength": 64,
+                        "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                        "optional": false
+                    }
+                },
+                "spanning_tree_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Spanning Tree Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "storm_control_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Storm Control Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                }
+            },
+            "required": [
+                "attachable_entity_profile",
+                "link_aggregation_type",
+                "names",
+                "port_channel_policy"
+            ],
+            "title": "bundle - PC Interface|VPC Interface Attributes."
+        },
+        "Interfaces:LeafInterfaces:PolicyGroups": {
+            "type": "object",
+            "description": "Object Types are:\n  * access\n  * breakout\n  * bundle",
+            "additionalProperties": false,
+            "properties": {
+                "access": {
+                    "type": "array",
+                    "description": "access - Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * annotation\n  * cdp_interface_policy\n  * copp_interface_policy\n  * data_plane_policing_egress\n  * data_plane_policing_ingress\n  * description\n  * dot1x_port_authentication_policy\n  * dwdm_policy\n  * fibre_channel_interface_policy\n  * global_alias\n  * l2_interface_policy\n  * link_flap_policy\n  * link_level_flow_control_policy\n  * link_level_policy\n  * lldp_interface_policy\n  * macsec_policy\n  * mcp_interface_policy\n  * monitoring_policy\n  * netflow_monitor_policies\n  * poe_interface_policy\n  * port_security_policy\n  * priority_flow_control_policy\n  * slow_drain_policy\n  * span_destination_groups\n  * span_source_groups\n  * spanning_tree_interface_policy\n  * storm_control_policy\n  * synce_interface_policy",
+                    "items": {
+                        "$ref": "#/definitions/Interfaces:LeafInterfaces:LeafAccessPort"
+                    }
+                },
+                "breakout": {
+                    "type": "array",
+                    "description": "breakout - Required Attributes are:\n  * breakout_map\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description",
+                    "items": {
+                        "$ref": "#/definitions/Interfaces:LeafInterfaces:LeafBreakoutPortGroup"
+                    }
+                },
+                "bundle": {
+                    "type": "array",
+                    "description": "bundle - Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * annotation\n  * cdp_interface_policy\n  * copp_interface_policy\n  * data_plane_policing_egress\n  * data_plane_policing_ingress\n  * description\n  * dot1x_port_authentication_policy\n  * dwdm_policy\n  * fibre_channel_interface_policy\n  * global_alias\n  * l2_interface_policy\n  * link_flap_policy\n  * link_level_flow_control_policy\n  * link_level_policy\n  * lldp_interface_policy\n  * macsec_policy\n  * mcp_interface_policy\n  * monitoring_policy\n  * netflow_monitor_policies\n  * poe_interface_policy\n  * port_security_policy\n  * priority_flow_control_policy\n  * slow_drain_policy\n  * span_destination_groups\n  * span_source_groups\n  * spanning_tree_interface_policy\n  * storm_control_policy\n  * synce_interface_policy",
+                    "items": {
+                        "$ref": "#/definitions/Interfaces:LeafInterfaces:LeafBundleInterface"
+                    }
+                }
+            },
+            "title": "Policy Groups"
+        },
+        "Interfaces:SpineInterfaces": {
+            "type": "object",
+            "description": "Object Types are:\n  * policy_groups",
+            "additionalProperties": false,
+            "properties": {
+                "policy_groups": {
+                    "type": "array",
+                    "description": "Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * annotation\n  * cdp_interface_policy\n  * description\n  * global_alias\n  * link_flap_policy\n  * link_level_policy\n  * macsec_policy",
+                    "items": {
+                        "$ref": "#/definitions/Interfaces:SpineInterfaces:PolicyGroups"
+                    }
+                }
+            },
+            "required": [
+                "policy_groups"
+            ],
+            "title": "spine - Access=> Access Policies => Interfaces => Spine Interfaces"
+        },
+        "Interfaces:SpineInterfaces:PolicyGroups": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "attachable_entity_profile": {
+                    "type": "string",
+                    "description": "The Name of the Global Attachable Entity Profile.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "cdp_interface_policy": {
+                    "type": "string",
+                    "description": "The Name of the CDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "global_alias": {
+                    "type": "string",
+                    "description": "A label, unique within the fabric, that can serve as a substitute for an object's Distinguished Name (DN).  A global alias must be unique accross the fabric.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "link_level_policy": {
+                    "type": "string",
+                    "description": "The Name of the Link Level Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "macsec_policy": {
+                    "type": "string",
+                    "description": "The Name of the MACSec Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "name": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "Name of the Spine Interface - Policy Group.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                }
+            },
+            "required": [
+                "attachable_entity_profile",
+                "name"
+            ],
+            "title": "Spine Policy Groups"
+        },
+        "NetflowMonitorPolicies": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "ip_filter_type": {
+                    "default": "ce",
+                    "description": "IP Filter Type.  Options are:\n*  ce\n*  ipv4\n*  ipv6",
+                    "enum": [
+                        "ce",
+                        "ipv4",
+                        "ipv6"
+                    ]
+                },
+                "netflow_monitor_policy": {
+                    "type": "string",
+                    "description": "The Name of the Netflow Monitor Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                }
+            },
+            "title": "Netflow Monitor Policies."
+        },
+        "PhysicalAndExternalDomains": {
+            "type": "object",
+            "description": "Object Types are:\n  * l3_domains\n  * physical_domains",
+            "additionalProperties": false,
+            "properties": {
+                "l3_domains": {
+                    "type": "array",
+                    "description": "l3_domains - Required Attributes are:\n  * name\n  * vlan_pool\n\nOptional Attributes are:\n  * annotation",
+                    "items": {
+                        "$ref": "#/definitions/Domain"
+                    }
+                },
+                "physical_domains": {
+                    "type": "array",
+                    "description": "physical_domains - Required Attributes are:\n  * name\n  * vlan_pool\n\nOptional Attributes are:\n  * annotation",
+                    "items": {
+                        "$ref": "#/definitions/Domain"
+                    }
+                }
+            },
+            "title": "PhysicalAndExternalDomains - Physical and External Domains"
+        },
+        "Policies": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Object Types are:\n  * global\n  * interface",
+            "properties": {
+                "global": {
+                    "$ref": "#/definitions/Policies:Global"
+                },
+                "interface": {
+                    "$ref": "#/definitions/Policies:Interface"
+                },
+                "switch": {
+                    "$ref": "#/definitions/Policies:Switch"
+                }
+            },
+            "title": "Policies"
+        },
+        "Policies:Global": {
+            "type": "object",
+            "description": "Object Types are:\n  * attachable_access_entity_profiles\n  * dhcp_relay\n  * error_disabled_recovery\n  * mcp_instance\n  * dhcp_relay\n  * qos_class\n  * recommended_policies",
+            "additionalProperties": false,
+            "properties": {
+                "attachable_access_entity_profiles": {
+                    "type": "array",
+                    "description": "attachable_access_entity_profiles - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * l3_domains\n  * physical_domains\n  * vmm_domains",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Global:AttachableAccessEntityProfile"
+                    }
+                },
+                "dhcp_relay": {
+                    "type": "array",
+                    "description": "dhcp_relay - Required Attributes are:\n  * name_addr_list\n  * epg\n\nOptional Attributes are:\n  * annotation\n  * application_profile\n  * description\n  * epg_type\n  * l3out\n  * mode\n  * tenant",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Global:DHCPRelay"
+                    }
+                },
+                "error_disabled_recovery": {
+                    "type": "array",
+                    "description": "error_disabled_recovery - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * error_disable_recovery_interval\n  * events",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Global:ErrorDisabledRecovery"
+                    }
+                },
+                "mcp_instance": {
+                    "type": "array",
+                    "description": "mcp_instance - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * description\n  * enable_mcp_pdu_per_vlan\n  * loop_detect_multiplication_factor\n  * loop_protect_action\n  * transmission_frequency",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Global:McpInstance"
+                    }
+                },
+                "qos_class": {
+                    "type": "array",
+                    "description": "qos_class - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * elephant_trap_age_period\n  * elephant_trap_bandwidth_threshold\n  * elephant_trap_byte_count\n  * elephant_trap_state\n  * fabric_flush_interval\n  * fabric_flush_state\n  * micro_burst_spine_queues\n  * micro_burst_leaf_queues\n  * preserve_cos",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Global:QosClass"
+                    }
+                },
+                "recommended_policies": {
+                    "type": "object",
+                    "description": "recommended_policies - Required Attributes are:\n  * error_disabled_recovery_policy\n  * mcp_instance_policy\n  * qos_class\n  * vpc_domain",
+                    "$ref": "#/definitions/Policies:Global:RecommendedPolicies"
+                }
+            },
+            "title": "Policies => Global"
+        },
+        "Policies:Global:AttachableAccessEntityProfile": {
+            "type": "object",
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "infra_vlan": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Flag to Allow Infrastructure VLAN on Ports assigned to this Attachable Access Entity Profile."
+                },
+                "l3_domains": {
+                    "type": "array",
+                    "description": "A List of Layer3 Domains to Attach to this AAEP Policy.",
+                    "items": {
+                        "type": "string",
+                        "description": "Name of a L3 Domain Policy",
+                        "minLength": 1,
+                        "maxLength": 64,
+                        "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "Name of the Attachable Access Entity Profile Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "physical_domains": {
+                    "type": "array",
+                    "description": "A List of Physical Domains to Attach to this AAEP Policy.",
+                    "items": {
+                        "type": "string",
+                        "description": "Name of a Physical Domain Policy",
+                        "minLength": 1,
+                        "maxLength": 64,
+                        "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                    }
+                },
+                "vmm_domains": {
+                    "type": "array",
+                    "description": "A List of Virtual Domains to Attach to this AAEP Policy.",
+                    "items": {
+                        "type": "string",
+                        "description": "Name of a VMM Domain Policy",
+                        "minLength": 1,
+                        "maxLength": 64,
+                        "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                    }
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "AttachableAccessEntityProfile"
+        },
+        "Policies:Global:DHCPRelay": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "epg": {
+                    "type": "string",
+                    "description": "Name of the EPG/External-EPG Object.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "epg_type": {
+                    "default": "application_epg",
+                    "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
+                    "enum": [
+                        "application_epg",
+                        "external_epg"
+                    ]
+                },
+                "l3out": {
+                    "type": "string",
+                    "description": "Name of parent L3Out object.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "mode": {
+                    "description": "DHCP relay policy mode. Allowed Values are:\n  * not-visible\n  * visible: (default)",
+                    "enum": [
+                        "not-visible",
+                        "visible"
+                    ]
+                },
+                "name_addr_list": {
+                    "type": "array",
+                    "description": "An Array of Policy Names and Addresses for DHCP Relay Servers.",
+                    "items": {
+                        "type": "array",
+                        "description": "A List of two strings.\n  * First - Name of the DHCP Policy.\n  * Second - IP(v4/v6) Address of the DHCP Server",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "tenant": {
+                    "description": "Name of parent Tenant object.",
+                    "enum": [
+                        "infra"
+                    ]
+                }
+            },
+            "required": [
+                "epg",
+                "epg_type",
+                "name_addr_list"
+            ],
+            "title": "dhcp_relay - DHCP Relay"
+        },
+        "Policies:Global:ErrorDisabledRecovery": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "error_disable_recovery_interval": {
+                    "type": "integer",
+                    "default": 300,
+                    "description": "Sets the error disable recovery interval, which specifies the time to recover from an error-disabled state. The interval range is from 30 seconds to 65535 seconds.",
+                    "minimum": 30,
+                    "maximum": 65535
+                },
+                "events": {
+                    "type": "object",
+                    "description": "Indicates whether an Error Disable Recovery type is enabled (true or false).  Attributes are:\n  * bpdu_guard\n  * frequent_endpoint_move\n  * loop_indication_by_mcp",
+                    "properties": {
+                        "bpdu_guard": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Flag to enable or disable recovery for a BPDU Guard event."
+                        },
+                        "frequent_endpoint_move": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Flag to enable or disable recovery for a Frequent Endpoint Move event."
+                        },
+                        "loop_indication_by_mcp": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Flag to enable or disable recovery for a Loop Indication by MCP event."
+                        }
+                    }
+                },
+                "name": {
+                    "default": "default",
+                    "description": "This should always be default.",
+                    "enum": [
+                        "default"
+                    ]
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "error_disabled_recovery_policy - Error Disabled Recovery - default."
+        },
+        "Policies:Global:McpInstance": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "admin_state": {
+                    "default": "enabled",
+                    "description": "The administrative state of the MCP instance policy.  Options are:\n  * disabled\n  * enabled: (default)",
+                    "enum": [
+                        "disabled",
+                        "enabled"
+                    ]
+                },
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "enable_mcp_pdu_per_vlan": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "When set to true it enables Enable MCP PDU per VLAN.  When set to false it disables Enable MCP PDU per VLAN."
+                },
+                "initial_delay": {
+                    "type": "integer",
+                    "default": 180,
+                    "description": "The delay time before the MCP starts taking action based on the value of the Loop Protection Action, which is a value configured by the user. From the system bootup until the Initial Delay Timer timeout, MCP will only create a syslog entry if a loop is detected. The range is from 0 to 1800 seconds.",
+                    "minimum": 1,
+                    "maximum": 1800
+                },
+                "loop_detect_multiplication_factor": {
+                    "type": "integer",
+                    "default": 3,
+                    "description": "The multiplication factor that MCP uses to determine when a loop is formed. It denotes the number of continuous packets a port has to receive before claiming a loop is formed. The range is from 1 to 255. For strict mode MCP, during the grace timer period, the default value of 3 is overruled. Even if 1 packet is received, the port is disabled.",
+                    "minimum": 1,
+                    "maximum": 255
+                },
+                "loop_protect_action": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Determines how MCP acts when a loop is detected. MCP error-disables the port or syslog only based on this value. For strict mode MCP, even if you uncheck the Port Disable check box, the port is disabled if a loop is detected.Determines how MCP acts when a loop is detected. MCP error-disables the port or syslog only based on this value. For strict mode MCP, even if you uncheck the Port Disable check box, the port is disabled if a loop is detected."
+                },
+                "name": {
+                    "default": "default",
+                    "description": "This should always be default.",
+                    "enum": [
+                        "default"
+                    ]
+                },
+                "transmission_frequency": {
+                    "type": "object",
+                    "description": "Sets the transmission frequency of the instance advertisements. The range is from 100 milliseconds to 300 seconds.",
+                    "properties": {
+                        "msec": {
+                            "type": "integer",
+                            "default": 0,
+                            "description": "Transmission Frequency Milliseconds.",
+                            "minimum": 0,
+                            "maximum": 999
+                        },
+                        "seconds": {
+                            "type": "integer",
+                            "default": 2,
+                            "description": "Transmission Frequency Seconds.",
+                            "minimum": 0,
+                            "maximum": 300
+                        }
+                    }
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "mcp_instance - MCP Instance - default"
+        },
+        "Policies:Global:QosClass": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "elephant_trap_age_period": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "Elephant Trap Age Timer.  Minimum allowed value is 0.",
+                    "minimum": 0,
+                    "maximum": 1800
+                },
+                "elephant_trap_bandwidth_threshold": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "Elephant flow track activeness.  Minimum allowed value is 0.",
+                    "minimum": 0,
+                    "maximum": 1800
+                },
+                "elephant_trap_byte_count": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "Elephant Trap flow identifier.  Minimum allowed value is 0.",
+                    "minimum": 0,
+                    "maximum": 1800
+                },
+                "elephant_trap_state": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Elephant Trap state.  Set to true to enable."
+                },
+                "fabric_flush_interval": {
+                    "type": "integer",
+                    "default": 500,
+                    "description": "Fabric Flush Interval in milliseconds.  Range is 100-1000.",
+                    "minimum": 100,
+                    "maximum": 1000
+                },
+                "fabric_flush_state": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Fabric Priority Flow Control flush State."
+                },
+                "micro_burst_spine_queues": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "Micro Burst Spine Queues percent.  Range is 0-100.  **Note: Requires version 5.X of the APIC.",
+                    "minimum": 0,
+                    "maximum": 100
+                },
+                "micro_burst_leaf_queues": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "Micro Burst Leaf Queues percent.  Range is 0-100.  **Note: Requires version 5.X of the APIC.",
+                    "minimum": 0,
+                    "maximum": 100
+                },
+                "name": {
+                    "default": "default",
+                    "description": "This should always be default.",
+                    "enum": [
+                        "default"
+                    ]
+                },
+                "preserve_cos": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "CoS Preservation, to guarantee the QoS priority settings of the various traffic streams, in a single-pod topology. In multipod topologies, use a DSCP policy to enable preserving QoS priority mapping for the traffic streams as they transit the inter-pod network.  QoS Class—Priority flow control requires that CoS levels be globally enabled for the fabric and assigned to the profiles of applications that generate FCoE traffic."
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "qos_class - QOS Class - default"
+        },
+        "Policies:Global:RecommendedPolicies": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "error_disabled_recovery_policy": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Flag to configure recommended settings for the Error Disabled Recovery Policy."
+                },
+                "mcp_instance_policy": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Flag to configure recommended settings for the MCP Instance Policy."
+                },
+                "qos_class": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Flag to configure recommended settings for the QOS Class - dot1p preserve attribute."
+                },
+                "vpc_domain": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Flag to configure recommended settings for the VPC Domain default Policy."
+                }
+            },
+            "required": [
+                "error_disabled_recovery_policy",
+                "mcp_instance_policy",
+                "qos_class",
+                "vpc_domain"
+            ],
+            "title": "Policies to Apply Recommended Settings to"
+        },
+        "Policies:Interface": {
+            "type": "object",
+            "description": "Object Types are:\n  * cdp_interface\n  * create_pre_built_interface_policies\n  * fibre_channel_interface\n  * l2_interface\n  * link_level\n  * lldp_interface\n  * mcp_interface\n  * port_channel\n  * port_security\n  * spanning_tree_interface",
+            "additionalProperties": false,
+            "properties": {
+                "cdp_interface": {
+                    "type": "array",
+                    "description": "cdp_interface - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * description\n  * global_alias",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Interface:CdpInterface"
+                    }
+                },
+                "create_pre_built_interface_policies": {
+                    "type": "object",
+                    "description": "Option to Create pre-defined Policies.  Policy Types are:\n  * cdp_interface\n  * fibre_channel_interface\n  * l2_interface\n  * link_level\n  * lldp_interface\n  * mcp_interface\n  * port_channel\n  * port_security\n  * spanning_tree_interface",
+                    "$ref": "#/definitions/Policies:Interface:CreatePreBuiltInterfacePolicies"
+                },
+                "fibre_channel_interface": {
+                    "type": "array",
+                    "description": "fibre_channel_interface - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * auto_max_speed\n  * description\n  * fill_pattern\n  * port_mode\n  * receive_buffer_credit\n  * speed\n  * trunk_mode",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Interface:FibreChannelInterface"
+                    }
+                },
+                "l2_interface": {
+                    "type": "array",
+                    "description": "l2_interface - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * qinq\n  * reflective_relay\n  * vlan_scope",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Interface:L2Interface"
+                    }
+                },
+                "link_level": {
+                    "type": "array",
+                    "description": "link_level - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * auto_negotiation\n  * description\n  * forwarding_error_correction\n  * global_alias\n  * link_debounce_interval\n  * speed",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Interface:LinkLevel"
+                    }
+                },
+                "lldp_interface": {
+                    "type": "array",
+                    "description": "lldp_interface - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * global_alias\n  * receive_state\n  * transmit_state",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Interface:LldpInterface"
+                    }
+                },
+                "mcp_interface": {
+                    "type": "array",
+                    "description": "mcp_interface - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * description",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Interface:McpInterface"
+                    }
+                },
+                "port_channel": {
+                    "type": "array",
+                    "description": "port_channel - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * control\n  * description\n  * global_alias\n  * maximum_number_of_links\n  * minimum_number_of_links\n  * mode",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Interface:PortChannel"
+                    }
+                },
+                "port_security": {
+                    "type": "array",
+                    "description": "port_security - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * maximum_endpoints\n  * port_security_timeout",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Interface:PortSecurity"
+                    }
+                },
+                "spanning_tree_interface": {
+                    "type": "array",
+                    "description": "spanning_tree_interface - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * bpdu_filter\n  * bpdu_guard\n  * description\n  * global_alias",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Interface:SpanningTreeInterface"
+                    }
+                }
+            },
+            "title": "Policies => Interface"
+        },
+        "Policies:Interface:CdpInterface": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "admin_state": {
+                    "default": "enabled",
+                    "description": "The State of the CDP Protocol on the Interface.  Options are:\n  * disabled\n  * enabled: (default)",
+                    "enum": [
+                        "disabled",
+                        "enabled"
+                    ]
+                },
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "global_alias": {
+                    "type": "string",
+                    "description": "A label, unique within the fabric, that can serve as a substitute for an object's Distinguished Name (DN).  A global alias must be unique accross the fabric.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the CDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "cdp_interface - CDP Interface Policy."
+        },
+        "Policies:Interface:CreatePreBuiltInterfacePolicies": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "cdp_interface": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "If Set to 'true', This will create policies defined in defaults/access.yaml:\ndefaults:\n  access:\n    pre_built_interface_policies:\n      cdp_interface"
+                },
+                "fibre_channel_interface": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If Set to 'true', This will create policies defined in defaults/access.yaml:\ndefaults:\n  access:\n    pre_built_interface_policies:\n      fibre_channel_interface"
+                },
+                "l2_interface": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "If Set to 'true', This will create policies defined in defaults/access.yaml:\ndefaults:\n  access:\n    pre_built_interface_policies:\n      l2_interface"
+                },
+                "link_level": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "If Set to 'true', This will create policies defined in defaults/access.yaml:\ndefaults:\n  access:\n    pre_built_interface_policies:\n      link_level"
+                },
+                "lldp_interface": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "If Set to 'true', This will create policies defined in defaults/access.yaml:\ndefaults:\n  access:\n    pre_built_interface_policies:\n      lldp_interface"
+                },
+                "mcp_interface": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "If Set to 'true', This will create policies defined in defaults/access.yaml:\ndefaults:\n  access:\n    pre_built_interface_policies:\n      mcp_interface"
+                },
+                "port_channel": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "If Set to 'true', This will create policies defined in defaults/access.yaml:\ndefaults:\n  access:\n    pre_built_interface_policies:\n      port_channel"
+                },
+                "port_security": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "If Set to 'true', This will create policies defined in defaults/access.yaml: defaults: access: pre_built_interface_policies: port_security."
+                },
+                "spanning_tree_interface": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "If Set to 'true', This will create policies defined in defaults/access.yaml: defaults: access: pre_built_interface_policies: spanning_tree_interface."
+                }
+            },
+            "required": [
+                "cdp_interface",
+                "fibre_channel_interface",
+                "l2_interface",
+                "link_level",
+                "lldp_interface",
+                "mcp_interface",
+                "port_channel",
+                "port_security",
+                "spanning_tree_interface"
+            ],
+            "title": "CreatePreBuiltInterfacePolicies"
+        },
+        "Policies:Interface:FibreChannelInterface": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "auto_max_speed": {
+                    "default": "32G",
+                    "description": "Auto-max-speed for object interface FC policy. Allowed values are:\n  * 4G\n  * 8G\n  * 16G\n  * 32G: (default)",
+                    "enum": [
+                        "4G",
+                        "8G",
+                        "16G",
+                        "32G"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "fill_pattern": {
+                    "default": "IDLE",
+                    "description": "Fill Pattern for native FC ports. Allowed values are:\n  * ARBFF\n  * IDLE: (default)",
+                    "enum": [
+                        "ARBFF",
+                        "IDLE"
+                    ]
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the Fibre-Channel Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "port_mode": {
+                    "default": "f",
+                    "description": "In which mode Ports should be used. Allowed values are:\n  * f: (default)\n  * np",
+                    "enum": [
+                        "f",
+                        "np"
+                    ]
+                },
+                "receive_buffer_credit": {
+                    "type": "integer",
+                    "default": 64,
+                    "description": "Receive buffer credits for native FC ports Range:(16 - 64).",
+                    "minimum": 16,
+                    "maximum": 64
+                },
+                "speed": {
+                    "default": "auto",
+                    "description": "Port speed for object Fibre-Channel Interface Policy.  Allowed values:\n  * 4G\n  * 8G\n  * 16G\n  * 32G\n  * 64G\n  * auto: (default)\n  * unknown",
+                    "enum": [
+                        "4G",
+                        "8G",
+                        "16G",
+                        "32G",
+                        "64G",
+                        "auto",
+                        "unknown"
+                    ]
+                },
+                "trunk_mode": {
+                    "default": "trunk-off",
+                    "description": "Trunking on/off for native FC ports.  Allowed values:\n  * auto\n  * trunk-off: (default)\n  * trunk-on\n  * un-init",
+                    "enum": [
+                        "auto",
+                        "trunk-off",
+                        "trunk-on",
+                        "un-init"
+                    ]
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "fibre_channel_interface - Fibre-Channel Interface Policy"
+        },
+        "Policies:Interface:L2Interface": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "admin_state": {
+                    "type": "string"
+                },
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the L2 Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "qinq": {
+                    "default": "disabled",
+                    "description": "To enable or disable an interface for Dot1q Tunnel or Q-in-Q encapsulation modes, select one of the following:\n  * corePort — Configure this core-switch interface to be included in a Dot1q Tunnel.  You can configure multiple corePorts, for multiple customers, to be used in a Dot1q Tunnel.\n  * disabled: (default) — Disable this interface to be used in a Dot1q Tunnel.\n  * doubleQtagPort — Configure this interface to be used for Q-in-Q encapsulated traffic.\n  * edgePort — Configure this edge-switch interface (for a single customer) to be included in a Dot1q Tunnel.",
+                    "enum": [
+                        "corePort",
+                        "disabled",
+                        "doubleQtagPort",
+                        "edgePort"
+                    ]
+                },
+                "reflective_relay": {
+                    "default": "disabled",
+                    "description": "Enable or disable reflective relay for ports that consume the policy.  Options are:\n  * disabled: (default)\n  * enabled",
+                    "enum": [
+                        "disabled",
+                        "enabled"
+                    ]
+                },
+                "vlan_scope": {
+                    "default": "global",
+                    "description": "The layer 2 interface VLAN scope. The scope can be:\n  * global: (default) — Sets the VLAN encapsulation value to map only to a single EPG per leaf.\n  * portlocal — Allows allocation of separate (Port, Vlan) translation entries in both ingress and egress directions. This configuration is not valid when the EPGs belong to a single bridge domain.\nVLAN Scope is not supported if edgePort is selected in the QinQ field.",
+                    "enum": [
+                        "global",
+                        "portlocal"
+                    ]
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "l2_interface - L2 Interface"
+        },
+        "Policies:Interface:LinkLevel": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "auto_negotiation": {
+                    "default": "on",
+                    "description": "Policy auto negotiation for object fabric if pol.  Allowed values:\n  * off\n  * on: (default)\n  * on-enforce",
+                    "enum": [
+                        "off",
+                        "on",
+                        "on-enforce"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "forwarding_error_correction": {
+                    "default": "inherit",
+                    "description": "Forwarding Error Correction for Link Level Policy.  Allowed values:\n  * inherit: (default)\n  * cl91-rs-fec\n  * cl74-fc-fec\n  * ieee-rs-fec\n  * cons16-rs-fec\n  * kp-fec\n  * disable-fec",
+                    "enum": [
+                        "inherit",
+                        "cl74-fc-fec",
+                        "cl91-rs-fec",
+                        "cons16-rs-fec",
+                        "disable-fec",
+                        "ieee-rs-fec",
+                        "kp-fec"
+                    ]
+                },
+                "global_alias": {
+                    "type": "string",
+                    "description": "A label, unique within the fabric, that can serve as a substitute for an object's Distinguished Name (DN).  A global alias must be unique accross the fabric.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the CDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "link_debounce_interval": {
+                    "type": "integer",
+                    "default": 100,
+                    "description": "Link debounce interval for object fabric if pol. Range of allowed values: 0-5000.",
+                    "minimum": 0,
+                    "maximum": 5000
+                },
+                "speed": {
+                    "default": "inherit",
+                    "description": "Port speed for object fabric if pol.  Allowed values:\n  * 100M\n  * 1G\n  * 10G\n  * 25G\n  * 40G\n  * 50G\n  * 100G\n  * 200G\n  * 400G\n  * inherit: (default)\n  * unknown",
+                    "enum": [
+                        "100M",
+                        "1G",
+                        "10G",
+                        "25G",
+                        "40G",
+                        "50G",
+                        "100G",
+                        "200G",
+                        "400G",
+                        "800G",
+                        "inherit",
+                        "unknown"
+                    ]
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "link_level - Link Level"
+        },
+        "Policies:Interface:LldpInterface": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "global_alias": {
+                    "type": "string",
+                    "description": "A label, unique within the fabric, that can serve as a substitute for an object's Distinguished Name (DN).  A global alias must be unique accross the fabric.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the LLDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "receive_state": {
+                    "default": "enabled",
+                    "description": "The reception of LLDP packets on an interface.  Options are:\n  * disabled\n  * enabled: (default)",
+                    "enum": [
+                        "disabled",
+                        "enabled"
+                    ]
+                },
+                "transmit_state": {
+                    "default": "enabled",
+                    "description": "The transmission of LLDP packets on an interface.  Options are:\n  * disabled\n  * enabled: (default)",
+                    "enum": [
+                        "disabled",
+                        "enabled"
+                    ]
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "lldp_interface - LLDP Interface Policy."
+        },
+        "Policies:Interface:McpInterface": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "admin_state": {
+                    "default": "enabled",
+                    "description": "The administrative state of the MCP interface policy.  Options are:\n  * disabled\n  * enabled: (default)",
+                    "enum": [
+                        "disabled",
+                        "enabled"
+                    ]
+                },
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the MCP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "mcp_interface - MCP Interface Policy"
+        },
+        "Policies:Interface:PortChannel": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "control": {
+                    "type": "object",
+                    "description": "LACP Control Parameters.  Parameters are: \n  * fast_select_hot_standby_ports\n  * graceful_convergence\n  * load_defer_member_ports\n  * suspend_individual_port\n  * symmetric_hashing",
+                    "properties": {
+                        "fast_select_hot_standby_ports": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Configures fast select for hot standby ports. Enabling this feature will allow fast selection of a hot standby port when last active port in the port-channel is going down.  Default is (true)."
+                        },
+                        "graceful_convergence": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Configures port-channel LACP graceful convergence. Disable this only with LACP ports connected to a Non-Nexus peer. Disabling this with Nexus peer can lead to port suspension.  Default is (true)."
+                        },
+                        "load_defer_member_ports": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Configures the load-balancing algorithm for port channels that applies to the entire device or to only one module.  Default is (false)."
+                        },
+                        "suspend_individual_port": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "LACP sets a port to the suspended state if it does not receive an LACP bridge protocol data unit (BPDU) from the peer ports in a port channel. This can cause some servers to fail to boot up as they require LACP to logically bring up the port.  Default is (true)."
+                        },
+                        "symmetric_hashing": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Bidirectional traffic is forced to use the same physical interface and each physical interface in the port channel is effectively mapped to a set of flows.  Default is (false)."
+                        }
+                    }
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "global_alias": {
+                    "type": "string",
+                    "description": "A label, unique within the fabric, that can serve as a substitute for an object's Distinguished Name (DN).  A global alias must be unique accross the fabric.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "maximum_number_of_links": {
+                    "type": "integer",
+                    "default": 16,
+                    "description": "Maximum number of links. Allowed value range is 1-16.",
+                    "minimum": 1,
+                    "maximum": 16
+                },
+                "minimum_number_of_links": {
+                    "type": "integer",
+                    "default": 1,
+                    "description": "Minimum number of links in port channel. Allowed value range is 1-16.",
+                    "minimum": 1,
+                    "maximum": 16
+                },
+                "mode": {
+                    "default": "active",
+                    "description": "Port-Channel policy mode. Options are:\n  * active: (default) — LACP mode that places a port into an active negotiating state in which the port initiates negotiations with other ports by sending LACP packets.\n  * mac-pin — Used for pinning VM traffic in a round-robin fashion to each uplink based on the MAC address of the VM. MAC Pinning is the recommended option for channeling when connecting to upstream switches that do not support multichassis EtherChannel (MEC).\n  * mac-pin-nicload — Pins VM traffic in a round-robin fashion to each uplink based on the MAC address of the physical NIC.\n  * off — All static port channels (that are not running LACP) remain in this mode. If you attempt to change the channel mode to active or passive before enabling LACP, the device displays an error message.\n  * passive — LACP mode that places a port into a passive negotiating state in which the port responds to LACP packets that it receives but does not initiate LACP negotiation. Passive mode is useful when you do not know whether the remote system, or partner, supports LACP.",
+                    "enum": [
+                        "active",
+                        "mac-pin",
+                        "mac-pin-nicload",
+                        "off",
+                        "passive"
+                    ]
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the CDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "port_channel - Port-Channel Policy."
+        },
+        "Policies:Interface:PortSecurity": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "maximum_endpoints": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "The maximum number of endpoints that can be learned on the interface. The current supported range for the maximum endpoints configured value is from 0 to 12000. If the maximum endpoints value is 0, the port security policy is disabled on that port.",
+                    "minimum": 0,
+                    "maximum": 12000
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the CDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "port_security_timeout": {
+                    "type": "integer",
+                    "default": 60,
+                    "description": "The delay time before MAC learning is re-enabled. The current supported range for the timeout value is from 60 to 3600.",
+                    "minimum": 60,
+                    "maximum": 3600
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "port_security - Port Security Policy."
+        },
+        "Policies:Interface:SpanningTreeInterface": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "bpdu_filter": {
+                    "default": "disabled",
+                    "description": "The interface level control that enables the BPDU filter for extended chassis ports.  Options are:\n  * disabled: (default)\n  * enabled",
+                    "enum": [
+                        "disabled",
+                        "enabled"
+                    ]
+                },
+                "bpdu_guard": {
+                    "default": "disabled",
+                    "description": "The interface level control that enables the BPDU guard for extended chassis ports.  Options are:\n  * disabled: (default)\n  * enabled",
+                    "enum": [
+                        "disabled",
+                        "enabled"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "global_alias": {
+                    "type": "string",
+                    "description": "A label, unique within the fabric, that can serve as a substitute for an object's Distinguished Name (DN).  A global alias must be unique accross the fabric.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the CDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "spanning_tree_interface - Spanning Tree Interface Policy"
+        },
+        "Policies:Switch": {
+            "type": "object",
+            "description": "Object Types are:\n  * vpc_domain",
+            "additionalProperties": false,
+            "properties": {
+                "vpc_domain": {
+                    "type": "array",
+                    "description": "vpc_domain - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * dead_interval\n  * description",
+                    "items": {
+                        "$ref": "#/definitions/Policies:Switch:VPCDomain"
+                    }
+                }
+            },
+            "title": "Policies => Switch"
+        },
+        "Policies:Switch:VPCDomain": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "dead_interval": {
+                    "type": "integer",
+                    "default": 200,
+                    "description": "The VPC peer dead interval time of object VPC Domain Policy. Range: 5-600. Default value is 200.",
+                    "minimum": 5,
+                    "maximum": 600
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of Object VPC Explicit Protection Group.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "vpc_domain - VPC Domain Policy"
+        },
+        "Pools": {
+            "type": "object",
+            "description": "Object Types are:\n  * vlan",
+            "additionalProperties": false,
+            "properties": {
+                "vlan": {
+                    "type": "array",
+                    "description": "vlan - Required Attributes are:\n  * encap_blocks\n  * name\n\nOptional Attributes are:\n  * allocation_mode\n  * annotation\n  * description",
+                    "items": {
+                        "$ref": "#/definitions/Pools:VLAN"
+                    }
+                }
+            },
+            "required": [
+                "vlan"
+            ],
+            "title": "Access => Access Policies => Pools"
+        },
+        "Pools:VLAN": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "allocation_mode": {
+                    "default": "dynamic",
+                    "description": "The allocation mode. The values can be:\n  * dynamic: (default) — Managed internally by the APIC to allocate VLANs for endpoint groups (EPGs). A vCenter Domain can associate only to a dynamic pool.\n  * static — One or more EPGs are associated with a domain, and that domain is associated with a static range of VLANs. You must configure statically deployed EPGs within that range of VLANs.",
+                    "enum": [
+                        "dynamic",
+                        "static"
+                    ]
+                },
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "encap_blocks": {
+                    "type": "array",
+                    "description": "encap_blocks - Required Attributes are:\n  * vlan_range\n\nOptional Attributes are:\n  * allocation_mode\n  * description\n  * role",
+                    "items": {
+                        "$ref": "#/definitions/Pools:VLAN:EncapBlock"
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the CDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                }
+            },
+            "required": [
+                "encap_blocks",
+                "name"
+            ],
+            "title": "vlan - VLAN Pool"
+        },
+        "Pools:VLAN:EncapBlock": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "allocation_mode": {
+                    "default": "inherit",
+                    "description": "The allocation mode. The values can be:\n  * dynamic — Managed internally by the APIC to allocate VLANs for endpoint groups (EPGs). A vCenter Domain can associate only to a dynamic pool.\n  * inherit: (default)\n  * static — One or more EPGs are associated with a domain, and that domain is associated with a static range of VLANs. You must configure statically deployed EPGs within that range of VLANs.",
+                    "enum": [
+                        "dynamic",
+                        "inherit",
+                        "static"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "role": {
+                    "default": "external",
+                    "description": "Role of the VLAN range. The options are:\n  * external: (default) — Used for allocating VLANs for each EPG assigned to the domain. The VLANs are used when packets are sent to or from leafs.\n  * Internal — Used for private VLAN allocations in the internal vSwitch by the Cisco ACI Virtual Edge (AVE). The VLANs are not seen outside the ESX host or on the wire.",
+                    "enum": [
+                        "external",
+                        "Internal"
+                    ]
+                },
+                "vlan_range": {
+                    "type": "string",
+                    "description": "Single VLAN; i.e. 1.  range of VLANs; i.e. 1-5. Or List of VLANs; i.e. 1-5,10-15",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[0-9\\-,]+$"
+                }
+            },
+            "required": [
+                "vlan_range"
+            ],
+            "title": "encap_blocks - VLAN Pool Encapsulation Blocks"
+        },
+        "Switches": {
+            "type": "object",
+            "description": "Object Types are:\n  * leaf\n  * spine",
+            "additionalProperties": false,
+            "properties": {
+                "leaf": {
+                    "$ref": "#/definitions/Switches:LeafSwitches"
+                },
+                "spine": {
+                    "$ref": "#/definitions/Switches:SpineSwitches"
+                }
+            },
+            "title": "switches - Access => Access Policies => Switches"
+        },
+        "Switches:LeafSwitches": {
+            "type": "object",
+            "description": "Object Types are:\n  * policy_groups",
+            "additionalProperties": false,
+            "properties": {
+                "policy_groups": {
+                    "type": "array",
+                    "description": "policy_groups - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * bfd_ipv4_policy\n  * bfd_ipv6_policy\n  * bfd_multihop_ipv4_policy\n  * bfd_multihop_ipv6_policy\n  * cdp_interface_policy\n  * copp_leaf_policy\n  * copp_pre_filter\n  * description\n  * dot1x_node_authentication_policy\n  * equipment_flash_config\n  * fast_link_failover_policy\n  * fibre_channel_node_policy\n  * fibre_channel_san_policy\n  * forward_scale_profile_policy\n  * lldp_interface_policy\n  * monitoring_policy\n  * netflow_node_policy\n  * poe_node_policy\n  * ptp_node_policy\n  * spanning_tree_interface_policy\n  * synce_node_policy\n  * usb_configuration_policy",
+                    "items": {
+                        "$ref": "#/definitions/Switches:LeafSwitches:PolicyGroups"
+                    }
+                }
+            },
+            "required": [
+                "policy_groups"
+            ],
+            "title": "leaf - Switches => Leaf Switches."
+        },
+        "Switches:SpineSwitches": {
+            "type": "object",
+            "description": "Object Types are:\n  * policy_groups",
+            "additionalProperties": false,
+            "properties": {
+                "policy_groups": {
+                    "type": "array",
+                    "description": "policy_groups - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * bfd_ipv4_policy\n  * bfd_ipv6_policy\n  * cdp_interface_policy\n  * copp_pre_filter\n  * copp_spine_policy\n  * description\n  * lldp_interface_policy\n  * usb_configuration_policy",
+                    "items": {
+                        "$ref": "#/definitions/Switches:SpineSwitches:PolicyGroups"
+                    }
+                }
+            },
+            "required": [
+                "policy_groups"
+            ],
+            "title": "spine - Switches => Spine Switches."
+        },
+        "Switches:LeafSwitches:PolicyGroups": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "bfd_ipv4_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The BFD IPv4 policy name.  Bidirectional Forwarding Detection (BFD) is used to provide sub-second failure detection times in the forwarding path between Cisco ACI fabric border leaf switches configured to support peering router connections.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "bfd_ipv6_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The BFD IPv6 policy name.  Bidirectional Forwarding Detection (BFD) is used to provide sub-second failure detection times in the forwarding path between Cisco ACI fabric border leaf switches configured to support peering router connections.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "bfd_multihop_ipv4_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The BFD multihop IPv4 policy name.  Bidirectional Forwarding Detection (BFD) multihop for IPv4 provides subsecond forwarding failure detection for a destination with more than one hop and up to 255 hops.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "bfd_multihop_ipv6_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The BFD multihop IPv6 policy name.  Bidirectional Forwarding Detection (BFD) multihop for IPv6 provides subsecond forwarding failure detection for a destination with more than one hop and up to 255 hops.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "cdp_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the CDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "copp_leaf_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The leaf CoPP policy name.  Control Plane Policing (CoPP) protects the control plane, which ensures network stability, reachability, and packet delivery.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "copp_pre_filter": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The CoPP Pre-Filter name.  A CoPP prefilter profile is used on spine and leaf switches to filter access to authentication services based on specified sources and TCP ports to protect against DDoS attacks. When deployed on a switch, control plane traffic is denied by default. Only the traffic specified in the CoPP prefilter profile is permitted.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "dot1x_node_authentication_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The 802.1x node authentication policy name.  An 802.1x node authorization policy is a client and server-based access control and authentication protocol that restricts unauthorized clients from connecting to a LAN through publicly accessible ports.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "equipment_flash_config": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Flash Configuration Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "fast_link_failover_policy": {
+                    "type": "string",
+                    "description": "The fast link failover policy name.  A fast link failover policy provides better convergence of the network.  Fast link failover policies are not supported on the same port as port profiles or remote leaf switch connections.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "fibre_channel_node_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The default Fibre Channel node policy name.  Fibre channel node policies specify FCoE-related settings, such as the load balance options and FIP keep alive intervals.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "fibre_channel_san_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Fibre Channel SAN policy name.  Fibre Channel SAN policies specify FCoE-related settings: Error detect timeout values (EDTOV), resource allocation timeout values (RATOV), and the MAC address prefix (also called FC map) used by the leaf switch. Typically the default value 0E:FC:00 is used. ",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "forward_scale_profile_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The forwarding scale profile policy name.  The forwarding scale profile policy provides different scalability options. The scaling types are:      * Dual Stack — Provides scalability of up to 12,000 endpoints for IPv6 configurations and up to 24,000 endpoints for IPv4 configurations.\n  * High LPM — Provides scalability similar to the dual-stack policy, except that the longest prefix match (LPM) scale is 128,000 and the policy scale is 8,000.\n  * IPv4 Scale — Enables systems with no IPv6 configurations to increase scalability to 48,000 IPv4 endpoints.\n  * High Dual Stack — Provides scalability of up to 64,000 MAC endpoints, 64,000 IPv4 endpoints, and 24,000 IPv6 endpoints.\nFor more information about this feature, see the Cisco APIC Forwarding Scale Profiles document.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "lldp_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the LLDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "monitoring_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Monitoring Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "netflow_node_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The NetFlow node policy name.  The node-level policy deploys two different NetFlow timers that specify the rate at which flow records are sent to the external collector.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the Leaf Switches Policy Group.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "poe_node_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The PoE node policy name.  PoE node policies control the overall power setting for the switch.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "ptp_node_policy": {
+                    "type": "string",
+                    "description": "The PTP node policy name.  The Precision Time Protocol (PTP) synchronizes distributed clocks in a system using Ethernet networks.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "spanning_tree_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the Spanning Tree Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "synce_node_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The SyncE Node policy name.  Synchronous Ethernet (SyncE) provides high-quality clock synchronization over Ethernet ports by using known common precision frequency references.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "usb_configuration_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The USB configuration policy name.  The USB configuration policy can disable the USB port on a Cisco ACI-mode switch to prevent someone booting the switch from a USB image that contains malicious code.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "policy_groups - Leaf Switch Policy Groups"
+        },
+        "Switches:SpineSwitches:PolicyGroups": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "bfd_ipv4_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The BFD IPv4 policy name.  Bidirectional Forwarding Detection (BFD) is used to provide sub-second failure detection times in the forwarding path between Cisco ACI fabric border leaf switches configured to support peering router connections.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "bfd_ipv6_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The BFD IPv6 policy name.  Bidirectional Forwarding Detection (BFD) is used to provide sub-second failure detection times in the forwarding path between Cisco ACI fabric border leaf switches configured to support peering router connections.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "cdp_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the CDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "copp_pre_filter": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The CoPP Pre-Filter name.  A CoPP prefilter profile is used on spine and leaf switches to filter access to authentication services based on specified sources and TCP ports to protect against DDoS attacks. When deployed on a switch, control plane traffic is denied by default. Only the traffic specified in the CoPP prefilter profile is permitted.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "copp_spine_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Spine CoPP policy name.  Control Plane Policing (CoPP) protects the control plane, which ensures network stability, reachability, and packet delivery.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "lldp_interface_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The Name of the LLDP Interface Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the Spine Switches Policy Group.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                },
+                "usb_configuration_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "The USB configuration policy name.  The USB configuration policy can disable the USB port on a Cisco ACI-mode switch to prevent someone booting the switch from a USB image that contains malicious code.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "policy_groups - Spine Switch Policy Groups"
+        }
+    }
+}
