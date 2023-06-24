@@ -27,9 +27,11 @@ If you would like to enable Auto Completion in the Pools File for ip, mac, uuid,
 
 Click: `Edit in settings.json`
 
-Configure the following in `yaml.schemas`
-```bash
-"https://raw.githubusercontent.com/terraform-cisco-modules/easy-aci-complete/main/schemas/pools.json": "pools.yaml"
+Visual Studio Code => Settings => YAML Schema: edit settings.json
+```python
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/terraform-cisco-modules/easy-aci-complete/main/yaml_schemas/access.json": "/access-policies/*.yaml",
+    }
 ```
 
 ## Requirements
