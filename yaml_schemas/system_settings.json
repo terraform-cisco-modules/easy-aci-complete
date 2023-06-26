@@ -1,0 +1,710 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/SystemSettingsWelcome",
+    "definitions": {
+        "SystemSettingsWelcome": {
+            "type": "object",
+            "description": "System => System Settings.",
+            "additionalProperties": false,
+            "properties": {
+                "system_settings": {
+                    "$ref": "#/definitions/SystemSettings"
+                }
+            },
+            "required": [
+                "system_settings"
+            ],
+            "title": "system_settings"
+        },
+        "SystemSettings": {
+            "type": "object",
+            "description": "Object Types are:\n  * interfaces\n  * physical_and_external_domains\n  * policies\n  * pools\n  * switches",
+            "additionalProperties": false,
+            "properties": {
+                "apic_connectivity_preference": {
+                    "description": "apic_connectivity_preference - Attribute is:\n  * interface_to_use_for_external_connections",
+                    "$ref": "#/definitions/SystemSettings:ApicConnectivityPreference"
+                },
+                "bgp": {
+                    "description": "bgp - Attribute is:\n  * autonomous_system_number",
+                    "$ref": "#/definitions/SystemSettings:Bgp"
+                },
+                "bgp_route_reflectors": {
+                    "description": "bgp_route_reflector - Attribute is:\n  * pods",
+                    "$ref": "#/definitions/SystemSettings:BgpRouteReflector"
+                },
+                "coop_group": {
+                    "description": "coop_group - Required Attribute is:\n  * type\n\n Optional Attribute is:\n  * annotation",
+                    "$ref": "#/definitions/SystemSettings:CoopGroup"
+                },
+                "endpoint_controls": {
+                    "description": "endpoint_controls - Attributes are:\n  * annotation\n  * ep_loop_protection\n  * ip_aging\n  * rouge_ep_control",
+                    "$ref": "#/definitions/SystemSettings:EndpointControls"
+                },
+                "fabric_wide_settings": {
+                    "description": "fabric_wide_settings - Optional Attribute are:\n  * annotation\n  * disable_remote_ep_learning\n  * enforce_domain_validation\n  * enforce_epg_vlan_validation\n  * enforce_subnet_check\n  * leaf_opflex_client_authentication\n  * leaf_ssl_opflex\n  * reallocate_gipo\n  * restrict_infra_vlan_traffic\n  * ssl_opflex_versions\n  * spine_opflex_client_authentication\n  * spine_ssl_opflex",
+                    "$ref": "#/definitions/SystemSettings:FabricWideSettings"
+                },
+                "global_aes_encryption_settings": {
+                    "description": "global_aes_encryption_settings - Optional Attribute are:\n  * annotation\n  * clear_passphrase\n  * description\n  * enable_encryption\n  * passphrase_key_derivation_version",
+                    "$ref": "#/definitions/SystemSettings:GlobalAesEncryptionSettings"
+                },
+                "isis_policy": {
+                    "description": "isis_policy - Optional Attribute are:\n  * annotation\n  * isis_mtu\n  * isis_metric_for_redistributed_routes\n  * lsp_fast_flood_mode\n  * lsp_generation_initial_wait_interval\n  * lsp_generation_maximum_wait_interval\n  * lsp_generation_second_wait_interval\n  * sfp_computation_frequency_initial_wait_interval\n  * sfp_computation_frequency_maximum_wait_interval\n  * sfp_computation_frequency_second_wait_interval",
+                    "$ref": "#/definitions/SystemSettings:ISISPolicy"
+                },
+                "port_tracking": {
+                    "description": "port_tracking - Optional Attribute are:\n  * annotation\n  * delay_restore_timer\n  * include_apic_ports\n  * number_of_active_ports\n  * port_tracking_state",
+                    "$ref": "#/definitions/SystemSettings:PortTracking"
+                },
+                "ptp_and_latency_measurement": {
+                    "description": "ptp_and_latency_measurement - Optional Attribute are:\n  * annotation\n  * announce_interval\n  * announce_timeout\n  * delay_request_interval\n  * global_domain\n  * global_priority_1\n  * global_priority_2\n  * precision_time_protocol\n  * ptp_profile\n  * sync_interval",
+                    "$ref": "#/definitions/SystemSettings:PtpAndLatencyMeasurement"
+                },
+                "recommended_settings": {
+                    "description": "recommended_settings - Use This to Configure the Recommended Settings for the Following Policy Types:\n  * coop_group\n  * endpoint_controls\n  * fabric_wide_settings\n  * global_aes_encryption_settings\n  * isis_policy\n  * port_tracking\n  * ptp_and_latency_measurement",
+                    "$ref": "#/definitions/SystemSettings:RecommendedSettings"
+                }
+            },
+            "title": "System => System Settings"
+        },
+        "SystemSettings:ApicConnectivityPreference": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "APIC Connectivity Preference",
+            "properties": {
+                "interface_to_use_for_external_connections": {
+                    "type": "string",
+                    "default": "ooband",
+                    "description": "The preferred management connectivity preference. Options are:\n  * inband — Executes in-band management connectivity between the APIC server to external devices through leaf switches on the ACI fabric.\n  * ooband: (default) — Executes out-of-band management connectivity between the APIC server to external devices through connections external to the ACI fabric.",
+                    "enum": [
+                        "inband",
+                        "ooband"
+                    ]
+                }
+            },
+            "required": [
+                "interface_to_use_for_external_connections"
+            ],
+            "title": "apic_connectivity_preference - APIC Connectivity Preference."
+        },
+        "SystemSettings:Bgp": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "BGP Autonomous System Number.",
+            "properties": {
+                "autonomous_system_number": {
+                    "default": 65001,
+                    "description": "BGP Autonomous System Number.",
+                    "minimum": 1,
+                    "maximum": 4294967294
+                }
+            },
+            "required": [
+                "autonomous_system_number"
+            ],
+            "title": "bgp - BGP Autonomous System Number."
+        },
+        "SystemSettings:BgpRouteReflector": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "pods - Required Attributes are:\n  * pod_id\n  * route_reflector_nodes",
+            "properties": {
+                "pods": {
+                    "type": "array",
+                    "description": "pods - Required Attributes are:\n  * pod_id\n  * route_reflector_nodes",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "description": "",
+                        "properties": {
+                            "pod_id": {
+                                "type": "integer",
+                                "default": 1,
+                                "description": "ACI Pod Identifier.",
+                                "minimum": 1,
+                                "maximum": 12
+                            },
+                            "route_reflector_nodes": {
+                                "type": "array",
+                                "description": "List of BGP Route Reflector Nodes.",
+                                "items": {
+                                    "type": "integer",
+                                    "default": 101,
+                                    "description": "Spine Node Identifier.",
+                                    "minimum": 1,
+                                    "maximum": 4000
+                                }
+                            }
+                        },
+                        "required": [
+                            "pod_id",
+                            "route_reflector_nodes"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "pods"
+            ],
+            "title": "pods - Pod(s) BGP Route Reflectors."
+        },
+        "SystemSettings:CoopGroup": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Coop Group",
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "type": {
+                    "type": "string",
+                    "default": "strict",
+                    "description": "COOP protocol is enhanced to support two ZMQ authentication modes:\n  * compatible — Type COOP accepts both MD5 authenticated and non-authenticated ZMQ connections for message transportation.\n  * strict: (defualt) — COOP allows MD5 authenticated ZMQ connections only.\nNote: The APIC provides a managed object (fabric:SecurityToken), that includes an attribute to be used for the MD5 password. An attribute in this managed object, called 'token', is a string that changes every hour. COOP obtains the notification from the DME to update the password for ZMQ authentication. The attribute token value is not displayed.",
+                    "enum": [
+                        "inband",
+                        "strict"
+                    ]
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "title": "coop_group - COOP Group."
+        },
+        "SystemSettings:EndpointControls": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Endpoint Controls.",
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "ep_loop_protection": {
+                    "description": "ep_loop_protection - Attributes are:\n  * action\n  * administrative_state\n  * loop_detection_interval\n  * loop_detection_multiplier",
+                    "$ref": "#/definitions/SystemSettings:EndpointControls:EpLoopProtection"
+                },
+                "ip_aging": {
+                    "description": "ip_aging - Attribute is:\n  * administrative_state",
+                    "$ref": "#/definitions/SystemSettings:EndpointControls:IpAging"
+                },
+                "rouge_ep_control": {
+                    "description": "rouge_ep_control - Attributes are:\n  * administrative_state\n  * hold_interval\n  * rouge_interval\n  * rouge_multiplier",
+                    "$ref": "#/definitions/SystemSettings:EndpointControls:RougeEpControl"
+                }
+            },
+            "title": "endpoint_controls - Endpoint Controls."
+        },
+        "SystemSettings:EndpointControls:EpLoopProtection": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Endpoint Controls => EP Loop Protection.",
+            "properties": {
+                "action": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "action - Attributes are:\n  * bd_learn_disablebd_learn_disable\n  * port_disable\nAction to Perform when a Loop is dected.",
+                    "properties": {
+                        "bd_learn_disable": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Disable bridge domain learning when a loop is detected."
+                        },
+                        "port_disable": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Disable the Port when a loop is detected."
+                        }
+                    }
+                },
+                "administrative_state": {
+                    "type": "string",
+                    "default": "enabled",
+                    "description": "The administrative state of the endpoint loop protection policy, options are:\n  * disabled\n  * enabled",
+                    "enum": [
+                        "disabled",
+                        "enabled"
+                    ]
+                },
+                "loop_detection_interval": {
+                    "type": "integer",
+                    "default": 60,
+                    "description": "Sets the loop detection interval, which specifies the time to detect a loop. The interval range is from 30 to 300 seconds.",
+                    "minimum": 30,
+                    "maximum": 300
+                },
+                "loop_detection_multiplier": {
+                    "type": "integer",
+                    "default": 4,
+                    "description": "Sets the loop detection multiplication factor, which is the number of times a single EP moves between ports within the loop detection interval.",
+                    "minimum": 1,
+                    "maximum": 255
+                }
+            },
+            "title": "ep_loop_protection - Endpoint Controls => EP Loop Protection."
+        },
+        "SystemSettings:EndpointControls:IpAging": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Endpoint Controls => IP Aging.",
+            "properties": {
+                "administrative_state": {
+                    "type": "string",
+                    "default": "enabled",
+                    "description": "Enables and disables the IP aging policy, options are:\n  * disabled\n  * enabled",
+                    "enum": [
+                        "disabled",
+                        "enabled"
+                    ]
+                }
+            },
+            "title": "ip_aging - Endpoint Controls => IP Aging."
+        },
+        "SystemSettings:EndpointControls:RougeEpControl": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Endpoint Controls => Rouge EP Control.",
+            "properties": {
+                "administrative_state": {
+                    "type": "string",
+                    "default": "enabled",
+                    "description": "The administrative state of the Rogue EP Control policy, options are:\n  * disabled\n  * enabled",
+                    "enum": [
+                        "disabled",
+                        "enabled"
+                    ]
+                },
+                "hold_interval": {
+                    "type": "integer",
+                    "default": 1800,
+                    "description": "Interval in seconds after the endpoint is declared rogue, where it is kept static so learning is prevented and the traffic to and from the rogue endpoint is dropped. After this interval, the endpoint is deleted. Valid values are from 300 to 3600.Interval in seconds after the endpoint is declared rogue, where it is kept static so learning is prevented and the traffic to and from the rogue endpoint is dropped. After this interval, the endpoint is deleted. Valid values are from 300 to 3600.",
+                    "minimum": 300,
+                    "maximum": 3600
+                },
+                "rouge_interval": {
+                    "type": "integer",
+                    "default": 30,
+                    "description": "Sets the Rogue EP detection interval, which specifies the time to detect rogue endpoints. Valid values are from 0 to 65535 seconds.",
+                    "minimum": 0,
+                    "maximum": 65535
+                },
+                "rouge_multiplier": {
+                    "type": "integer",
+                    "default": 6,
+                    "description": "Sets the Rogue EP Detection multiplication factor for determining if an endpoint is unauthorized. If the endpoint moves more times than this number, within the EP detection interval, the endpoint is declared rogue. Valid values are from 2 to 10.",
+                    "minimum": 2,
+                    "maximum": 10
+                }
+            },
+            "title": "rouge_ep_control - Endpoint Controls => Rouge EP Control."
+        },
+        "SystemSettings:FabricWideSettings": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Fabric Wide Settings.",
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "disable_remote_ep_learning": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "You should enable this policy in fabrics which include the Cisco Nexus 9000 series switches, 93128TX, 9396PX, or 9396TX switches with the N9K-M12PQ uplink module, after all the nodes have been successfully upgraded to APIC Release 2.2(2x).\n  * Note: After any of the following configuration changes, you may need to manually flush previously learned IP endpoints:\n    - Remote IP endpoint learning is disabled.\n    - The VRF is configured for ingress policy enforcement.\n    - At least one Layer 3 interface exists in the VRF.\n  * To manually flush previously learned IP endpoints, enter the following command on both VPC peers: vsh -c 'clear system internal epm endpoint vrf <vrf-name> remote'"
+                },
+                "enforce_domain_validation": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable a validation check when static paths are added, to ensure that a domain is attached to the EPG on the path."
+                },
+                "enforce_epg_vlan_validation": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "When checked, the system globally prevents overlapping VLAN pools from being assigned to EPGs.\n  * Note:  If overlapping VLAN pools already exist and this parameter is checked, the system returns an error. You must assign VLAN pools that are not overlapping to the EPGs before choosing this feature.\n  * If this parameter is checked and an attempt is made to add an overlapping VLAN pool to an EPG, the system returns an error."
+                },
+                "enforce_subnet_check": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "When checked, IP address learning on outside of subnets configured in a VRF, for all VRFs are disabled."
+                },
+                "leaf_opflex_client_authentication": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "To enforce Opflex client certificate authentication on leaf switches for GOLF and Linux."
+                },
+                "leaf_ssl_opflex": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "To enable SSL Opflex transport for leaf switches."
+                },
+                "reallocate_gipo": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable reallocating group IP outer addresses (Gipos) on non-stretched BDs to make room for stretched BDs."
+                },
+                "restrict_infra_vlan_traffic": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "This feature restricts Infra VLAN traffic to only network paths specified by Infra security entry policies. When this feature is enabled, each leaf switch limits Infra VLAN traffic between compute nodes to allow only iVXLAN traffic. The switch also limits traffic to fabric nodes to allow only OpFlex and iVXLAN/VXLAN traffic. APIC management traffic is allowed on front panel ports on the Infra VLAN."
+                },
+                "ssl_opflex_versions": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "ssl_opflex_versions - Attributes are:\n  * TLSv1\n  * TLSv1_1\n  * TLSv1_2\nThis is only applicable to APIC version 5.2 and greater.",
+                    "properties": {
+                        "TLSv1": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Enable TLS Version 1."
+                        },
+                        "TLSv1_1": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Enable TLS Version 1.1."
+                        },
+                        "TLSv1_2": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Enable TLS Version 1.2."
+                        }
+                    }
+                },
+                "spine_opflex_client_authentication": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "To enforce Opflex client certificate authentication on spine switches for GOLF and Linux."
+                },
+                "spine_ssl_opflex": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "To enable SSL Opflex transport for spine switches.."
+                }
+            },
+            "title": "fabric_wide_settings - Fabric Wide Settings."
+        },
+        "SystemSettings:GlobalAesEncryptionSettings": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Global AES Encryption Settings.",
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "clear_passphrase": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Flag to clear the passphrase when disabling Global AES Encryption."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "enable_encryption": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enables strong encryption on the import or export policy."
+                },
+                "passphrase_key_derivation_version": {
+                    "type": "string",
+                    "default": "v1",
+                    "description": "v1 is the only option today. Options are:\n  * v1",
+                    "enum": [
+                        "v1"
+                    ]
+                }
+            },
+            "title": "global_aes_encryption_settings - Global AES Encryption Settings."
+        },
+        "SystemSettings:ISISPolicy": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "ISIS Policy.",
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "isis_mtu": {
+                    "type": "integer",
+                    "default": 1492,
+                    "description": "The IS-IS Domain policy LSP MTU. The MTU is from 128 to 4352.",
+                    "minimum": 128,
+                    "maximum": 4352
+                },
+                "isis_metric_for_redistributed_routes": {
+                    "type": "integer",
+                    "default": 63,
+                    "description": "The IS-IS metric that is used for all imported routes into IS-IS. The values available are from 1 to 63.",
+                    "minimum": 1,
+                    "maximum": 63
+                },
+                "lsp_fast_flood_mode": {
+                    "type": "string",
+                    "default": "enabled",
+                    "description": "The IS-IS Fast-Flooding of LSPs improves Intermediate System-to-Intermediate System (IS-IS) convergence time when new link-state packets (LSPs) are generated in the network and shortest path first (SPF) is triggered by the new LSPs. The mode can be:\n  * disabled\n  * enabled",
+                    "enum": [
+                        "disabled",
+                        "enabled"
+                    ]
+                },
+                "lsp_generation_initial_wait_interval": {
+                    "type": "integer",
+                    "default": 50,
+                    "description": "The LSP generation initial wait interval. This is used in the LSP generation interval for the LSP MTU.  Permitted Values are 50 to 120000.",
+                    "minimum": 50,
+                    "maximum": 120000
+                },
+                "lsp_generation_maximum_wait_interval": {
+                    "type": "integer",
+                    "default": 8000,
+                    "description": "The LSP generation maximum wait interval. This is used in the LSP generation interval for the LSP MTU.  Permitted Values are 50 to 120000.",
+                    "minimum": 50,
+                    "maximum": 120000
+                },
+                "lsp_generation_second_wait_interval": {
+                    "type": "integer",
+                    "default": 50,
+                    "description": "The LSP generation second wait interval. This is used in the LSP generation interval for the LSP MTU.  Permitted Values are 50 to 120000.",
+                    "minimum": 50,
+                    "maximum": 120000
+                },
+                "sfp_computation_frequency_initial_wait_interval": {
+                    "type": "integer",
+                    "default": 50,
+                    "description": "The SPF computation frequency initial wait interval. This is used in the SPF computations for the LSP MTU.  Permitted Values are 50 to 120000.",
+                    "minimum": 50,
+                    "maximum": 120000
+                },
+                "sfp_computation_frequency_maximum_wait_interval": {
+                    "type": "integer",
+                    "default": 8000,
+                    "description": "The SPF computation frequency maximum wait interval. This is used in the SPF computations for the LSP MTU.  Permitted Values are 50 to 120000.",
+                    "minimum": 50,
+                    "maximum": 120000
+                },
+                "sfp_computation_frequency_second_wait_interval": {
+                    "type": "integer",
+                    "default": 50,
+                    "description": "The SPF computation frequency second wait interval. This is used in the SPF computations for the LSP MTU.  Permitted Values are 50 to 120000.",
+                    "minimum": 50,
+                    "maximum": 120000
+                }
+            },
+            "title": "isis_policy - ISIS Policy."
+        },
+        "SystemSettings:PortTracking": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Port Tracking",
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "delay_restore_timer": {
+                    "type": "integer",
+                    "default": 120,
+                    "description": "The timer that controls the delay restore interval time in seconds. The range is from 1 second to 300 seconds.",
+                    "minimum": 1,
+                    "maximum": 300
+                },
+                "include_apic_ports": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If you put a check in the box, port tracking brings down the Cisco Application Policy Infrastructure Controller (APIC) ports when the leaf switch loses connectivity to all fabric ports (that is, there are 0 fabric links). Enable this feature only if the Cisco APICs are dual- or multi-homed to the fabric. Bringing down the Cisco APIC ports helps in switching over to the secondary link in the case of a dual-homed Cisco APIC."
+                },
+                "number_of_active_ports": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "Number of active spine links that triggers port tracking. The range is from 0 to 12.",
+                    "minimum": 0,
+                    "maximum": 12
+                },
+                "port_tracking_state": {
+                    "type": "string",
+                    "default": "on",
+                    "description": "The administrative port tracking state. The state can be:\n  * off\n  * on",
+                    "enum": [
+                        "off",
+                        "on"
+                    ]
+                }
+            },
+            "title": "port_tracking - Port Tracking."
+        },
+        "SystemSettings:PtpAndLatencyMeasurement": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "PTP and Latency Measurement.",
+            "properties": {
+                "annotation": {
+                    "type": "string",
+                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                },
+                "announce_interval": {
+                    "type": "integer",
+                    "default": 1,
+                    "description": "Specifies the logarithm of the mean interval in seconds with base 2 for a master port to send announce messages. The range depends on the chosen profile:\n  * AES67-2015: 0 to 4. These values result in a range of 1 to 16 seconds.\n  * Default: 0 to 4. These values result in a range of 1 to 16 seconds.\n  * SMPTE-2059-2: -3 to 1. These values result in a range of 0.125 to 2 seconds.\nThe value is applied to all PTP-enabled fabric links.",
+                    "minimum": -3,
+                    "maximum": 16
+                },
+                "announce_timeout": {
+                    "type": "integer",
+                    "default": 3,
+                    "description": "Specifies the number of announce messages that the system waits before the PTP announce message is considered expired. The range and the default depend on the chosen PTP profile:\n  * AES67-2015: 2 to 10.\n  * Default: 2 to 10.\n  * SMPTE-2059-2: 2 to 10.\nThe value is applied to all PTP-enabled fabric links.",
+                    "minimum": 2,
+                    "maximum": 10
+                },
+                "delay_request_interval": {
+                    "type": "integer",
+                    "default": -2,
+                    "description": "Specifies the logarithm of the mean interval in seconds with base 2 for a slave port to send delay request messages. The range depends on the chosen PTP profile:\n  * AES67-2015: -3 to 5. These values result in a range of 0.125 to 32 seconds.\n  * Default: 0 to 5. These values result in a range of 0.5 to 2 seconds.\n  * SMPTE-2059-2: 0 to 5. These values result in a range of 0.5 to 2 seconds.\nThe value is applied to all PTP-enabled fabric links.",
+                    "minimum": -3,
+                    "maximum": 32
+                },
+                "global_domain": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "Specifies the PTP domain number. Although multiple PTP domains are not supported in Cisco ACI, you can still change the domain number used in Cisco ACI. The same value is used on all leaf and spine nodes.  The valid range of values is 0 to 128. The default is 0.",
+                    "minimum": 0,
+                    "maximum": 128
+                },
+                "global_priority_1": {
+                    "type": "integer",
+                    "default": 255,
+                    "description": "Specifies a value that is used to decide the grandmaster clock. The same value is used on all leaf and spine nodes. The ftag0 root spine switch uses the configured value, minus 1.  The valid range of values is 1 to 255. The default is 255 so that the root spine of ftag0 tree can be the grandmaster in case there is no external node that can serve as the grandmaster.",
+                    "minimum": 1,
+                    "maximum": 255
+                },
+                "global_priority_2": {
+                    "type": "integer",
+                    "default": 255,
+                    "description": "Specifies a value that is used to decide the grandmaster clock. The same value is used on all leaf and spine nodes. The ftag0 root spine switch uses the configured value, minus 1.  The valid range of values is 1 to 255. The default is 255 so that the root spine of ftag0 tree can be the grandmaster in case there is no external node that can serve as the grandmaster.",
+                    "minimum": 1,
+                    "maximum": 255
+                },
+                "precision_time_protocol": {
+                    "type": "string",
+                    "default": "enabled",
+                    "description": "Specifies the protocol administrative state. The state can be:\n  * disabled — PTP is disabled on all leaf and spine nodes.\n  * enabled: (default) — PTP is enabled on all fabric links that belong to the ftag tree with ID 0 (ftag0 tree), which is one of the internal tree topologies that is automatically built based on Cisco ACI infra ISIS for loop free connectivity between all leaf and spine nodes in each pod.",
+                    "enum": [
+                        "disabled",
+                        "enabled"
+                    ]
+                },
+                "ptp_profile": {
+                    "type": "string",
+                    "default": "AES67-2015",
+                    "description": "Specifies the PTP profile, which defines the range and default value of various PTP parameters, such as intervals. The values are:\n  * AES67-2015: (default) — AES67-2015, which is the standard for audio over Ethernet and audio over IP interoperability.\n  * Default — IEEE 1588-2008, which is the default PTP profile for clock synchronization.\n  * SMPTE-2059-2 — SMTPE ST2059-2015, which is the standard for video over IP.\nThe profile is applied to all PTP-enabled fabric links.",
+                    "enum": [
+                        "AES67-2015",
+                        "Default",
+                        "SMPTE-2059-2"
+                    ]
+                },
+                "sync_interval": {
+                    "type": "integer",
+                    "default": -3,
+                    "description": "Specifies the logarithm of the mean interval in seconds with base 2 for a master port to send synchronization messages. The range and the default depend on the chosen PTP profile:\n  * AES67-2015: -4 to 1. These values result in a range of 0.0625 to 16 seconds.\n  * Default: -1 to 1. These values result in a range of 0.5 to 2 seconds.\n  * SMPTE-2059-2: -4 to -1. These values result in a range of 0.0625 to 0.5 seconds. SMPTE defines this as -7 to -1. However, Cisco ACI allows only -4 to -1 for hardware and software stability.\nThe value is applied to all PTP-enabled fabric links.",
+                    "minimum": 0,
+                    "maximum": 0
+                }
+            },
+            "title": "ptp_and_latency_measurementity_preference - PTP and Latency Measurement."
+        },
+        "SystemSettings:RecommendedSettings": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Recommended Settings.",
+            "properties": {
+                "coop_group": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Apply the recommended settings for the COOP Group in System Settings.  See defaults/system_settings.yaml to view these settings."
+                },
+                "endpoint_controls": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "endpoint_controls - Attributes are:\n  * ep_loop_protection\n  * ip_aging\n  * rouge_ep_control",
+                    "properties": {
+                        "ep_loop_protection": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Apply the recommended settings for the EP Loop Protection in Endpoint Controls in System Settings.  See defaults/system_settings.yaml to view these settings."
+                        },
+                        "ip_aging": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Apply the recommended settings for the IP Aging in Endpoint Controls in System Settings.  See defaults/system_settings.yaml to view these settings."
+                        },
+                        "rouge_ep_control": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Apply the recommended settings for the Rouge EP Control in Endpoint Controls in System Settings.  See defaults/system_settings.yaml to view these settings."
+                        }
+                    }
+                },
+                "fabric_wide_settings": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Apply the recommended settings for the Fabric Wide Settings, in System Settings.  See defaults/system_settings.yaml to view these settings."
+                },
+                "global_aes_encryption_settings": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Apply the recommended settings for the Global AES Encryption Settngs, in System Settings.  See defaults/system_settings.yaml to view these settings."
+                },
+                "isis_policy": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Apply the recommended settings for the ISIS Policy in System Settings.  See defaults/system_settings.yaml to view these settings."
+                },
+                "port_tracking": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Apply the recommended settings for the Port Tracking in System Settings.  See defaults/system_settings.yaml to view these settings."
+                },
+                "ptp_and_latency_measurement": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Apply the recommended settings for the PTP and Latency Measurement in System Settings.  See defaults/system_settings.yaml to view these settings."
+                }
+            },
+            "title": "recommended_settings - Recommended Settings."
+        }
+    }
+}

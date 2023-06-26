@@ -5,13 +5,14 @@ defaults:
       interface_to_use_for_external_connections: inband
     bgp:
       autonomous_system_number: 65000
-    bgp_route_reflector:
+    bgp_route_reflectors:
       # Remember to Test without
       pods:
         - pod_id: 1
           route_reflector_nodes: [101, 102]
     coop_group:
       annotation: ''
+      description: ''
       type: strict
     endpoint_controls:
       annotation: ''
@@ -46,7 +47,9 @@ defaults:
       spine_opflex_client_authentication: true
       spine_ssl_opflex: true
     global_aes_encryption_settings:
+      annotation: ''
       clear_passphrase: false
+      description: ''
       enable_encryption: true
       passphrase_key_derivation_version: v1
     isis_policy:
