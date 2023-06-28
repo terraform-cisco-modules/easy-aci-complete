@@ -5,13 +5,16 @@ defaults:
       authentication:
         aaa:
           console:
+            annotation: ''
             login_domain: ''
             realm: local
           default:
+            annotation: ''
             fallback_domain_avialability: false
             login_domain: ''
             realm: local
           icmp_reachability:
+            annotation: ''
             retries: 1
             timeout: 5
             use_icmp_reachable_providers_only: true
@@ -47,6 +50,7 @@ defaults:
             username: 'default'
           timeout: 5
       security:
+        annotation: ''
         lockout_user:
           enable_lockout: 'disable'
           lockout_duration: 60
@@ -62,11 +66,11 @@ defaults:
         user_passwords_to_store_count: 5
         web_session_idle_timeout: 1200
         web_token_timeout: 600
-    external-data-collectors:
+    external_data_collectors:
       smart_callhome:
         admin_state: enabled
         annotation: ''
-        contact_information: ''
+        contact_information: '' # If undefined it will use customer_contact_email
         contract_id: ''
         customer_contact_email: ''
         customer_id: ''
@@ -76,9 +80,9 @@ defaults:
             email: admin@example.com
             format: short-txt # aml|short-txt|xml
             rfc_compliant: true
-        from_email: ''
+        from_email: '' # If undefined it will use customer_contact_email
         phone_contact: ''
-        reply_to_email: ''
+        reply_to_email: '' # If undefined it will use customer_contact_email
         site_id: ''
         smtp_server:
             management_epg: default
@@ -113,7 +117,7 @@ defaults:
             transport: udp
         show_milliseconds_in_timestamp: false
         show_time_zone_in_timestamp: false
-    import-export:
+    import_export:
       configuration_backups:
         annotation: ''
         description: ''
