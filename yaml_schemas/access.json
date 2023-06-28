@@ -4,7 +4,7 @@
     "definitions": {
         "AccessWelcome": {
             "type": "object",
-            "description": "Access => Access Policies.",
+            "description": "Fabric => Access Policies.",
             "additionalProperties": false,
             "properties": {
                 "access": {
@@ -37,7 +37,7 @@
                     "$ref": "#/definitions/Switches"
                 }
             },
-            "title": "Access => Access Policies"
+            "title": "Fabric => Access Policies"
         },
         "Domain": {
             "type": "object",
@@ -83,7 +83,7 @@
                     "$ref": "#/definitions/Interfaces:SpineInterfaces"
                 }
             },
-            "title": "interfaces - Access => Access Policies => Interfaces"
+            "title": "interfaces - Fabric => Access Policies => Interfaces"
         },
         "Interfaces:LeafInterfaces": {
             "type": "object",
@@ -305,8 +305,7 @@
                         "description": "The Name of the Span Destination Group.",
                         "minLength": 1,
                         "maxLength": 64,
-                        "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                        "optional": false
+                        "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                     }
                 },
                 "span_source_groups": {
@@ -317,8 +316,7 @@
                         "description": "The Name of the Span Source Group.",
                         "minLength": 1,
                         "maxLength": 64,
-                        "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                        "optional": false
+                        "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                     }
                 },
                 "spanning_tree_interface_policy": {
@@ -545,8 +543,7 @@
                         "description": "Name of the Leaf Interface - Bundle Policy Group.",
                         "minLength": 1,
                         "maxLength": 64,
-                        "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                        "optional": false
+                        "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                     }
                 },
                 "port_channel_policy": {
@@ -589,8 +586,7 @@
                         "description": "The Name of the Span Destination Group.",
                         "minLength": 1,
                         "maxLength": 64,
-                        "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                        "optional": false
+                        "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                     }
                 },
                 "span_source_groups": {
@@ -601,8 +597,7 @@
                         "description": "The Name of the Span Source Group.",
                         "minLength": 1,
                         "maxLength": 64,
-                        "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                        "optional": false
+                        "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                     }
                 },
                 "spanning_tree_interface_policy": {
@@ -2024,7 +2019,7 @@
             "required": [
                 "vlan"
             ],
-            "title": "Access => Access Policies => Pools"
+            "title": "Fabric => Access Policies => Pools"
         },
         "Pools:VLAN": {
             "type": "object",
@@ -2126,7 +2121,7 @@
                     "$ref": "#/definitions/Switches:SpineSwitches"
                 }
             },
-            "title": "switches - Access => Access Policies => Switches"
+            "title": "switches - Fabric => Access Policies => Switches"
         },
         "Switches:LeafSwitches": {
             "type": "object",

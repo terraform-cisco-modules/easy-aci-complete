@@ -12,10 +12,13 @@ defaults:
         isis_policy: default
         macsec_policy: default
         management_access_policy: default
+        name: '**REQUIRED**'
         snmp_policy: default
       profile:
         annotation: ''
         description: ''
+        name: '**REQUIRED**'
+        policy_group: default
         pod_selector_type: ALL # ALL or range
         pods: [1, 2] # Beginning and Ending pod ID's if type is changed to range
     policies:
@@ -33,13 +36,13 @@ defaults:
             preferred: false
           ip_version_preference: IPv4
           management_epg: default
+          name: '**REQUIRED**'
       interface:
         l3_interface:
           annotation: ''
           bfd_isis_policy_configuration: enabled
           description: ''
       monitoring:
-        common_policy:
         fabric_node_controls:
           annotation: ''
           description: ''
@@ -47,22 +50,24 @@ defaults:
           feature_selections: telemetry # analytics, netflow, telemetry
       pod:
         date_and_time:
-          annotation: ''
           administrative_state: enabled
+          annotation: ''
           authentication_keys:
             authentication_type: sha1
             key_id: 0
             trusted: true
           description: ''
           display_format: local
-          master_mode: disabled
-          ntp_servers:
-            preferred: false
-            key_id: 0
-          key_id: 0
           management_epg: default
+          master_mode: disabled
           maximum_polling_interval: 6
           minimum_polling_interval: 5
+          name: '**REQUIRED**'
+          ntp_servers:
+            description: ''
+            ntp_server: '**REQUIRED**'
+            key_id: 0
+            preferred: false
           offset_state: enabled
           server_state: enabled
           stratum_value: 8
@@ -78,6 +83,7 @@ defaults:
               faults: true
               session_logs: false
           location: ''
+          name: '**REQUIRED**'
           snmp_client_groups:
               clients:
                 address: '**REQUIRED**'

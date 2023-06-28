@@ -1,4 +1,3 @@
-Transfer protocol to be used for data export of object File Remote Path .  Allowed values are:
-\n  * ftp
-\n  * scp
-\n  * sftp: (default)
+
+
+
