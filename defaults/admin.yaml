@@ -3,22 +3,22 @@ defaults:
   admin:
     aaa:
       authentication:
-        aaa:
-          console:
+        authentication_default_settings:
+          console_authentication:
             annotation: ''
             login_domain: ''
             realm: local
-          default:
+          default_authentication:
             annotation: ''
-            fallback_domain_avialability: false
+            fallback_check: false
             login_domain: ''
             realm: local
-          icmp_reachability:
+          remote_authentication:
             annotation: ''
+            ping_check: true
+            remote_user_login_policy: no-login
             retries: 1
             timeout: 5
-            use_icmp_reachable_providers_only: true
-          remote_user_login_policy: no-login
         radius:
           annotation: ''
           authorization_protocol: pap

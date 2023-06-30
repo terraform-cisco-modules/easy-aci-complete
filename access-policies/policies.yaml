@@ -21,10 +21,9 @@ access:
           physical_domains: [access]
           vmm_domains: [Asgard]
       dhcp_relay:
-        - name_addr_list: [
-            [ad1, 10.101.128.15],
-            [ad2, 10.101.128.16]
-          ]
+        - dhcp_servers: 
+            - 10.101.128.15
+            - 10.101.128.15
           epg: prod
           epg_type: external_epg
           l3out: asgard-prod

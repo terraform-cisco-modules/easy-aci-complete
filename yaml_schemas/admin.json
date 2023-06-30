@@ -43,7 +43,7 @@
             "additionalProperties": false,
             "properties": {
                 "authentication": {
-                    "description": "authentication - Attributes are:\n  * aaa\n  * radius\n  * tacacs",
+                    "description": "authentication - Attributes are:\n  * authentication_default_settings\n  * radius\n  * tacacs",
                     "$ref": "#/definitions/Admin:AAA:Authentication"
                 },
                 "security": {
@@ -58,49 +58,53 @@
             "additionalProperties": false,
             "description": "Authentication",
             "properties": {
-                "aaa": {
-                    "description": "aaa - Attributes are:\n  * console\n  * default\n  * icmp_reachability\n  * remote_user_login_policy",
-                    "$ref": "#/definitions/Admin:AAA:Authentication:AAA"
+                "authentication_default_settings": {
+                    "description": "Attributes are:\n  * console_authentication\n  * default_authentication\n  * remote_authentication\n",
+                    "$ref": "#/definitions/Admin:AAA:Authentication:AuthenticationDefaultSettings"
                 },
                 "radius": {
-                    "description": "radius - Required Attributes are:\n  * hosts\n  * login_domain\n\nOptional Attributes are:\n  * annotation\n  * authorization_protocol\n  * description\n  * management_epg\n  * port\n  * retries\n  * server_monitoring\n  * timeout\n  * type",
+                    "description": "Required Attributes are:\n  * hosts\n  * login_domain\n\nOptional Attributes are:\n  * annotation\n  * authorization_protocol\n  * description\n  * management_epg\n  * port\n  * retries\n  * server_monitoring\n  * timeout\n  * type",
                     "items": {
                         "$ref": "#/definitions/Admin:AAA:Authentication:Radius"
-                    }
+                    },
+                    "title": "radius - Admin => AAA => Authentication: Login Domains/Providers."
                 },
                 "tacacs": {
-                    "description": "tacacs - Required Attributes are:\n  * hosts\n  * login_domain\n\nOptional Attributes are:\n  * accounting_include\n  * annotation\n  * authorization_protocol\n  * description\n  * management_epg\n  * port\n  * retries\n  * server_monitoring\n  * timeout",
+                    "description": "Required Attributes are:\n  * hosts\n  * login_domain\n\nOptional Attributes are:\n  * accounting_include\n  * annotation\n  * authorization_protocol\n  * description\n  * management_epg\n  * port\n  * retries\n  * server_monitoring\n  * timeout",
                     "items": {
                         "$ref": "#/definitions/Admin:AAA:Authentication:Tacacs"
-                    }
+                    },
+                    "title": "tacacs - Admin => AAA => Authentication: Login Domains/Providers."
                 }
             },
             "title": "aaa - Admin => AAA => Authentication."
         },
-        "Admin:AAA:Authentication:AAA": {
+        "Admin:AAA:Authentication:AuthenticationDefaultSettings": {
             "type": "object",
             "additionalProperties": false,
             "description": "Authentication Default Settings.  \n  * console\n  * default\n  * icmp_reachability\n  * remote_user_login_policy",
             "properties": {
-                "console": {
+                "console_authentication": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "console - Attributes are:\n  * login_domain\n  * realm",
+                    "description": "Attributes are:\n  * login_domain\n  * realm",
                     "properties": {
                         "annotation": {
                             "type": "string",
                             "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
                             "minLength": 1,
                             "maxLength": 128,
-                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                            "title": "annotation"
                         },
                         "login_domain": {
                             "type": "string",
-                            "default": "",
+                            "default": "default",
                             "description": "Name of the Login Domain to assign to console authentication.",
                             "minLength": 1,
                             "maxLength": 64,
-                            "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                            "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                            "title": "login_domain"
                         },
                         "realm": {
                             "type": "string",
@@ -115,38 +119,42 @@
                                 "rsa",
                                 "saml",
                                 "tacacs"
-                            ]
+                            ],
+                            "title": "realm"
                         }
                     },
                     "required": [
                         "realm"
                     ],
-                    "title": "import_export - Admin => Import/Export - Configuration Backups with Export Policies, Remote Locations, and Schedulers"
+                    "title": "console_authentication - Admin => AAA => Authentication: Authentication Default Settings: Console Authentication."
                 },
-                "default": {
+                "default_authentication": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "default - Attributes are:\n  * fallback_domain_avialability\n  * login_domain\n  * realm",
+                    "description": "default - Attributes are:\n  * fallback_check\n  * login_domain\n  * realm",
                     "properties": {
                         "annotation": {
                             "type": "string",
                             "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
                             "minLength": 1,
                             "maxLength": 128,
-                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                            "title": "annotation"
                         },
-                        "fallback_domain_avialability": {
+                        "fallback_check": {
                             "type": "boolean",
                             "default": false,
-                            "description": "Flag to allow fallback to local authentication in the event the login_domain is unavailable."
+                            "description": "Flag to allow fallback to local authentication in the event the Login Domain is unavailable.",
+                            "title": "fallback_check"
                         },
                         "login_domain": {
                             "type": "string",
-                            "default": "",
+                            "default": "default",
                             "description": "Name of the Login Domain to assign to default authentication.",
                             "minLength": 1,
                             "maxLength": 64,
-                            "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                            "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                            "title": "login_domain"
                         },
                         "realm": {
                             "type": "string",
@@ -161,57 +169,65 @@
                                 "rsa",
                                 "saml",
                                 "tacacs"
-                            ]
+                            ],
+                            "title": "realm"
                         }
                     },
                     "required": [
                         "realm"
-                    ]
+                    ],
+                    "title": "default_authentication - Admin => AAA => Authentication: Authentication Default Settings: Default Authentication."
                 },
-                "icmp_reachability": {
+                "remote_authentication": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "icmp_reachability - Attributes are:\n  * retries\n  * timeout\n  * use_icmp_reachable_providers_only",
+                    "description": "Attributes are:\n  * ping_check\n  * remote_user_login_policy\n  * retries\n  * timeout",
                     "properties": {
                         "annotation": {
                             "type": "string",
                             "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
                             "minLength": 1,
                             "maxLength": 128,
-                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                            "title": "annotation"
+                        },
+                        "ping_check": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Heart beat ping checks for RADIUS/TACACS/LDAP/SAML/RSA server reachability.",
+                            "title": "ping_check"
+                        },
+                        "remote_user_login_policy": {
+                            "type": "string",
+                            "default": "no-login",
+                            "description": "The default role policy of remote user. Allowed values are:\n  * assign-default-role\n  * no-login: (default)",
+                            "enum": [
+                                "assign-default-role",
+                                "no-login"
+                            ],
+                            "title": "remote_user_login_policy"
                         },
                         "retries": {
                             "type": "integer",
                             "default": 1,
                             "description": "The number of attempts that the authentication method is tried. Allowed range: '0-5'.  Default is 1.",
                             "minimum": 0,
-                            "maximum": 5
+                            "maximum": 5,
+                            "title": "retries"
                         },
                         "timeout": {
                             "type": "integer",
                             "default": 5,
                             "description": "The amount of time between authentication attempts. Allowed range: '1-60'.  Default is 5.",
                             "minimum": 1,
-                            "maximum": 60
-                        },
-                        "use_icmp_reachable_providers_only": {
-                            "type": "boolean",
-                            "default": false,
-                            "description": "Heart beat ping checks for RADIUS/TACACS/LDAP/SAML/RSA server reachability."
+                            "maximum": 60,
+                            "title": "timeout"
                         }
-                   }
-                },
-                "remote_user_login_policy": {
-                    "type": "string",
-                    "default": "no-login",
-                    "description": "The default role policy of remote user. Allowed values are:\n  * assign-default-role\n  * no-login: (default)",
-                    "enum": [
-                        "assign-default-role",
-                        "no-login"
-                    ]
+                   },
+                   "title": "remote_authentication - Admin => AAA => Authentication: Authentication Default Settings: Remote Authentication."
                 }
             },
-            "title": "aaa - Admin => Authentication => Authentication Default Settings."
+            "title": "authentication_default_settings - Admin => AAA => Authentication: Authentication Default Settings"
         },
         "Admin:AAA:Authentication:Radius": {
             "type": "object",
@@ -223,7 +239,8 @@
                     "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "annotation"
                 },
                 "authorization_protocol": {
                     "type": "string",
@@ -233,14 +250,17 @@
                         "chap",
                         "mschap",
                         "pap"
-                    ]
+                    ],
+                    "title": "authorization_protocol"
                 },
                 "description": {
                     "type": "string",
+                    "default": "default",
                     "description": "Description to add to the Object.  The description can be up to 128 characters.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "description"
                 },
                 "hosts": {
                     "type": "array",
@@ -248,19 +268,22 @@
                     "description": "List of RADIUS Providers to add to the Login Domain.  The Priority will be assigned based on the order of the providers added.",
                     "items": {
                         "type": "string",
+                        "default": "198.18.18.12",
                         "description": "RADIUS Provider",
                         "minLength": 7,
                         "maxLength": 128,
                         "pattern": "(^(((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|((([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)+([A-Za-z|[A-Za-z][A-Za-z0-9\\-]*[A-Za-z0-9])))$|(?:^|(?<=\\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\\s|$))"
-                    }
+                    },
+                    "title": "hosts"
                 },
                 "login_domain": {
                     "type": "string",
-                    "default": "",
+                    "default": "default",
                     "description": "A Name for the Login Domain to Assign these RADIUS Providers to.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "login_domain"
                 },
                 "management_epg": {
                     "type": "string",
@@ -268,21 +291,24 @@
                     "description": "The name of the Management EPG to assign to the hosts.  Default is 'default'.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "management_epg"
                 },
                 "port": {
                     "type": "integer",
                     "default": 1812,
                     "description": "The UDP port number to be used when making connections to the RADIUS daemon. The range is from 1 to 65535.  Default is 1812.",
                     "minimum": 1,
-                    "maximum": 65535
+                    "maximum": 65535,
+                    "title": "port"
                 },
                 "retries": {
                     "type": "integer",
                     "default": 1,
                     "description": "The number of retries when contacting the TACACS+ endpoint. The range is from 0 to 5 retries. The default is 1.",
                     "minimum": 0,
-                    "maximum": 5
+                    "maximum": 5,
+                    "title": "retries"
                 },
                 "server_monitoring": {
                     "type": "object",
@@ -292,24 +318,28 @@
                         "admin_state": {
                             "type": "boolean",
                             "default": false,
-                            "description": "Administrative State of Server Monitoring."
+                            "description": "Administrative State of Server Monitoring.",
+                            "title": "annotation"
                         },
                         "username": {
                             "type": "string",
-                            "default": "",
+                            "default": "monitoring",
                             "description": "The username to assign to the server monitoring configuration.",
                             "minLength": 1,
                             "maxLength": 128,
-                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                            "title": "username"
                         }
-                    }
+                    },
+                    "title": "server_monitoring"
                 },
                 "timeout": {
                     "type": "integer",
                     "default": 5,
                     "description": "The period of time (in seconds) the device will wait for a response from the daemon before it times out and declares an error. The range is from 1 to 60 seconds. The default is 5 seconds. If set to 0, the AAA provider timeout is used.",
                     "minimum": 0,
-                    "maximum": 60
+                    "maximum": 60,
+                    "title": "timeout"
                 },
                 "type": {
                     "type": "string",
@@ -318,7 +348,8 @@
                     "enum": [
                         "duo",
                         "radius"
-                    ]
+                    ],
+                    "title": "type"
                 }
             },
             "required": [
@@ -340,31 +371,37 @@
                         "audit_logs": {
                             "type": "boolean",
                             "default": true,
-                            "description": "Include Audit Logs.  Default is true."
+                            "description": "Include Audit Logs.  Default is true.",
+                            "title": "audit_logs"
                         },
                         "events": {
                             "type": "boolean",
                             "default": false,
-                            "description": "Include Events.  Default is false."
+                            "description": "Include Events.  Default is false.",
+                            "title": "events"
                         },
                         "faults": {
                             "type": "boolean",
                             "default": false,
-                            "description": "Include Faults.  Default is false."
+                            "description": "Include Faults.  Default is false.",
+                            "title": "faults"
                         },
                         "session_logs": {
                             "type": "boolean",
                             "default": true,
-                            "description": "Include Session Logs.  Default is false."
+                            "description": "Include Session Logs.  Default is false.",
+                            "title": "session_logs"
                         }
-                    }
+                    },
+                    "title": "accounting_include"
                 },
                 "annotation": {
                     "type": "string",
                     "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "annotation"
                 },
                 "authorization_protocol": {
                     "type": "string",
@@ -374,14 +411,17 @@
                         "chap",
                         "mschap",
                         "pap"
-                    ]
+                    ],
+                    "title": "authorization_protocol"
                 },
                 "description": {
                     "type": "string",
+                    "default": "default",
                     "description": "Description to add to the Object.  The description can be up to 128 characters.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "description"
                 },
                 "hosts": {
                     "type": "array",
@@ -389,19 +429,22 @@
                     "description": "List of TACACS+ Providers to add to the Login Domain.  The Priority will be assigned based on the order of the providers added.",
                     "items": {
                         "type": "string",
+                        "default": "198.18.1.49",
                         "description": "TACACS+ Provider",
                         "minLength": 7,
                         "maxLength": 128,
                         "pattern": "(^(((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|((([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)+([A-Za-z|[A-Za-z][A-Za-z0-9\\-]*[A-Za-z0-9])))$|(?:^|(?<=\\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\\s|$))"
-                    }
+                    },
+                    "title": "hosts"
                 },
                 "login_domain": {
                     "type": "string",
-                    "default": "",
+                    "default": "default",
                     "description": "A Name for the Login Domain to Assign these TACACS+ Providers to.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "login_domain"
                 },
                 "management_epg": {
                     "type": "string",
@@ -409,21 +452,24 @@
                     "description": "The name of the Management EPG to assign to the hosts.  Default is 'default'.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "management_epg"
                 },
                 "port": {
                     "type": "integer",
                     "default": 49,
                     "description": "The TCP port number to be used when making connections to the TACACS+ daemon. The range is from 1 to 65535. The default is 49.",
                     "minimum": 1,
-                    "maximum": 65535
+                    "maximum": 65535,
+                    "title": "port"
                 },
                 "retries": {
                     "type": "integer",
                     "default": 1,
                     "description": "The number of retries when contacting the TACACS+ endpoint. The range is from 0 to 5 retries. The default is 1.",
                     "minimum": 0,
-                    "maximum": 5
+                    "maximum": 5,
+                    "title": "retries"
                 },
                 "server_monitoring": {
                     "type": "object",
@@ -433,24 +479,28 @@
                         "admin_state": {
                             "type": "boolean",
                             "default": false,
-                            "description": "Administrative State of Server Monitoring."
+                            "description": "Administrative State of Server Monitoring.",
+                            "title": "admin_state"
                         },
                         "username": {
                             "type": "string",
-                            "default": "",
+                            "default": "monitoring",
                             "description": "The username to assign to the server monitoring configuration.",
                             "minLength": 1,
                             "maxLength": 128,
-                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                            "title": "username"
                         }
-                    }
+                    },
+                    "title": "server_monitoring"
                 },
                 "timeout": {
                     "type": "integer",
                     "default": 5,
                     "description": "The period of time (in seconds) the device will wait for a response from the daemon before it times out and declares an error. The range is from 1 to 60 seconds. The default is 5 seconds. If set to 0, the AAA provider timeout is used.",
                     "minimum": 0,
-                    "maximum": 60
+                    "maximum": 60,
+                    "title": "timeout"
                 },
                 "type": {
                     "type": "string",
@@ -459,7 +509,8 @@
                     "enum": [
                         "duo",
                         "radius"
-                    ]
+                    ],
+                    "title": "type"
                 }
             },
             "required": [
@@ -485,51 +536,59 @@
                             "enum": [
                                 "disable",
                                 "enable"
-                            ]
+                            ],
+                            "title": "enable_lockout"
                         },
                         "lockout_duration": {
                             "type": "integer",
                             "default": 60,
                             "description": "Duration in minutes for which login should be blocked.Duration in minutes for which future logins should be blocked Allowed range is 1-1440.  Default is 60.",
                             "minimum": 1,
-                            "maximum": 1440
+                            "maximum": 1440,
+                            "title": "lockout_duration"
                         },
                         "max_failed_attempts": {
                             "type": "integer",
                             "default": 5,
                             "description": "Maximum continuous failed logins before blocking user.max failed login attempts before blocking user login Allowed range is 1-15.  Default is 5.",
                             "minimum": 1,
-                            "maximum": 15
+                            "maximum": 15,
+                            "title": "max_failed_attempts"
                         },
                         "max_failed_attempts_window": {
                             "type": "integer",
                             "default": 5,
                             "description": "Time period for maximum continuous failed logins.times in minutes for max login failures to occur before blocking the user Allowed range is 1-720.  Default is 5.",
                             "minimum": 1,
-                            "maximum": 720
+                            "maximum": 720,
+                            "title": "max_failed_attempts_window"
                         }
-                    }
+                    },
+                    "title": "lockout_user"
                 },
                 "maximum_validity_period": {
                     "type": "integer",
                     "default": 24,
                     "description": "Maximum Validity Period in hours.The maximum validity period for a web token. Allowed range is 4-24.  Default is 24.",
                     "minimum": 4,
-                    "maximum": 24
+                    "maximum": 24,
+                    "title": "maximum_validity_period"
                 },
                 "no_change_interval": {
                     "type": "integer",
                     "default": 24,
                     "description": "No Password Change Interval in Hours.A minimum period after a password change before the user can change the password again. Allowed range is 0-745.  Default is 24.",
                     "minimum": 0,
-                    "maximum": 745
+                    "maximum": 745,
+                    "title": "no_change_interval"
                 },
                 "password_change_interval": {
                     "type": "integer",
                     "default": 48,
                     "description": "A time interval for limiting the number of password changes. Allowed range is 0-745. The default is 48.",
                     "minimum": 0,
-                    "maximum": 745
+                    "maximum": 745,
+                    "title": "password_change_interval"
                 },
                 "password_change_interval_enforce": {
                     "type": "string",
@@ -538,47 +597,54 @@
                     "enum": [
                         "disable",
                         "enable"
-                    ]
+                    ],
+                    "title": "password_change_interval_enforce"
                 },
                 "password_changes_within_interval": {
                     "type": "integer",
                     "default": 2,
                     "description": "Number of Password Changes in Interval.  The number of password changes allowed within the change interval. Allowed range is 0-10. The default is 2.",
                     "minimum": 0,
-                    "maximum": 10
+                    "maximum": 10,
+                    "title": "password_changes_within_interval"
                 },
                 "password_expiration_warn_time": {
                     "type": "integer",
                     "default": 15,
                     "description": "Password Expiration Warn Time in Days.  A warning period before password expiration. A warning will be displayed when a user logs in within this number of days of an impending password expiration. Allowed range is 0-30. The default is 15.",
                     "minimum": 0,
-                    "maximum": 30
+                    "maximum": 30,
+                    "title": "password_expiration_warn_time"
                 },
                 "password_strength_check": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Password Strength Check.  The password strength check specifies if the system enforces the strength of the user password."
+                    "description": "Password Strength Check.  The password strength check specifies if the system enforces the strength of the user password.",
+                    "title": "password_strength_check"
                 },
                 "user_passwords_to_store_count": {
                     "type": "integer",
                     "default": 5,
                     "description": "Password History Count.  How many retired passwords are stored in a user's password history. Allowed range is 0-15. The default is 5.",
                     "minimum": 0,
-                    "maximum": 15
+                    "maximum": 15,
+                    "title": "user_passwords_to_store_count"
                 },
                 "web_session_idle_timeout": {
                     "type": "integer",
                     "default": 1200,
                     "description": "GUI Idle Timeout in Seconds.  The maximum interval time the GUI remains idle before login needs to be refreshed. Allowed range is 60-65525. The default is 1200.",
                     "minimum": 60,
-                    "maximum": 65525
+                    "maximum": 65525,
+                    "title": "web_session_idle_timeout"
                 },
                 "web_token_timeout": {
                     "type": "integer",
                     "default": 600,
                     "description": "Timeout in Seconds.  The web token timeout interval. Allowed range is 300-9600. The default is 600.",
                     "minimum": 300,
-                    "maximum": 9600
+                    "maximum": 9600,
+                    "title": "web_token_timeout"
                 }
             },
             "title": "security - Admin => AAA => Security."
@@ -589,16 +655,18 @@
             "description": "Admin => External Data Collectors",
             "properties": {
                 "smart_callhome": {
-                    "description": "smart_callhome - Required Attributes are:\n  * contract_id\n  * customer_contact_email\n  * name\n  *smart_destinations\n  *smtp_server\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * contact_information\n  * customer_contact_email\n  * customer_id\n  * description\n  * from_email\n  * phone_contact\n  * reply_to_email\n  * site_id\n  * street_address",
+                    "description": "Required Attributes are:\n  * contract_id\n  * customer_contact_email\n  * name\n  *smart_destinations\n  *smtp_server\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * contact_information\n  * customer_contact_email\n  * customer_id\n  * description\n  * from_email\n  * phone_contact\n  * reply_to_email\n  * site_id\n  * street_address",
                     "items": {
                         "$ref": "#/definitions/Admin:ExternalDataCollectors:SmartCallhome"
-                    }
+                    },
+                    "title": "smart_callhome - Admin => External Data Collectors => Smart Callhome."
                 },
                 "syslog": {
-                    "description": "syslog - Required Attributes are:\n  * name\n  * remote_destinations\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * console_destination\n  * description\n  * format\n  * include_types\n  * local_file_destination\n  * min_severity\n  * show_milliseconds_in_timestamp\n  * show_time_zone_in_timestamp",
+                    "description": "Required Attributes are:\n  * name\n  * remote_destinations\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * console_destination\n  * description\n  * format\n  * include_types\n  * local_file_destination\n  * min_severity\n  * show_milliseconds_in_timestamp\n  * show_time_zone_in_timestamp",
                     "items": {
                         "$ref": "#/definitions/Admin:ExternalDataCollectors:Syslog"
-                    }
+                    },
+                    "title": "syslog - Admin => External Data Collectors => Syslog."
                 }
             },
             "title": "external_data_collectors - Admin => External Data Collectors."
@@ -615,74 +683,88 @@
                     "enum": [
                         "disabled",
                         "enabled"
-                    ]
+                    ],
+                    "title": "admin_state"
                 },
                 "annotation": {
                     "type": "string",
                     "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "annotation"
                 },
                 "contact_information": {
                     "type": "string",
-                    "format": "idn-email",
                     "description": "The customer contact Identifier. Note that the customer ID associated with the Smart Callhome configuration in Cisco UCS must be the CCO (Cisco.com) account name associated with a support contract that includes Smart Callhome.  If undefined it will use customer_contact_email.",
+                    "format": "idn-email",
                     "minLength": 8,
                     "maxLength": 128,
-                    "pattern": "^([A-Za-z\\d]|[A-Za-z\\d](([a-zA-Z0-9,=\\.!\\-#|\\$%\\^&*\\+/\\?_\\{\\}~]+)*)[a-zA-Z0-9,=!\\-#|\\$%\\^&\\*\\+/\\?_\\{\\}~])@(?:[0-9a-zA-Z-]+\\.)+[a-zA-Z]{2,9}$"
+                    "pattern": "^([A-Za-z\\d]|[A-Za-z\\d](([a-zA-Z0-9,=\\.!\\-#|\\$%\\^&*\\+/\\?_\\{\\}~]+)*)[a-zA-Z0-9,=!\\-#|\\$%\\^&\\*\\+/\\?_\\{\\}~])@(?:[0-9a-zA-Z-]+\\.)+[a-zA-Z]{2,9}$",
+                    "title": "contact_information"
                 },
                 "contract_id": {
                     "type": "integer",
+                    "default": 222222222,
                     "description": "The contract information provided by the customer.",
                     "minimum": 100000000,
-                    "maximum": 999999999
+                    "maximum": 999999999,
+                    "title": "contract_id"
                 },
                 "customer_contact_email": {
                     "type": "string",
-                    "format": "idn-email",
+                    "default": "admin@example.com",
                     "description": "The email address of the contact for the system or site. This address is not necessarily the same as the reply-to addresses used in the outgoing emails.",
+                    "format": "idn-email",
                     "minLength": 8,
                     "maxLength": 128,
-                    "pattern": "^([A-Za-z\\d]|[A-Za-z\\d](([a-zA-Z0-9,=\\.!\\-#|\\$%\\^&*\\+/\\?_\\{\\}~]+)*)[a-zA-Z0-9,=!\\-#|\\$%\\^&\\*\\+/\\?_\\{\\}~])@(?:[0-9a-zA-Z-]+\\.)+[a-zA-Z]{2,9}$"
+                    "pattern": "^([A-Za-z\\d]|[A-Za-z\\d](([a-zA-Z0-9,=\\.!\\-#|\\$%\\^&*\\+/\\?_\\{\\}~]+)*)[a-zA-Z0-9,=!\\-#|\\$%\\^&\\*\\+/\\?_\\{\\}~])@(?:[0-9a-zA-Z-]+\\.)+[a-zA-Z]{2,9}$",
+                    "title": "customer_contact_email"
                 },
                 "description": {
                     "type": "string",
+                    "default": "default",
                     "description": "Description to add to the Object.  The description can be up to 128 characters.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "description"
                 },
                 "from_email": {
                     "type": "string",
-                    "format": "idn-email",
                     "description": "The email address of the sender.  If undefined it will use customer_contact_email.",
+                    "format": "idn-email",
                     "minLength": 8,
                     "maxLength": 128,
-                    "pattern": "^([A-Za-z\\d]|[A-Za-z\\d](([a-zA-Z0-9,=\\.!\\-#|\\$%\\^&*\\+/\\?_\\{\\}~]+)*)[a-zA-Z0-9,=!\\-#|\\$%\\^&\\*\\+/\\?_\\{\\}~])@(?:[0-9a-zA-Z-]+\\.)+[a-zA-Z]{2,9}$"
+                    "pattern": "^([A-Za-z\\d]|[A-Za-z\\d](([a-zA-Z0-9,=\\.!\\-#|\\$%\\^&*\\+/\\?_\\{\\}~]+)*)[a-zA-Z0-9,=!\\-#|\\$%\\^&\\*\\+/\\?_\\{\\}~])@(?:[0-9a-zA-Z-]+\\.)+[a-zA-Z]{2,9}$",
+                    "title": "from_email"
                 },
                 "name": {
                     "type": "string",
-                    "default": "",
+                    "default": "default",
                     "description": "A Name for the Smart Callhome Policy.  Recommend 'default'",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "name"
                 },
                 "phone_contact": {
                     "type": "string",
+                    "default": "+1 (408) 555-5555",
                     "description": "The customer contact phone number.",
                     "minLength": 8,
                     "maxLength": 128,
-                    "pattern": "^[\\d\\+\\(\\) \\-\\./ext]+$"
+                    "pattern": "^[\\d\\+\\(\\) \\-\\./ext]+$",
+                    "title": "phone_contact"
                 },
                 "reply_to_email": {
                     "type": "string",
-                    "format": "idn-email",
                     "description": "The reply-to email address for emails sent.  If undefined it will use customer_contact_email.",
+                    "format": "idn-email",
                     "minLength": 8,
                     "maxLength": 128,
-                    "pattern": "^([A-Za-z\\d]|[A-Za-z\\d](([a-zA-Z0-9,=\\.!\\-#|\\$%\\^&*\\+/\\?_\\{\\}~]+)*)[a-zA-Z0-9,=!\\-#|\\$%\\^&\\*\\+/\\?_\\{\\}~])@(?:[0-9a-zA-Z-]+\\.)+[a-zA-Z]{2,9}$"
+                    "pattern": "^([A-Za-z\\d]|[A-Za-z\\d](([a-zA-Z0-9,=\\.!\\-#|\\$%\\^&*\\+/\\?_\\{\\}~]+)*)[a-zA-Z0-9,=!\\-#|\\$%\\^&\\*\\+/\\?_\\{\\}~])@(?:[0-9a-zA-Z-]+\\.)+[a-zA-Z]{2,9}$",
+                    "title": "reply_to_email"
                 },
                 "smart_destinations": {
                     "type": "array",
@@ -698,15 +780,18 @@
                                 "enum": [
                                     "disabled",
                                     "enabled"
-                                ]
+                                ],
+                                "title": "admin_state"
                             },
                             "email": {
                                 "type": "string",
-                                "format": "idn-email",
+                                "default": "admin@example.com",
                                 "description": "The email address of the destination/receiver.",
+                                "format": "idn-email",
                                 "minLength": 8,
                                 "maxLength": 128,
-                                "pattern": "^([A-Za-z\\d]|[A-Za-z\\d](([a-zA-Z0-9,=\\.!\\-#|\\$%\\^&*\\+/\\?_\\{\\}~]+)*)[a-zA-Z0-9,=!\\-#|\\$%\\^&\\*\\+/\\?_\\{\\}~])@(?:[0-9a-zA-Z-]+\\.)+[a-zA-Z]{2,9}$"
+                                "pattern": "^([A-Za-z\\d]|[A-Za-z\\d](([a-zA-Z0-9,=\\.!\\-#|\\$%\\^&*\\+/\\?_\\{\\}~]+)*)[a-zA-Z0-9,=!\\-#|\\$%\\^&\\*\\+/\\?_\\{\\}~])@(?:[0-9a-zA-Z-]+\\.)+[a-zA-Z]{2,9}$",
+                                "title": "email"
                             },
                             "format": {
                                 "type": "string",
@@ -716,24 +801,28 @@
                                     "aml",
                                     "short-txt",
                                     "xml"
-                                ]
+                                ],
+                                "title": "format"
                             },
                             "rfc_compliant": {
                                 "type": "boolean",
                                 "default": true,
-                                "description": "Flag to send messages only to be sent in RFC-compliant formats."
+                                "description": "Flag to send messages only to be sent in RFC-compliant formats.",
+                                "title": "rfc_compliant"
                             }
                         },
                         "required": [
                             "email"
                         ]
-                    }
+                    },
+                    "title": "smart_destinations"
                 },
                 "site_id": {
                     "type": "integer",
                     "description": "The site ID provided by the customer. This is the ID of the network where the site is deployed.",
-                    "minimum": 9,
-                    "maximum": 9
+                    "minimum": 100000000,
+                    "maximum": 999999999,
+                    "title": "site_id"
                 },
                 "smtp_server": {
                     "type": "object",
@@ -742,10 +831,12 @@
                     "properties": {
                         "host": {
                             "type": "string",
+                            "default": "smtp-server.example.com",
                             "description": "The hostname or IP for the Smart Callhome destination group profile. Smart Callhome sends email messages to either the IP address or hostname and the associated port number.",
                             "minLength": 1,
                             "maxLength": 64,
-                            "pattern": "(^(((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|((([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)+([A-Za-z|[A-Za-z][A-Za-z0-9\\-]*[A-Za-z0-9])))$|(?:^|(?<=\\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\\s|$))"
+                            "pattern": "(^(((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|((([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)+([A-Za-z|[A-Za-z][A-Za-z0-9\\-]*[A-Za-z0-9])))$|(?:^|(?<=\\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\\s|$))",
+                            "title": "host"
                         },
                         "management_epg": {
                             "type": "string",
@@ -753,34 +844,39 @@
                             "description": "The name of the Management EPG to assign to the server.  Default is 'default'.",
                             "minLength": 1,
                             "maxLength": 64,
-                            "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                            "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                            "title": "management_epg"
                         },
                         "port_number": {
                             "type": "integer",
                             "default": 25,
                             "description": "The SMTP server port number for the Smart Callhome destination group profile. Note that you must configure the SMTP server address for the Smart Callhome functionality to work. You can also configure the from and reply-to e-mail addresses. The port rage is from 0 to 65535.  Default is 25.",
                             "minimum": 1,
-                            "maximum": 65535
+                            "maximum": 65535,
+                            "title": "port_number"
                         },
                         "username": {
                             "type": "string",
                             "description": "Username for the smtp server when secure_smtp is enabled.",
                             "minLength": 1,
                             "maxLength": 128,
-                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                            "title": "username"
                         }
                     },
                     "required": [
                         "management_epg",
                         "host"
-                    ]
+                    ],
+                    "title": "smtp_server"
                 },
                 "street_address": {
                     "type": "string",
                     "description": "The Street Address of the customer.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "street_address"
                 }
             },
             "required": [
@@ -804,19 +900,21 @@
                     "enum": [
                         "disabled",
                         "enabled"
-                    ]
+                    ],
+                    "title": "admin_state"
                 },
                 "annotation": {
                     "type": "string",
                     "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "annotation"
                 },
                 "console_destination": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "console_destination - Attributes are:\n  * admin_state\n  * severity\nSyslog settings for Console.",
+                    "description": "Attributes are:\n  * admin_state\n  * severity\nSyslog settings for Console.",
                     "properties": {
                         "admin_state": {
                             "type": "string",
@@ -825,7 +923,8 @@
                             "enum": [
                                 "disabled",
                                 "enabled"
-                            ]
+                            ],
+                            "title": "admin_state"
                         },
                         "severity": {
                             "type": "string",
@@ -835,19 +934,23 @@
                                 "alerts",
                                 "critical",
                                 "emergencies"
-                            ]
+                            ],
+                            "title": "severity"
                         }
                     },
                     "required": [
                         "severity"
-                    ]
+                    ],
+                    "title": "console_destination"
                 },
                 "description": {
                     "type": "string",
+                    "default": "default",
                     "description": "Description to add to the Object.  The description can be up to 128 characters.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "description"
                 },
                 "format": {
                     "type": "string",
@@ -857,34 +960,40 @@
                         "aci",
                         "nxos",
                         "rfc5424-ts"
-                    ]
+                    ],
+                    "title": "format"
                 },
                 "include_types": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "accounting_include - Attributes are:\n  * audit_logs\n  * events\n  * faults\n  * session_logs\nManagement Messages to include in the accounting log",
+                    "description": "Attributes are:\n  * audit_logs\n  * events\n  * faults\n  * session_logs\nManagement Messages to include in the accounting log",
                     "properties": {
                         "audit_logs": {
                             "type": "boolean",
                             "default": false,
-                            "description": "Include Audit Logs.  Default is false."
+                            "description": "Include Audit Logs.  Default is false.",
+                            "title": "audit_logs"
                         },
                         "events": {
                             "type": "boolean",
                             "default": false,
-                            "description": "Include Events.  Default is false."
+                            "description": "Include Events.  Default is false.",
+                            "title": "events"
                         },
                         "faults": {
                             "type": "boolean",
                             "default": true,
-                            "description": "Include Faults.  Default is true."
+                            "description": "Include Faults.  Default is true.",
+                            "title": "faults"
                         },
                         "session_logs": {
                             "type": "boolean",
                             "default": false,
-                            "description": "Include Session Logs.  Default is false."
+                            "description": "Include Session Logs.  Default is false.",
+                            "title": "session_logs"
                         }
-                    }
+                    },
+                    "title": "include_types"
                 },
                 "local_file_destination": {
                     "type": "object",
@@ -898,7 +1007,8 @@
                             "enum": [
                                 "disabled",
                                 "enabled"
-                            ]
+                            ],
+                            "title": "admin_state"
                         },
                         "severity": {
                             "type": "string",
@@ -913,12 +1023,14 @@
                                 "notifications",
                                 "information",
                                 "debugging"
-                            ]
+                            ],
+                            "title": "severity"
                         }
                     },
                     "required": [
                         "severity"
-                    ]
+                    ],
+                    "title": "local_file_destination"
                 },
                 "min_severity": {
                     "type": "string",
@@ -933,14 +1045,17 @@
                         "notifications",
                         "information",
                         "debugging"
-                    ]
+                    ],
+                    "title": "min_severity"
                 },
                 "name": {
                     "type": "string",
+                    "default": "default",
                     "description": "The name for the Syslog Profile.  Recommend 'default'",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "name"
                 },
                 "remote_destinations": {
                     "type": "array",
@@ -956,7 +1071,8 @@
                                 "enum": [
                                     "disabled",
                                     "enabled"
-                                ]
+                                ],
+                                "title": "admin_state"
                             },
                             "forwarding_facility": {
                                 "type": "string",
@@ -971,7 +1087,8 @@
                                     "local5",
                                     "local6",
                                     "local7"
-                                ]
+                                ],
+                                "title": "forwarding_facility"
                             },
                             "hosts": {
                                 "type": "array",
@@ -979,11 +1096,13 @@
                                 "additionalProperties": false,
                                 "items": {
                                     "type": "string",
+                                    "default": "198.18.1.62",
                                     "description": "The hostname or IP address for export destination.",
                                     "minLength": 7,
                                     "maxLength": 128,
                                     "pattern": "(^(((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|((([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)+([A-Za-z|[A-Za-z][A-Za-z0-9\\-]*[A-Za-z0-9])))$|(?:^|(?<=\\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\\s|$))"
-                                }
+                                },
+                                "title": "hosts"
                             },
                             "management_epg": {
                                 "type": "string",
@@ -991,14 +1110,16 @@
                                 "description": "The name of the Management EPG to assign to the server.  Default is 'default'.",
                                 "minLength": 1,
                                 "maxLength": 64,
-                                "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                                "title": "management_epg"
                             },
                             "port": {
                                 "type": "integer",
                                 "default": 514,
                                 "description": "The syslog service port of the remote destination. The range is from 1 to 65535.  The default is 514.",
                                 "minimum": 1,
-                                "maximum": 65535
+                                "maximum": 65535,
+                                "title": "port"
                             },
                             "severity": {
                                 "type": "string",
@@ -1013,7 +1134,8 @@
                                     "notifications",
                                     "information",
                                     "debugging"
-                                ]
+                                ],
+                                "title": "severity"
                             },
                             "transport": {
                                 "type": "string",
@@ -1023,23 +1145,27 @@
                                     "ssl",
                                     "tcp",
                                     "udp"
-                                ]
+                                ],
+                                "title": "transport"
                             }
                         },
                         "required": [
                             "hosts"
                         ]
-                    }
+                    },
+                    "title": "remote_destinations"
                 },
                 "show_milliseconds_in_timestamp": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Include msec in the log timestamp.  Default is false."
+                    "description": "Include msec in the log timestamp.  Default is false.",
+                    "title": "show_milliseconds_in_timestamp"
                 },
                 "show_time_zone_in_timestamp": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Include the local time zone in the log timestamp.  Default is false."
+                    "description": "Include the local time zone in the log timestamp.  Default is false.",
+                    "title": "show_time_zone_in_timestamp"
                 }
             },
             "required": [
@@ -1054,10 +1180,11 @@
             "additionalProperties": false,
             "properties": {
                 "configuration_backups": {
-                    "description": "configuration_backups - Required Attributes are:\n  * name\n  * remote_hosts\n\nAdditional Attributes are:\n  * annotation\n  * description\nImport/Export > Export Policies > Configuration\n  * format\n  * include_secure_fields\n  * max_snapshot_count\n  * snapshot\n  * start_now\nImport/Export > Remote Locations\n  * authentication_type\n  * management_epg\n  * protocol\n  * remote_hosts\n  * remote_path\n  * remote_port\n  * username\nSchedulers > Fabric\n  * delay_between_node_upgrades\n  * maximum_concurrent_nodes\n  * maximum_running_time\n  * processing_break\n  * processing_size_capacity\n  * schedule\n  * window_type",
+                    "description": "Required Attributes are:\n  * name\n  * remote_hosts\n\nAdditional Attributes are:\n  * annotation\n  * description\nImport/Export > Export Policies > Configuration\n  * format\n  * include_secure_fields\n  * max_snapshot_count\n  * snapshot\n  * start_now\nImport/Export > Remote Locations\n  * authentication_type\n  * management_epg\n  * protocol\n  * remote_hosts\n  * remote_path\n  * remote_port\n  * username\nSchedulers > Fabric\n  * delay_between_node_upgrades\n  * maximum_concurrent_nodes\n  * maximum_running_time\n  * processing_break\n  * processing_size_capacity\n  * schedule\n  * window_type",
                     "items": {
                         "$ref": "#/definitions/Admin:ImportExport:ConfigurationBackups"
-                    }
+                    },
+                    "title": "configuration_backups - Admin => Import/Export - Configuration Backups with Export Policies, Remote Locations, and Schedulers"
                 }
             },
             "required": [
@@ -1075,7 +1202,8 @@
                     "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "annotation"
                 },
                 "authentication_type": {
                     "type": "string",
@@ -1084,21 +1212,25 @@
                     "enum": [
                         "usePassword",
                         "useSshKeyContents"
-                    ]
+                    ],
+                    "title": "authentication_type"
                 },
                 "delay_between_node_upgrades": {
                     "type": "integer",
                     "default": 0,
                     "description": "Delay between node upgrades. Delay between node upgrades in seconds. Range: '0-18000'.  The default is 0.",
                     "minimum": 0,
-                    "maximum": 18000
+                    "maximum": 18000,
+                    "title": "delay_between_node_upgrades"
                 },
                 "description": {
                     "type": "string",
+                    "default": "default",
                     "description": "Description to add to the Object.  The description can be up to 128 characters.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "description"
                 },
                 "format": {
                     "type": "string",
@@ -1107,12 +1239,14 @@
                     "enum": [
                         "json",
                         "xml"
-                    ]
+                    ],
+                    "title": "format"
                 },
                 "include_secure_fields": {
                     "type": "boolean",
                     "default": false,
-                    "description": "This requires the Global AES Setting to be enabled for this to be set to true.  Default is false."
+                    "description": "This requires the Global AES Setting to be enabled for this to be set to true.  Default is false.",
+                    "title": "include_secure_fields"
                 },
                 "management_epg": {
                     "type": "string",
@@ -1120,35 +1254,41 @@
                     "description": "The name of the Management EPG to assign to the server.  Default is 'default'.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "management_epg"
                 },
                 "max_snapshot_count": {
                     "type": "integer",
                     "default": 0,
                     "description": "A value between 0-10.  The default is 0.",
                     "minimum": 0,
-                    "maximum": 10
+                    "maximum": 10,
+                    "title": "max_snapshot_count"
                 },
                 "maximum_concurrent_nodes": {
                     "type": "integer",
                     "default": 0,
                     "description": "The concurrency capacity limit. This is the maximum number of tasks that can be processed concurrently.  The default is 0.",
                     "minimum": 0,
-                    "maximum": 100
+                    "maximum": 100,
+                    "title": "maximum_concurrent_nodes"
                 },
                 "maximum_running_time": {
                     "type": "integer",
                     "default": 0,
                     "description": "The processing time capacity limit. This is the maximum duration of the window. The range is 0 to (2^64 - 1) milliseconds. The default value of 0 indicates unlimited, meaning there is no time limit enforced on the scheduler window.  The default is 0.",
                     "minimum": 0,
-                    "maximum": 18446744073709551615
+                    "maximum": 18446744073709551615,
+                    "title": "maximum_running_time"
                 },
                 "name": {
                     "type": "string",
+                    "default": "default",
                     "description": "Name of your Configuration Backup Policy.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "name"
                 },
                 "processing_break": {
                     "type": "string",
@@ -1156,14 +1296,16 @@
                     "description": "A period of time taken between processing of items within the concurrency cap. Allowed Min Value: '00:00:00:00.001'(Format is DD:HH:MM:SS.Milliseconds).\n* NOTE: (If user sets '00:00:00:00.000' as a value, provider will accept it but it'll set it as 'none').",
                     "minLength": 4,
                     "maxLength": 15,
-                    "pattern": "^(none|([\\d]{2}:){3}\\.[\\d]{3})$"
+                    "pattern": "^(none|([\\d]{2}:){3}\\.[\\d]{3})$",
+                    "title": "processing_break"
                 },
                 "processing_size_capacity": {
                     "type": "integer",
                     "default": 0,
                     "description": "Processing size capacity limitation specification. Indicates the limit of items to be processed within this window. Range: 1-65535.  The default is 0.",
                     "minimum": 0,
-                    "maximum": 10
+                    "maximum": 10,
+                    "title": "processing_size_capacity"
                 },
                 "protocol": {
                     "type": "string",
@@ -1173,7 +1315,8 @@
                         "ftp",
                         "scp",
                         "sftp"
-                    ]
+                    ],
+                    "title": "protocol"
                 },
                 "remote_hosts": {
                     "type": "array",
@@ -1181,11 +1324,13 @@
                     "additionalProperties": false,
                     "items": {
                         "type": "string",
+                        "default": "198.18.1.22",
                         "description": "The hostname or IP address for the export destination.",
                         "minLength": 7,
                         "maxLength": 128,
                         "pattern": "(^(((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|((([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)+([A-Za-z|[A-Za-z][A-Za-z0-9\\-]*[A-Za-z0-9])))$|(?:^|(?<=\\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\\s|$))"
-                    }
+                    },
+                    "title": "remote_hosts"
                 },
                 "remote_path": {
                     "type": "string",
@@ -1193,24 +1338,28 @@
                     "description": "Remote Path on the Hosts.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "remote_path"
                 },
                 "remote_port": {
                     "type": "integer",
                     "default": 22,
                     "description": "Remote Protocol Port 0-65535.  The default is 22.",
                     "mini": 0,
-                    "maximum": 10
+                    "maximum": 10,
+                    "title": "remote_port"
                 },
                 "snapshot": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Flag to set Snapshot for object configuration export policy.  Default is false."
+                    "description": "Flag to set Snapshot for object configuration export policy.  Default is false.",
+                    "title": "snapshot"
                 },
                 "start_now": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Flag to start the export now.  Default is false."
+                    "description": "Flag to start the export now.  Default is false.",
+                    "title": "start_now"
                 },
                 "schedule": {
                     "type": "object",
@@ -1232,23 +1381,27 @@
                                 "every-day",
                                 "even-day",
                                 "odd-day"
-                            ]
+                            ],
+                            "title": "days"
                         },
                         "hour": {
                             "type": "integer",
                             "default": 23,
                             "description": "The hour that the recurring window begins.  The default is 23.",
                             "minimum": 0,
-                            "maximum": 24
+                            "maximum": 24,
+                            "title": "hour"
                         },
                         "minute": {
                             "type": "integer",
                             "default": 45,
                             "description": "The minute that the recurring window begins.  The default is 45.",
                             "minimum": 0,
-                            "maximum": 59
+                            "maximum": 59,
+                            "title": "minute"
                         }
-                    }
+                    },
+                    "title": "schedule"
                 },
                 "username": {
                     "type": "string",
@@ -1256,7 +1409,8 @@
                     "description": "Username for the Remote Host when authentication_type is set to 'usePassword'.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "username"
                 }
             },
             "required": [

@@ -2,12 +2,17 @@
 admin:
   aaa:  
     authentication:
-      aaa:
-        console:
+      authentication_default_settings:
+        console_authentication:
           realm: local
-        default:
+        default_authentication:
           login_domain: TACACS
           realm: tacacs
+        remote_authentication:
+          ping_check: true
+          remote_user_login_policy: no-login
+          retries: 1
+          timeout: 5
       radius:
         - login_domain: RADIUS
           hosts: [198.18.18.12, 198.18.18.13]
@@ -20,9 +25,9 @@ admin:
       web_session_idle_timeout: 65525
   external_data_collectors:
     smart_callhome:
-      - name: default
-        contract_id: 123456789
+      - contract_id: 123456789
         customer_contact_email: rich-lab@cisco.com
+        name: default
         phone_contact: +1 408-555-5555
         smart_destinations:
             - email: rich-lab@cisco.com

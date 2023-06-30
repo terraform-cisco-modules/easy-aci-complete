@@ -40,12 +40,12 @@ defaults:
       leaf_ssl_opflex: true
       reallocate_gipo: false
       restrict_infra_vlan_traffic: false
+      spine_opflex_client_authentication: true
+      spine_ssl_opflex: true
       ssl_opflex_versions:
         TLSv1: false
         TLSv1_1: false
         TLSv1_2: true
-      spine_opflex_client_authentication: true
-      spine_ssl_opflex: true
     global_aes_encryption_settings:
       annotation: ''
       clear_passphrase: false
