@@ -1,6 +1,9 @@
 ---
 tenants:
   - name: common
+    annotations:
+      - key: key_name
+        value: key_value
     networking:
       l3outs:
         - name: asgard-dmz

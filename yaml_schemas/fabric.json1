@@ -4,7 +4,7 @@
     "definitions": {
         "FabricWelcome": {
             "type": "object",
-            "description": "",
+            "description": "Access => Fabric Policies.",
             "additionalProperties": false,
             "properties": {
                 "fabric": {
@@ -22,19 +22,22 @@
             "additionalProperties": false,
             "properties": {
                 "pods": {
-                    "description": "Object Types are:\n  * policy_group\n  * profile",
-                    "$ref": "#/definitions/Fabric:Pods"
+                    "description": "pods - Object Types are:\n  * policy_group\n  * profile",
+                    "$ref": "#/definitions/Fabric:Pods",
+                    "title": "pods - Access => Fabric Policies => Pods"
                 },
                 "policies": {
-                    "description": "Object Types are:\n  * global\n  * interface\n  * monitoring\n  * pod",
-                    "$ref": "#/definitions/Fabric:Policies"
+                    "description": "policies - Object Types are:\n  * global\n  * interface\n  * monitoring\n  * pod",
+                    "$ref": "#/definitions/Fabric:Policies",
+                    "title": "policies - Access => Fabric Policies => Pods"
                 },
                 "recommended_settings": {
-                    "description": "Object Types are:\n  * fabric_node_controls\n  * l3_interface\n  * pods\n  These Default Setting Values can be seen in defaults/fabric.yaml.",
-                    "$ref": "#/definitions/Fabric:RecommendedSettings"
+                    "description": "recommended_settings - Object Types are:\n  * fabric_node_controls\n  * l3_interface\n  * pods",
+                    "$ref": "#/definitions/Fabric:RecommendedSettings",
+                    "title": "recommended_settings - Recommended Settings"
                 }
             },
-            "title": "fabric — Fabric -> Fabric Policies"
+            "title": "Access => Fabric Policies"
         },
         "Fabric:Pods": {
             "type": "object",
@@ -42,117 +45,101 @@
             "additionalProperties": false,
             "properties": {
                 "policy_group": {
-                    "type": "object",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * bgp_route_reflector_policy\n  * coop_group_policy\n  * date_time_policy\n  * description\n  * isis_policy\n  * macsec_policy\n  * management_access_policy\n  * snmp_policy",
+                    "description": "policy_group - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * bgp_route_reflector_policy\n  * coop_group_policy\n  * date_time_policy\n  * description\n  * isis_policy\n  * macsec_policy\n  * management_access_policy\n  * snmp_policy",
                     "$ref": "#/definitions/Fabric:Pods:PolicyGroup"
                 },
                 "profile": {
-                    "type": "object",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * policy_group\n  * pod_selector_type\n  * pods",
+                    "description": "profile - Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * policy_group\n  * pod_selector_type\n  * pods",
                     "$ref": "#/definitions/Fabric:Pods:Profile"
                 }
             },
-            "title": "pods — Fabric -> Fabric Policies -> Pods"
+            "title": "pods - Access => Fabric Policies => Pods"
         },
         "Fabric:Pods:PolicyGroup": {
             "type": "object",
             "additionalProperties": false,
-            "description": "",
             "properties": {
                 "annotation": {
                     "type": "string",
                     "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                 },
                 "bgp_route_reflector_policy": {
                     "type": "string",
                     "default": "default",
-                    "description": "Name of the BGP Route Reflector Policy.",
+                    "description": "The Name of the Global Attachable Entity Profile.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "bgp_route_reflector_policy"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                 },
                 "coop_group_policy": {
                     "type": "string",
                     "default": "default",
-                    "description": "Name of the COOP Group Policy.",
+                    "description": "The Name of the CDP Interface Policy.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "coop_group_policy"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                 },
                 "date_time_policy": {
                     "type": "string",
-                    "default": "default",
-                    "description": "Name of the Data and Time Policy.",
+                    "description": "The Name of the CoPP Interafce Policy.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "date_time_policy"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                 },
                 "description": {
                     "type": "string",
-                    "default": "default",
                     "description": "Description to add to the Object.  The description can be up to 128 characters.",
-                    "minLength": 0,
+                    "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "description"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                 },
                 "isis_policy": {
                     "type": "string",
                     "default": "default",
-                    "description": "Name of the ISIS Policy.",
+                    "description": "The Name of the 802.1X Port Authentication Policy.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "isis_policy"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                 },
                 "macsec_policy": {
                     "type": "string",
                     "default": "default",
-                    "description": "Name of the MACSec Policy.",
+                    "description": "The Name of the Ingress Data Plane Policing Policy.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "macsec_policy"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                 },
                 "management_access_policy": {
                     "type": "string",
                     "default": "default",
-                    "description": "Name of the Management Access Policy.",
+                    "description": "The Name of the Ingress Data Plane Policing Policy.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "management_access_policy"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                 },
                 "name": {
                     "type": "string",
-                    "default": "default",
-                    "description": "Name of the Pod Policy Group.",
+                    "description": "Name of the Leaf Interface - Access Policy Group.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "name"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                 },
                 "snmp_policy": {
                     "type": "string",
                     "default": "default",
-                    "description": "Name of the SNMP Policy.",
+                    "description": "The Name of the PoE Interface Policy.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "snmp_policy"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                 }
             },
             "required": [
                 "name"
             ],
-            "title": "policy_group — Fabric -> Fabric Policies -> Pod -> Policy Group"
+            "title": "policy_group - Pod Policy Group"
         },
         "Fabric:Pods:Profile": {
             "type": "object",
@@ -162,135 +149,120 @@
                 "annotation": {
                     "type": "string",
                     "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 0,
+                    "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                 },
                 "description": {
                     "type": "string",
-                    "default": "default",
                     "description": "Description to add to the Object.  The description can be up to 128 characters.",
-                    "minLength": 0,
+                    "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "description"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                 },
                 "name": {
                     "type": "string",
-                    "default": "default",
-                    "description": "Name of the Pod Profile.",
+                    "description": "Name of the Leaf Interface - Access Policy Group.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "name"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                 },
                 "policy_group": {
                     "type": "string",
                     "default": "default",
-                    "description": "Name of the Pod Policy Group to add to the Selector Group.",
+                    "description": "The Name of the Port Channel Policy.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "policy_group"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                 },
                 "pod_selector_type": {
                     "type": "string",
                     "default": "ALL",
-                    "description": "Options are:\n  * ALL (default): Select all Pods in the Fabric.\n  * range: Select Specific Pods in the Fabric.",
+                    "description": "The Name of the Port Security Policy.",
                     "enum": [
                         "ALL",
                         "range"
-                    ],
-                    "title": "pod_selector_type"
+                    ]
                 },
                 "pods": {
+                    "description": "Beginning and Ending pod ID's if type is changed to range.",
                     "type": "array",
-                    "description": "if pod_selector_type is set to range, enter the starting and ending pods to add to the selector group.\nFormat. [{staring_pod_id}, {ending_pod_id}]",
                     "items": {
                         "type": "integer",
-                        "description": "Number Between 1 and 12.",
+                        "description": "Pod Identifier.",
                         "minimum": 1,
-                        "maximum": 12,
-                        "title": "Pod Identifier"
-                    },
-                    "title": "pods"
+                        "maximum": 12
+                    }
                 }
             },
             "required": [
                 "name"
             ],
-            "title": "profile — Fabric -> Fabric Policies -> Pod -> Profile."
+            "title": "profile - Pod Profile."
         },
         "Fabric:Policies": {
             "type": "object",
-            "description": "",
+            "description": "Object Types are:\n  * global\n  * interface\n  * monitoring",
             "additionalProperties": false,
             "properties": {
                 "global": {
                     "type": "object",
-                    "description": "Attributes are:\n  * dns_profiles",
+                    "description": "global - Attributes are:\n  * dns_profiles",
                     "$ref": "#/definitions/Fabric:Policies:Global"
                 },
                 "interface": {
                     "type": "object",
-                    "description": "Attributes are:\n  * l3_interface",
+                    "description": "interface - Attributes are:\n  * l3_interface",
                     "$ref": "#/definitions/Fabric:Policies:Interface"
                 },
                 "monitoring": {
                     "type": "object",
-                    "description": "Attributes are:\n  * fabric_node_controls",
+                    "description": "monitoring - Attributes are:\n  * fabric_node_controls",
                     "$ref": "#/definitions/Fabric:Policies:Monitoring"
                 },
                 "pod": {
                     "type": "object",
-                    "description": "Attributes are:\n  * date_and_time\n  * snmp",
+                    "description": "pod - Attributes are:\n  * date_and_time\n  * snmp",
                     "$ref": "#/definitions/Fabric:Policies:Pod"
                 }
             },
-            "title": "policies — Fabric -> Fabric Policies -> Policies"
+            "title": "PhysicalAndExternalDomains - Physical and External Domains"
         },
         "Fabric:Policies:Global": {
             "type": "object",
+            "description": "BLAH",
             "additionalProperties": false,
-            "description": "",
             "properties": {
                 "dns_profiles": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * dns_domains\n  * dns_providers\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * ip_version_preference\n  * management_epg",
+                    "description": "dns_profiles - Required Attributes are:\n  * dns_domains\n  * dns_providers\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * ip_version_preference\n  * management_epg",
                     "items": {
                         "$ref": "#/definitions/Fabric:Policies:Global:DnsProfiles"
-                    },
-                    "title": "dns_profiles — Policies -> Global -> dns_profiles"
+                    }
                 }
             },
-            "title": "global — Policies -> Global"
+            "title": "global - Policies => Global => DNS Profiles."
         },
         "Fabric:Policies:Global:DnsProfiles": {
             "type": "object",
-            "additionalProperties": false,
-            "description": "",
             "properties": {
                 "annotation": {
                     "type": "string",
                     "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                 },
                 "description": {
                     "type": "string",
-                    "default": "default",
                     "description": "Description to add to the Object.  The description can be up to 128 characters.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "description"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                 },
                 "dns_domains": {
                     "type": "array",
-                    "description": "The DNS domain uses a hierarchical scheme for establishing host names for network nodes and allows local control of the segments of the network through a client-server scheme. The DNS system can locate a network device by translating the hostname of the device into its associated IP address.",
+                    "description": "A List of Layer3 Domains to Attach to this AAEP Policy.",
                     "items": {
                         "type": "object",
                         "additionalProperties": false,
@@ -298,102 +270,87 @@
                         "properties": {
                             "domain": {
                                 "type": "string",
-                                "default": "example.com",
-                                "description": "The Domain Name.",
+                                "description": "Description to add to the Object.  The description can be up to 128 characters.",
                                 "minLength": 1,
                                 "maxLength": 128,
-                                "pattern": "^(?!-)[A-Za-z0-9-]+([\\-\\.]{1}[a-z0-9]+)*\\.[A-Za-z]{2,6}$",
-                                "title": "domain"
+                                "pattern": "^(?!-)[A-Za-z0-9-]+([\\-\\.]{1}[a-z0-9]+)*\\.[A-Za-z]{2,6}$"
                             },
                             "default_domain": {
                                 "type": "boolean",
                                 "default": false,
-                                "description": "Indicates whether this domain is the default domain. Only one domain in the group can be the default. Default is false.",
-                                "title": "default_domain"
+                                "description": "Description to add to the Object.  The description can be up to 128 characters."
                             },
                             "description": {
                                 "type": "string",
-                                "default": "default",
                                 "description": "Description to add to the Object.  The description can be up to 128 characters.",
                                 "minLength": 1,
                                 "maxLength": 128,
-                                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                                "title": "description"
+                                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                             }
                                     
                         },
                         "required": [
                             "domain"
-                        ],
-                        "title": "dns_domains — DNS Domains"
+                        ]
                     }
                 },
                 "dns_providers": {
                     "type": "array",
-                    "description": "The DNS provider is a DNS server that uses a hierarchical scheme for establishing host names for network nodes, which local control of the segments of the network through a client-server scheme. The DNS system can locate a network device by translating the hostname of the device into its associated IP address.",
+                    "description": "A List of Layer3 Domains to Attach to this AAEP Policy.",
                     "items": {
                         "type": "object",
                         "additionalProperties": false,
-                        "description": "Required Attributes:\n  * dns_provider\n\nOptional Attributes:\n  * description\n  * preferred",
+                        "description": "Name of a L3 Domain Policy",
                         "properties": {
                             "description": {
                                 "type": "string",
-                                "default": "default",
                                 "description": "Description to add to the Object.  The description can be up to 128 characters.",
                                 "minLength": 1,
                                 "maxLength": 128,
-                                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                                "title": "description"
+                                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                             },
                             "dns_provider": {
                                 "type": "string",
-                                "default": "208.67.220.220",
-                                "description": "The IPv4 or IPv6 address of the DNS provider.",
+                                "description": "Description to add to the Object.  The description can be up to 128 characters.",
                                 "minLength": 7,
                                 "maxLength": 128,
-                                "pattern": "^((([1-9]|[1-9][0-9]{1}|1[0-9]{2}|2[0-1][0-9]|22[0-3])\\.)(([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))\\.){2}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$|^(([a-fA-F]|[a-fA-F][a-fA-F0-9\\-]*[a-fA-F0-9])\\.)*([A-Fa-f]|[A-Fa-f][A-Fa-f0-9\\-]*[A-Fa-f0-9])$|^(?:(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-fA-F]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,1}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,2}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,3}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:[0-9a-fA-F]{1,4})):)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,4}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,5}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,6}(?:(?:[0-9a-fA-F]{1,4})))?::)))))$",
-                                "title": "dns_provider"
+                                "pattern": "^\\s*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))\\s*$)|(^\\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?\\s*$"
                             },
                             "preferred": {
                                 "type": "boolean",
                                 "default": false,
-                                "description": "pecifies if this the preferred provider. Only one provider in the group should be preferred.  Default is false.",
-                                "title": "preferred"
+                                "description": "Description to add to the Object.  The description can be up to 128 characters."
                             }
                         },
                         "required": [
                             "dns_provider"
-                        ],
-                        "title": "dns_providers — DNS Providers"
+                        ]
                     }
                 },
                 "ip_version_preference": {
                     "type": "string",
                     "default": "IPv4",
-                    "description": "The preferred IP protocol to perform DNS Lookups with.",
+                    "description": "Name of the Attachable Access Entity Profile Policy.",
                     "enum": [
                         "IPv4",
                         "IPv6"
-                    ],
-                    "title": "ip_version_preference"
+                    ]
                 },
                 "management_epg": {
                     "type": "string",
                     "default": "default",
-                    "description": "The Name of the management EPG.",
+                    "description": "Name of the Attachable Access Entity Profile Policy.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "management_epg"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                 },
                 "name": {
                     "type": "string",
                     "default": "default",
-                    "description": "Name for the DNS Profile.",
+                    "description": "Name of the Attachable Access Entity Profile Policy.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "name"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                 }
             },
             "required": [
@@ -401,110 +358,103 @@
                 "dns_providers",
                 "name"
             ],
-            "title": "dns_profiles — DNS Profiles"
+            "title": "dns_profiles - DNS Profiles"
         },
         "Fabric:Policies:Interface": {
             "type": "object",
-            "description": "",
+            "description": "BLAH",
             "additionalProperties": false,
             "properties": {
                 "l3_interface": {
                     "type": "object",
-                    "description": "Required Attributes are:\n  * bfd_isis_policy_configuration",
+                    "description": "l3_interface - Required Attributes are:\n  * bfd_isis_policy_configuration",
                     "$ref": "#/definitions/Fabric:Policies:Interface:L3Interface"
                 }
             },
-            "title": "interface — Policies -> Interface."
+            "title": "global - Policies => Global => DNS Profiles."
         },
         "Fabric:Policies:Interface:L3Interface": {
             "type": "object",
             "additionalProperties": false,
-            "description": "",
             "properties": {
                 "annotation": {
                     "type": "string",
                     "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                 },
                 "bfd_isis_policy_configuration": {
                     "default": "enabled",
-                    "description": "State ( enabled or disabled) of the BFD-IS-IS policy configuration.\n  * enabled: (default)\n  * disabled",
+                    "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                     "enum": [
                         "disabled",
                         "enabled"
-                    ],
-                    "title": "bfd_isis_policy_configuration"
+                    ]
                 },
                 "description": {
                     "type": "string",
                     "description": "Description to add to the Object.  The description can be up to 128 characters.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "description"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                 }
             },
             "required": [
                 "bfd_isis_policy_configuration"
             ],
-            "title": "l3_interface — Interface -> L3 Interface"
+            "title": "l3_interface - Interface => L3 Interface"
         },
         "Fabric:Policies:Monitoring": {
             "type": "object",
-            "description": "",
+            "description": "BLAH",
             "additionalProperties": false,
             "properties": {
                 "fabric_node_controls": {
                     "type": "object",
-                    "description": "Attributes are:\n  * annotation\n  * description\n  * enable_dom\n  * feature_selections",
+                    "description": "fabric_node_controls - Attributes are:\n  * annotation\n  * description\n  * enable_dom\n  * feature_selections",
                     "$ref": "#/definitions/Fabric:Policies:Monitoring:FabricNodeControls"
                 }
             },
-            "title": "monitoring — Policies -> Monitoring."
+            "title": "monitoring - Policies => Monitoring."
         },
         "Fabric:Policies:Monitoring:FabricNodeControls": {
             "type": "object",
             "additionalProperties": false,
-            "description": "",
             "properties": {
                 "annotation": {
                     "type": "string",
                     "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                 },
                 "description": {
                     "type": "string",
                     "description": "Description to add to the Object.  The description can be up to 128 characters.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "description"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                 },
                 "enable_dom": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "A check box that enables or disables digital optical monitoring (DOM) for the fabric node control.\n  * true: (default) — Enables digital optical monitoring.\n  * false — Disables digital optical monitoring.",
-                    "title": "enable_dom"
+                    "default": "Dom",
+                    "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
+                    "enum": [
+                        "Dom",
+                        "enabled"
+                    ]
                 },
                 "feature_selections": {
-                    "type": "string",
                     "default": "telemetry",
-                    "description": "ACI switch hardware supports either NetFlow or Cisco Tetration Analytics, but not both. If the APIC pushes both Cisco Tetration Analytics and NetFlow configurations to a particular node, the chosen priority flag alerts the switch as to which feature should be given priority. The other feature’s configuration is ignored.\n  * analytics — Analytic priority downloads the Cisco Tetration Analytics sensor software for installation on the switches.\n  * netflow — Netflow priority downloads and installs the Cisco Netflow configuration on the switches to analyze network traffic.\n  * telemetry: (default) — Telemetry priority is used in conjunction with the Network Insight Resources APIC App. This policy enables Cisco Telemetry configuration on the switches to analyze network traffic.",
+                    "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                     "enum": [
                         "analytics",
                         "netflow",
                         "telemetry"
-                    ],
-                    "title": "feature_selections"
+                    ]
                 }
             },
-            "title": "fabric_node_controls — Policies -> Monitoring -> Fabric Node Controls."
+            "title": "fabric_node_controls - Policies => Monitoring => Fabric Node Controls."
         },
         "Fabric:Policies:Pod": {
             "type": "object",
@@ -513,27 +463,23 @@
             "properties": {
                 "date_and_time": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n  * ntp_servers\n\nOptional Attributes are:\n  * annotation\n  * administrative_state\n  * authentication_keys\n  * description\n  * display_format\n  * master_mode\n  * key_id\n  * management_epg\n  * maximum_polling_interval\n  * minimum_polling_interval\n  * offset_state\n  * server_state\n  * stratum_value\n  * time_zone",
+                    "description": "date_and_time - Required Attributes are:\n  * name\n  * ntp_servers\n\nOptional Attributes are:\n  * annotation\n  * administrative_state\n  * authentication_keys\n  * description\n  * display_format\n  * master_mode\n  * key_id\n  * management_epg\n  * maximum_polling_interval\n  * minimum_polling_interval\n  * offset_state\n  * server_state\n  * stratum_value\n  * time_zone",
                     "items": {
                         "$ref": "#/definitions/Fabric:Policies:Pod:DateAndTime"
-                    },
-                    "title": "date_and_time — Policies -> Pod -> Date and Time."
+                    }
                 },
                 "snmp": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n  * snmp_client_groups\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * contact\n  * description\n  * include_types\n  * location\n  * snmp_communities\n  * snmp_destinations\n  * users",
+                    "description": "snmp - Required Attributes are:\n  * name\n  * snmp_client_groups\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * contact\n  * description\n  * include_types\n  * location\n  * snmp_communities\n  * snmp_destinations\n  * users",
                     "items": {
                         "$ref": "#/definitions/Fabric:Policies:Pod:SNMP"
-                    },
-                    "title": "snmp — Policies -> Pod -> snmp."
+                    }
                 }
             },
-            "title": "pod — Policies -> Pod"
+            "title": "pod - Policies => Pod"
         },
         "Fabric:Policies:Pod:DateAndTime": {
             "type": "object",
-            "additionalProperties": false,
-            "description": "BLAH",
             "properties": {
                 "administrative_state": {
                     "type": "string",
@@ -560,7 +506,7 @@
                     "items": {
                         "type": "object",
                         "additionalProperties": false,
-                        "description": "authentication_keys — Required Attributes are:\n  * key_id\n\nOptional Attributes are:\n  * authentication_type\n  * trusted",
+                        "description": "authentication_keys - Required Attributes are:\n  * key_id\n\nOptional Attributes are:\n  * authentication_type\n  * trusted",
                         "properties": {
                             "authentication_type": {
                                 "type": "string",
@@ -575,7 +521,7 @@
                             "key_id": {
                                 "type": "integer",
                                 "default": 1,
-                                "description": "The user-configured NTP client authentication key identifier. The NTP client authentication key is for authenticating time synchronization.  This is a reference to the Sensitive Variable ntp_key_{1-5}, which should be loaded into the environment as TF_VAR_ntp_key_{1-5}.",
+                                "description": "The user-configured NTP client authentication key identifier. The NTP client authentication key is for authenticating time synchronization.  This is a reference to the Sensitive Variable ntp_key_{1-5}, which should be loaded into the environment as TF_VAR_ntp_key_{1-5}",
                                 "minimum": 1,
                                 "maximum": 5,
                                 "title": "key_id"
@@ -658,11 +604,11 @@
                 "ntp_servers": {
                     "type": "array",
                     "additionalProperties": false,
-                    "description": "Required Attributes are:\n  * ntp_server\n\nOptional Attributes are:\n  * description\n  * key_id\n  * preferred",
+                    "description": "Required Attributes are:\nntp_server\n\nOptional Attributes are:\n  * description\n  * key_id\n  * preferred",
                     "items": {
                         "type": "object",
                         "additionalProperties": false,
-                        "description": "",
+                        "description": "List of NTP Servers.  Required Attributes are:\n  * ntp_server",
                         "properties": {
                             "description": {
                                 "type": "string",
@@ -697,9 +643,9 @@
                         },
                         "required": [
                             "ntp_server"
-                        ]
-                    },
-                    "title": "ntp_servers"
+                        ],
+                        "title": "ntp_servers"
+                    }
                 },
                 "offset_state": {
                     "type": "string",
@@ -719,7 +665,7 @@
                         "disabled",
                         "enabled"
                     ],
-                    "title": "server_state — Server State"
+                    "title": "server_state - Server State"
                 },
                 "stratum_value": {
                     "type": "integer",
@@ -727,7 +673,7 @@
                     "description": "Specifies the stratum level from which NTP clients get their time synchronized. The range is from 1 to 15.  The default master mode stratum number is 8.",
                     "minimum": 1,
                     "maximum": 5,
-                    "title": "stratum_value — Stratum"
+                    "title": "stratum_value - Stratum"
                 },
                 "time_zone": {
                     "type": "string",
@@ -1151,282 +1097,254 @@
                         "Pacific/Wallis",
                         "UTC: (default)"
                     ],
-                    "title": "time_zone — Timezone"
+                    "title": "time_zone - Timezone"
                 }
             },
             "required": [
                 "name",
                 "ntp_servers"
             ],
-            "title": "date_and_time — Policies -> Pod -> Date and Time."
+            "title": "date_and_time - Policies => Pod => Date and Time."
         },
         "Fabric:Policies:Pod:SNMP": {
             "type": "object",
-            "additionalProperties": false,
-            "description": "",
             "properties": {
                 "admin_state": {
                     "type": "string",
                     "default": "enabled",
-                    "description": "The administrative state of the SNMP policy. The state can be:\n  * disabled\n  * enabled: (default)",
+                    "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                     "enum": [
                         "disabled",
                         "enabled"
-                    ],
-                    "title": "admin_state"
+                    ]
                 },
                 "annotation": {
                     "type": "string",
                     "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                 },
                 "contact": {
                     "type": "string",
-                    "description": "The contact information for the SNMP policy.",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "contact"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                 },
                 "description": {
                     "type": "string",
                     "description": "Description to add to the Object.  The description can be up to 128 characters.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "description"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                 },
                 "include_types": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "Attributes are:\n  * audit_logs\n  * events\n  * faults\n  * session_logs\nThe Type of messages to include in the SNMP Policy.",
+                    "description": "include_types - Attributes are:\n  * audit_logs\n  * events\n  * faults\n  * session_logs\nManagement Messages to include in the accounting log",
                     "properties": {
                         "audit_logs": {
                             "type": "boolean",
                             "default": false,
-                            "description": "Include Audit Logs.  Default is false.",
-                            "title": "audit_logs"
+                            "description": "Include Audit Logs.  Default is false."
                         },
                         "events": {
                             "type": "boolean",
                             "default": false,
-                            "description": "Include Events.  Default is false.",
-                            "title": "events"
+                            "description": "Include Events.  Default is false."
                         },
                         "faults": {
                             "type": "boolean",
                             "default": true,
-                            "description": "Include Faults.  Default is true.",
-                            "title": "faults"
+                            "description": "Include Faults.  Default is true."
                         },
                         "session_logs": {
                             "type": "boolean",
                             "default": false,
-                            "description": "Include Session Logs.  Default is false.",
-                            "title": "session_logs"
+                            "description": "Include Session Logs.  Default is false."
                         }
-                    },
-                    "title": "include_types"
+                    }
                 },
                 "location": {
                     "type": "string",
-                    "description": "The location for the SNMP policy.",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "location"
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                 },
                 "name": {
                     "type": "string",
                     "default": "default",
-                    "description": "Name for the SNMP Policy.",
+                    "description": "Name of the Attachable Access Entity Profile Policy.",
                     "minLength": 1,
                     "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "name"
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                 },
                 "snmp_client_groups": {
                     "type": "array",
                     "additionalProperties": false,
-                    "description": "Required Attributes are:\n  * clients\n\nOptional Attributes are:\n  * description\n  * management_epg\n  * name",
+                    "description": "snmp_client_groups - The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                     "items": {
                         "type": "object",
                         "additionalProperties": false,
-                        "description": "",
+                        "description": "snmp_client_groups - Required Attributes are:\n  * clients\n\nOptional Attributes are:\n  * description\n  * management_epg\n  * name",
                         "properties": {
                             "clients": {
                                 "type": "array",
                                 "additionalProperties": false,
-                                "description": "List of Client Groups to assign to the SNMP Policy.\nclients — Required Attributes are:\n  * address\n\nOptional Attributes are:\n  * name\nIf Name is undefined Address will be assigned as the name.",
+                                "description": "clients - Required Attributes are:\n  * address\n\nOptional Attributes are:\n  * name\nIf Name is undefined Address will be assigned as the name.",
                                 "items": {
                                     "type": "object",
                                     "additionalProperties": false,
-                                    "description": "",
+                                    "description": "BLAH BLAH",
                                     "properties": {
                                         "address": {
                                             "type": "string",
-                                            "default": "snmp-client.example.com",
-                                            "description": "The SNMP client profile IPv4/IPv6 address or Hostname.",
+                                            "default": "",
+                                            "description": "",
                                             "minLength": 7,
                                             "maxLength": 128,
-                                            "pattern": "(^(((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|((([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)+([A-Za-z|[A-Za-z][A-Za-z0-9\\-]*[A-Za-z0-9])))$|(?:^|(?<=\\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\\s|$))",
-                                            "title": "address"
+                                            "pattern": "(^(((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|((([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)+([A-Za-z|[A-Za-z][A-Za-z0-9\\-]*[A-Za-z0-9])))$|(?:^|(?<=\\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\\s|$))"
                                         },
                                         "name": {
                                             "type": "string",
-                                            "description": "The name of the client group profile. This name can be between 1 and 64 alphanumeric characters.",
+                                            "default": "default",
+                                            "description": "Name of the Attachable Access Entity Profile Policy.",
                                             "minLength": 1,
                                             "maxLength": 64,
-                                            "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                                            "title": "name"
+                                            "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                                         }
                                     }
                                 },
                                 "required": [
                                     "address"
                                 ],
-                                "title": "clients — SNMP -> Client Group -> Clients"
+                                "title": "clients - SNMP => Client Group => Clients"
                             },
                             "description": {
                                 "type": "string",
                                 "description": "Description to add to the Object.  The description can be up to 128 characters.",
                                 "minLength": 1,
                                 "maxLength": 128,
-                                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                                "title": "description"
+                                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                             },
                             "management_epg": {
                                 "type": "string",
                                 "default": "default",
-                                "description": "Name of the Management EPG.",
+                                "description": "Name of the Attachable Access Entity Profile Policy.",
                                 "minLength": 1,
                                 "maxLength": 64,
-                                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                                "title": "management_epg"
+                                "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                             },
                             "name": {
                                 "type": "string",
                                 "default": "default",
-                                "description": "Name for the SNMP Cllient Group.",
+                                "description": "Name of the Attachable Access Entity Profile Policy.",
                                 "minLength": 1,
                                 "maxLength": 64,
-                                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                                "title": "name"
+                                "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                             }
                         }
                     },
                     "required": [
                         "clients"
-                    ],
-                    "title": "snmp_client_groups — SNMP Client Groups"
+                    ]
                 },
                 "snmp_communities": {
                     "type": "array",
                     "additionalProperties": false,
-                    "description": "Required Attributes are:\n  * key_id\n\nOptional Attributes are:\n  * authentication_type\n  * trusted",
+                    "description": "snmp_communities - The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                     "items": {
                         "type": "object",
                         "additionalProperties": false,
-                        "description": "",
+                        "description": "snmp_communities - Required Attributes are:\n  * key_id\n\nOptional Attributes are:\n  * authentication_type\n  * trusted",
                         "properties": {
                             "community_variable": {
                                 "type": "integer",
                                 "default": 1,
-                                "description": "A value between 1 to 5 that will point to the snmp_community_{value} variable, which should be loaded into the environment as TF_VAR_snmp_community_{1-5}.",
+                                "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                                 "minimum": 1,
-                                "maximum": 5,
-                                "title": "community_variable"
+                                "maximum": 5
                             },
                             "description": {
                                 "type": "string",
                                 "description": "Description to add to the Object.  The description can be up to 128 characters.",
                                 "minLength": 1,
                                 "maxLength": 128,
-                                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                                "title": "description"
+                                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                             }
                         }
                     },
                     "required": [
                         "key_id"
-                    ],
-                    "title": "snmp_communities — SNMP Communities"
+                    ]
                 },
                 "snmp_destinations": {
                     "type": "array",
                     "additionalProperties": false,
-                    "description": "Required Attributes are:\n  * host\n\nOptional Attributes are:\n  * authentication_type\n  * trusted",
+                    "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                     "items": {
                         "type": "object",
                         "additionalProperties": false,
-                        "description": "",
+                        "description": "authentication_keys - Required Attributes are:\n  * key_id\n\nOptional Attributes are:\n  * authentication_type\n  * trusted",
                         "properties": {
                             "community_variable": {
                                 "type": "integer",
                                 "default": 1,
-                                "description": "A value between 1 to 5 that will point to the snmp_community_{value} variable, which should be loaded into the environment as TF_VAR_snmp_community_{1-5}.",
+                                "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                                 "minimum": 1,
-                                "maximum": 5,
-                                "title": "community_variable"
+                                "maximum": 5
                             },
                             "host": {
                                 "type": "string",
-                                "default": "snmp-server.example.com",
-                                "description": "The host for the SNMP trap destination. SNMP traps enable an agent to notify the management station of significant events by way of an unsolicited SNMP message.",
+                                "default": "",
+                                "description": "",
                                 "minLength": 7,
                                 "maxLength": 128,
-                                "pattern": "(^(((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|((([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)+([A-Za-z|[A-Za-z][A-Za-z0-9\\-]*[A-Za-z0-9])))$|(?:^|(?<=\\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\\s|$))",
-                                "title": "host"
+                                "pattern": "(^(((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|((([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)+([A-Za-z|[A-Za-z][A-Za-z0-9\\-]*[A-Za-z0-9])))$|(?:^|(?<=\\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\\s|$))"
                             },
                             "management_epg": {
                                 "type": "string",
                                 "default": "default",
-                                "description": "Name of the Management EPG.",
+                                "description": "Name of the Attachable Access Entity Profile Policy.",
                                 "minLength": 1,
                                 "maxLength": 64,
-                                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                                "title": "management_epg"
+                                "pattern": "^[a-zA-Z0-9_\\.:-]+$"
                             },
                             "port": {
                                 "type": "integer",
                                 "default": 162,
-                                "description": "The service port of the SNMP trap destination. SNMP traps enable an agent to notify the management station of significant events by way of an unsolicited SNMP message. The range is from 0(unspecified) to 65535.  Default is 162.",
+                                "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                                 "minimum": 1,
-                                "maximum": 65535,
-                                "title": "port"
+                                "maximum": 65535
                             },
                             "username": {
                                 "type": "string",
                                 "default": "",
-                                "description": "The name of the SNMP User.",
+                                "description": "The username to assign to the server monitoring configuration.",
                                 "minLength": 1,
                                 "maxLength": 128,
-                                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                                "title": "username"
+                                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                             },
                             "v3_security_level": {
                                 "type": "string",
                                 "default": "auth",
-                                "description": "The SNMP V3 security level for the destination path. The level can be:\n  * auth: (default)\n  * noauth\n  * priv",
+                                "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                                 "enum": [
                                     "auth",
                                     "noauth",
                                     "priv"
-                                ],
-                                "title": "v3_security_level"
+                                ]
                             },
                             "version": {
                                 "type": "string",
                                 "default": "v3",
-                                "description": "The SNMP version to utilize for the Trap destination.\n  * v1\n  * v2c: (default)\n  * v3",
+                                "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                                 "enum": [
                                     "v2c",
                                     "v3"
-                                ],
-                                "title": "version"
+                                ]
                             }
                         }
                     },
@@ -1446,30 +1364,28 @@
                             "community_variable",
                             "host"
                         ]
-                    },
-                    "title": "snmp_destinations — SNMP Destinations." 
+                    }   
                 },
                 "users": {
                     "type": "array",
                     "additionalProperties": false,
-                    "description": "Required Attributes are:\n  * authorization_key\n  * username\n\nOptional Attributes are:\n  * authorization_type\n  * privacy_key\n  * privacy_type",
+                    "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                     "items": {
                         "type": "object",
                         "additionalProperties": false,
-                        "description": "",
+                        "description": "authentication_keys - Required Attributes are:\n  * key_id\n\nOptional Attributes are:\n  * authentication_type\n  * trusted",
                         "properties": {
                             "authorization_key": {
                                 "type": "integer",
                                 "default": 1,
-                                "description": "A value between 1 to 5 that will point to the snmp_authorization_key_{value} variable, which should be loaded into the environment as TF_VAR_snmp_authorization_key_{1-5}.",
+                                "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                                 "minimum": 1,
-                                "maximum": 5,
-                                "title": "authorization_key"
+                                "maximum": 5
                             },
                             "authorization_type": {
                                 "type": "string",
                                 "default": "hmac-sha1-96",
-                                "description": "The authentication type for the user profile. The authentication type is a message authentication code (MAC) that is used between two parties sharing a secret key to validate information transmitted between them. HMAC (Hash MAC) is based on cryptographic hash functions. It can be used in combination with any iterated cryptographic hash function. HMAC MD5 and HMAC SHA1 are two constructs of the HMAC using the MD5 hash function and the SHA1 hash function. HMAC also uses a secret key for calculation and verification of the message authentication values. Supported types are:\n  * hmac-md5-96\n  * hmac-sha1-96: (default)\n  * hmac-sha2-224\n  * hmac-sha2-256\n  * hmac-sha2-384\n  * hmac-sha2-512",
+                                "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                                 "enum": [
                                     "md5",
                                     "hmac-md5-96",
@@ -1478,77 +1394,68 @@
                                     "hmac-sha1-256",
                                     "hmac-sha1-384",
                                     "hmac-sha1-512"
-                                ],
-                                "title": "authorization_type"
+                                ]
                             },
                             "privacy_key": {
                                 "type": "integer",
                                 "default": 1,
-                                "description": "A value between 1 to 5 that will point to the snmp_privacy_key_{value} variable, which should be loaded into the environment as TF_VAR_snmp_privacy_key_{1-5}.",
+                                "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                                 "minimum": 1,
-                                "maximum": 5,
-                                "title": "privacy_key"
+                                "maximum": 5
                             },
                             "privacy_type": {
                                 "type": "string",
                                 "default": "none",
-                                "description": "The privacy (encryption) type for the user profile. The type can be Data Encryption Standard (DES) or Advanced Encryption Standard (AES). Data Encryption Standard is a method of data encryption that uses a private (secret) key. DES applies a 56-bit key to each 64-bit block of data. Advanced Encryption Standard that uses a key with a length of 128 bits to encrypt data blocks with a length of 128 bits. The privacy types are:\n  * aes-128\n  * des\n  * none: (default)",
+                                "description": "The Type of EPG to assign to the DHCP relay Provider.  Options are:\n  * application_epg: (default)\n  * external_epg",
                                 "enum": [
                                     "aes-128",
                                     "des",
                                     "none"
-                                ],
-                                "title": "privacy_type"
+                                ]
                             },
                             "username": {
                                 "type": "string",
                                 "default": "",
-                                "description": "The name of the SNMP User to create.",
+                                "description": "The username to assign to the server monitoring configuration.",
                                 "minLength": 1,
                                 "maxLength": 128,
-                                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                                "title": "username"
+                                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
                             }
                         }
                     },
                     "required": [
                         "authorization_key",
                         "username"
-                    ],
-                    "title": "users — SNMP Users"
+                    ]
                 }
             },
             "required": [
                 "name",
                 "snmp_client_groups"
             ],
-            "title": "snmp — Policies -> Pod -> SNMP."
+            "title": "snmp - Policies => Pod => SNMP."
         },
         "Fabric:RecommendedSettings": {
             "type": "object",
             "additionalProperties": false,
-            "description": "",
             "properties": {
                 "fabric_node_controls": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Flag to configure recommended settings for the Error Disabled Recovery Policy.  These Default Setting Values can be seen in defaults/fabric.yaml.",
-                    "title": "fabric_node_controls"
+                    "description": "Flag to configure recommended settings for the Error Disabled Recovery Policy."
                 },
                 "l3_interface": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Flag to configure recommended settings for the MCP Instance Policy.  These Default Setting Values can be seen in defaults/fabric.yaml.",
-                    "title": "l3_interface"
+                    "description": "Flag to configure recommended settings for the MCP Instance Policy."
                 },
                 "pods": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Flag to configure recommended settings for the QOS Class — dot1p preserve attribute.  These Default Setting Values can be seen in defaults/fabric.yaml.",
-                    "title": "pods"
+                    "description": "Flag to configure recommended settings for the QOS Class - dot1p preserve attribute."
                 }
             },
-            "title": "recommended_settings — Pre-Generated Recommended Settings."
+            "title": "Policies to Apply Recommended Settings to"
         }
 }
 }

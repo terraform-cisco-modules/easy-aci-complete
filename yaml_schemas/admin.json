@@ -8,7 +8,7 @@
             "additionalProperties": false,
             "properties": {
                 "admin": {
-                    "description": "admin - Attributes are:\n  * aaa\n  * external_data_collectors\n  * import_export",
+                    "description": "admin — Attributes are:\n  * aaa\n  * external_data_collectors\n  * import_export",
                     "$ref": "#/definitions/Admin"
                 }
             },
@@ -23,15 +23,15 @@
             "additionalProperties": false,
             "properties": {
                 "aaa": {
-                    "description": "aaa - Attributes are:\n  * authentication\n  * security",
+                    "description": "aaa — Attributes are:\n  * authentication\n  * security",
                     "$ref": "#/definitions/Admin:AAA"
                 },
                 "external_data_collectors": {
-                    "description": "external_data_collectors - Attributes are:\n  * smart_callhome\n  * syslog",
+                    "description": "external_data_collectors — Attributes are:\n  * smart_callhome\n  * syslog",
                     "$ref": "#/definitions/Admin:ExternalDataCollectors"
                 },
                 "import_export": {
-                    "description": "import_export - Attribute is:\n  * configuration_backups",
+                    "description": "import_export — Attribute is:\n  * configuration_backups",
                     "$ref": "#/definitions/Admin:ImportExport"
                 }
             },
@@ -43,15 +43,15 @@
             "additionalProperties": false,
             "properties": {
                 "authentication": {
-                    "description": "authentication - Attributes are:\n  * authentication_default_settings\n  * radius\n  * tacacs",
+                    "description": "authentication — Attributes are:\n  * authentication_default_settings\n  * radius\n  * tacacs",
                     "$ref": "#/definitions/Admin:AAA:Authentication"
                 },
                 "security": {
-                    "description": "security - Attributes are:\n  * lockout_user\n  * maximum_validity_period\n  * no_change_interval\n  * password_change_interval\n  * password_change_interval_enforce\n  * password_changes_within_interval\n  * password_expiration_warn_time\n  * password_strength_check\n  * user_passwords_to_store_count\n  * web_session_idle_timeout\n  * web_token_timeout",
+                    "description": "security — Attributes are:\n  * lockout_user\n  * maximum_validity_period\n  * no_change_interval\n  * password_change_interval\n  * password_change_interval_enforce\n  * password_changes_within_interval\n  * password_expiration_warn_time\n  * password_strength_check\n  * user_passwords_to_store_count\n  * web_session_idle_timeout\n  * web_token_timeout",
                     "$ref": "#/definitions/Admin:AAA:Security"
                 }
             },
-            "title": "aaa - Admin => AAA"
+            "title": "aaa — Admin -> AAA"
         },
         "Admin:AAA:Authentication": {
             "type": "object",
@@ -67,17 +67,17 @@
                     "items": {
                         "$ref": "#/definitions/Admin:AAA:Authentication:Radius"
                     },
-                    "title": "radius - Admin => AAA => Authentication: Login Domains/Providers."
+                    "title": "radius — Admin -> AAA -> Authentication: Login Domains/Providers."
                 },
                 "tacacs": {
                     "description": "Required Attributes are:\n  * hosts\n  * login_domain\n\nOptional Attributes are:\n  * accounting_include\n  * annotation\n  * authorization_protocol\n  * description\n  * management_epg\n  * port\n  * retries\n  * server_monitoring\n  * timeout",
                     "items": {
                         "$ref": "#/definitions/Admin:AAA:Authentication:Tacacs"
                     },
-                    "title": "tacacs - Admin => AAA => Authentication: Login Domains/Providers."
+                    "title": "tacacs — Admin -> AAA -> Authentication: Login Domains/Providers."
                 }
             },
-            "title": "aaa - Admin => AAA => Authentication."
+            "title": "aaa — Admin -> AAA -> Authentication."
         },
         "Admin:AAA:Authentication:AuthenticationDefaultSettings": {
             "type": "object",
@@ -126,12 +126,12 @@
                     "required": [
                         "realm"
                     ],
-                    "title": "console_authentication - Admin => AAA => Authentication: Authentication Default Settings: Console Authentication."
+                    "title": "console_authentication — Admin -> AAA -> Authentication: Authentication Default Settings: Console Authentication."
                 },
                 "default_authentication": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "default - Attributes are:\n  * fallback_check\n  * login_domain\n  * realm",
+                    "description": "default — Attributes are:\n  * fallback_check\n  * login_domain\n  * realm",
                     "properties": {
                         "annotation": {
                             "type": "string",
@@ -176,7 +176,7 @@
                     "required": [
                         "realm"
                     ],
-                    "title": "default_authentication - Admin => AAA => Authentication: Authentication Default Settings: Default Authentication."
+                    "title": "default_authentication — Admin -> AAA -> Authentication: Authentication Default Settings: Default Authentication."
                 },
                 "remote_authentication": {
                     "type": "object",
@@ -224,10 +224,10 @@
                             "title": "timeout"
                         }
                    },
-                   "title": "remote_authentication - Admin => AAA => Authentication: Authentication Default Settings: Remote Authentication."
+                   "title": "remote_authentication — Admin -> AAA -> Authentication: Authentication Default Settings: Remote Authentication."
                 }
             },
-            "title": "authentication_default_settings - Admin => AAA => Authentication: Authentication Default Settings"
+            "title": "authentication_default_settings — Admin -> AAA -> Authentication: Authentication Default Settings"
         },
         "Admin:AAA:Authentication:Radius": {
             "type": "object",
@@ -313,7 +313,7 @@
                 "server_monitoring": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "server_monitoring - Attributes are:\n  * admin_state\n  * username\nEnabling Server Monitoring allows the connectivity of the remote AAA servers to be tested.",
+                    "description": "server_monitoring — Attributes are:\n  * admin_state\n  * username\nEnabling Server Monitoring allows the connectivity of the remote AAA servers to be tested.",
                     "properties": {
                         "admin_state": {
                             "type": "boolean",
@@ -356,7 +356,7 @@
                 "hosts",
                 "login_domain"
             ],
-            "title": "radius - Admin => AAA => Login Domains/Providers type RADIUS."
+            "title": "radius — Admin -> AAA -> Login Domains/Providers type RADIUS."
         },
         "Admin:AAA:Authentication:Tacacs": {
             "type": "object",
@@ -366,7 +366,7 @@
                 "accounting_include": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "accounting_include - Attributes are:\n  * audit_logs\n  * events\n  * faults\n  * session_logs\nManagement Messages to include in the accounting log",
+                    "description": "accounting_include — Attributes are:\n  * audit_logs\n  * events\n  * faults\n  * session_logs\nManagement Messages to include in the accounting log",
                     "properties": {
                         "audit_logs": {
                             "type": "boolean",
@@ -474,7 +474,7 @@
                 "server_monitoring": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "server_monitoring - Attributes are:\n  * admin_state\n  * username\nEnabling Server Monitoring allows the connectivity of the remote AAA servers to be tested.",
+                    "description": "server_monitoring — Attributes are:\n  * admin_state\n  * username\nEnabling Server Monitoring allows the connectivity of the remote AAA servers to be tested.",
                     "properties": {
                         "admin_state": {
                             "type": "boolean",
@@ -517,17 +517,17 @@
                 "hosts",
                 "login_domain"
             ],
-            "title": "tacacs - Admin => AAA => Login Domains/Providers type TACACS."
+            "title": "tacacs — Admin -> AAA -> Login Domains/Providers type TACACS."
         },
         "Admin:AAA:Security": {
             "type": "object",
             "additionalProperties": false,
-            "description": "AAA => Security.",
+            "description": "AAA -> Security.",
             "properties": {
                 "lockout_user": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "lockout_user - Attributes are:\n  * enable_lockout\n  * lockout_duration\n  * max_failed_attempts\n  * max_failed_attempts_window\nList of Lockout User Attributes.",
+                    "description": "lockout_user — Attributes are:\n  * enable_lockout\n  * lockout_duration\n  * max_failed_attempts\n  * max_failed_attempts_window\nList of Lockout User Attributes.",
                     "properties": {
                         "enable_lockout": {
                             "type": "string",
@@ -647,29 +647,29 @@
                     "title": "web_token_timeout"
                 }
             },
-            "title": "security - Admin => AAA => Security."
+            "title": "security — Admin -> AAA -> Security."
         },
         "Admin:ExternalDataCollectors": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Admin => External Data Collectors",
+            "description": "Admin -> External Data Collectors",
             "properties": {
                 "smart_callhome": {
                     "description": "Required Attributes are:\n  * contract_id\n  * customer_contact_email\n  * name\n  *smart_destinations\n  *smtp_server\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * contact_information\n  * customer_contact_email\n  * customer_id\n  * description\n  * from_email\n  * phone_contact\n  * reply_to_email\n  * site_id\n  * street_address",
                     "items": {
                         "$ref": "#/definitions/Admin:ExternalDataCollectors:SmartCallhome"
                     },
-                    "title": "smart_callhome - Admin => External Data Collectors => Smart Callhome."
+                    "title": "smart_callhome — Admin -> External Data Collectors -> Smart Callhome."
                 },
                 "syslog": {
                     "description": "Required Attributes are:\n  * name\n  * remote_destinations\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * console_destination\n  * description\n  * format\n  * include_types\n  * local_file_destination\n  * min_severity\n  * show_milliseconds_in_timestamp\n  * show_time_zone_in_timestamp",
                     "items": {
                         "$ref": "#/definitions/Admin:ExternalDataCollectors:Syslog"
                     },
-                    "title": "syslog - Admin => External Data Collectors => Syslog."
+                    "title": "syslog — Admin -> External Data Collectors -> Syslog."
                 }
             },
-            "title": "external_data_collectors - Admin => External Data Collectors."
+            "title": "external_data_collectors — Admin -> External Data Collectors."
         },
         "Admin:ExternalDataCollectors:SmartCallhome": {
             "type": "object",
@@ -769,7 +769,7 @@
                 "smart_destinations": {
                     "type": "array",
                     "additionalProperties": false,
-                    "description": "smart_destinations - List of email addresses to send smart callHome information.  Required Attributes:\n  * email\n\nOptional Attributes:\n  * admin_state\n  * format\n  * rfc_compliant",
+                    "description": "smart_destinations — List of email addresses to send smart callHome information.  Required Attributes:\n  * email\n\nOptional Attributes:\n  * admin_state\n  * format\n  * rfc_compliant",
                     "items": {
                         "type": "object",
                         "properties": {
@@ -886,7 +886,7 @@
                 "smart_destinations",
                 "smtp_server"
             ],
-            "title": "smart_callhome - Admin => External Data Collectors => Smart Callhome."
+            "title": "smart_callhome — Admin -> External Data Collectors -> Smart Callhome."
         },
         "Admin:ExternalDataCollectors:Syslog": {
             "type": "object",
@@ -998,7 +998,7 @@
                 "local_file_destination": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "local_file_destination - Attributes are:\n  * admin_state\n  * severity\nSyslog settings for Local File.",
+                    "description": "local_file_destination — Attributes are:\n  * admin_state\n  * severity\nSyslog settings for Local File.",
                     "properties": {
                         "admin_state": {
                             "type": "string",
@@ -1060,7 +1060,7 @@
                 "remote_destinations": {
                     "type": "array",
                     "additionalProperties": false,
-                    "description": "remote_destinations - List of email addresses to send smart callHome information.  Required Attributes:\n  * email\n\nOptional Attributes:\n  * admin_state\n  * format\n  * rfc_compliant",
+                    "description": "remote_destinations — List of email addresses to send smart callHome information.  Required Attributes:\n  * email\n\nOptional Attributes:\n  * admin_state\n  * format\n  * rfc_compliant",
                     "items": {
                         "type": "object",
                         "properties": {
@@ -1172,7 +1172,7 @@
                 "name",
                 "remote_destinations"
             ],
-            "title": "syslog - Admin => External Data Collectors => Syslog."
+            "title": "syslog — Admin -> External Data Collectors -> Syslog."
         },
         "Admin:ImportExport": {
             "type": "object",
@@ -1184,13 +1184,13 @@
                     "items": {
                         "$ref": "#/definitions/Admin:ImportExport:ConfigurationBackups"
                     },
-                    "title": "configuration_backups - Admin => Import/Export - Configuration Backups with Export Policies, Remote Locations, and Schedulers"
+                    "title": "configuration_backups — Admin -> Import/Export — Configuration Backups with Export Policies, Remote Locations, and Schedulers"
                 }
             },
             "required": [
                 "configuration_backups"
             ],
-            "title": "import_export - Admin => Import/Export - Configuration Backups with Export Policies, Remote Locations, and Schedulers"
+            "title": "import_export — Admin -> Import/Export — Configuration Backups with Export Policies, Remote Locations, and Schedulers"
         },
         "Admin:ImportExport:ConfigurationBackups": {
             "type": "object",
@@ -1276,7 +1276,7 @@
                 "maximum_running_time": {
                     "type": "integer",
                     "default": 0,
-                    "description": "The processing time capacity limit. This is the maximum duration of the window. The range is 0 to (2^64 - 1) milliseconds. The default value of 0 indicates unlimited, meaning there is no time limit enforced on the scheduler window.  The default is 0.",
+                    "description": "The processing time capacity limit. This is the maximum duration of the window. The range is 0 to (2^64 to 1) milliseconds. The default value of 0 indicates unlimited, meaning there is no time limit enforced on the scheduler window.  The default is 0.",
                     "minimum": 0,
                     "maximum": 18446744073709551615,
                     "title": "maximum_running_time"
@@ -1364,12 +1364,12 @@
                 "schedule": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "schedule - Attributes are:\n  * days\n  * hour\n  * minute\nSyslog settings for Console.",
+                    "description": "schedule — Attributes are:\n  * days\n  * hour\n  * minute\nSyslog settings for Console.",
                     "properties": {
                         "days": {
                             "type": "string",
                             "default": "every-day",
-                            "description": "Recurring Window Schedule Day(s). Options are:\n  * - every-day: (default)\n  * - even-day\n  * - odd-day\n  * - Sunday\n  * - Monday\n  * - Tuesday\n  * - Wednesday\n  * - Thursday\n  * - Friday\n  * - Saturday\n  * - Sunday",
+                            "description": "Recurring Window Schedule Day(s). Options are:\n  * every-day: (default)\n  * even-day\n  * odd-day\n  * Sunday\n  * Monday\n  * Tuesday\n  * Wednesday\n  * Thursday\n  * Friday\n  * Saturday\n  * Sunday",
                             "enum": [
                                 "Sunday",
                                 "Monday",
@@ -1417,7 +1417,7 @@
                 "name",
                 "remote_hosts"
             ],
-            "title": "configuration_backups - Admin => Schedulers => Fabric: One-Time/Recuring Windows and Admin => Import/Export => [ Export Policies => Configuration | Remote Locations ]."
+            "title": "configuration_backups — Admin -> Schedulers -> Fabric: One-Time/Recuring Windows and Admin -> Import/Export -> [ Export Policies -> Configuration | Remote Locations ]."
         }
     }
 }

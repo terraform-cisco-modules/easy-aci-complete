@@ -4,7 +4,7 @@
     "definitions": {
         "SystemSettingsWelcome": {
             "type": "object",
-            "description": "System => System Settings.",
+            "description": "System -> System Settings.",
             "additionalProperties": false,
             "properties": {
                 "system_settings": {
@@ -66,7 +66,7 @@
                     "$ref": "#/definitions/SystemSettings:RecommendedSettings"
                 }
             },
-            "title": "System => System Settings"
+            "title": "System -> System Settings"
         },
         "SystemSettings:ApicConnectivityPreference": {
             "type": "object",
@@ -87,7 +87,7 @@
             "required": [
                 "interface_to_use_for_external_connections"
             ],
-            "title": "apic_connectivity_preference - APIC Connectivity Preference."
+            "title": "apic_connectivity_preference — APIC Connectivity Preference."
         },
         "SystemSettings:Bgp": {
             "type": "object",
@@ -105,16 +105,16 @@
             "required": [
                 "autonomous_system_number"
             ],
-            "title": "bgp - BGP Autonomous System Number."
+            "title": "bgp — BGP Autonomous System Number."
         },
         "SystemSettings:BgpRouteReflector": {
             "type": "object",
             "additionalProperties": false,
-            "description": "pods - Required Attributes are:\n  * pod_id\n  * route_reflector_nodes",
+            "description": "",
             "properties": {
                 "pods": {
                     "type": "array",
-                    "description": "pods - Required Attributes are:\n  * pod_id\n  * route_reflector_nodes",
+                    "description": "Required Attributes are:\n  * pod_id\n  * route_reflector_nodes",
                     "items": {
                         "type": "object",
                         "additionalProperties": false,
@@ -152,7 +152,7 @@
             "required": [
                 "pods"
             ],
-            "title": "bgp_route_reflectors - Pod(s) BGP Route Reflectors."
+            "title": "bgp_route_reflectors — Pod(s) BGP Route Reflectors."
         },
         "SystemSettings:CoopGroup": {
             "type": "object",
@@ -190,7 +190,7 @@
             "required": [
                 "type"
             ],
-            "title": "coop_group - COOP Group."
+            "title": "coop_group — COOP Group."
         },
         "SystemSettings:EndpointControls": {
             "type": "object",
@@ -218,12 +218,12 @@
                     "$ref": "#/definitions/SystemSettings:EndpointControls:RougeEpControl"
                 }
             },
-            "title": "endpoint_controls - Endpoint Controls."
+            "title": "endpoint_controls — Endpoint Controls."
         },
         "SystemSettings:EndpointControls:EpLoopProtection": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Endpoint Controls => EP Loop Protection.",
+            "description": "Endpoint Controls -> EP Loop Protection.",
             "properties": {
                 "action": {
                     "type": "object",
@@ -272,12 +272,12 @@
                     "title": "loop_detection_multiplier"
                 }
             },
-            "title": "ep_loop_protection - Endpoint Controls => EP Loop Protection."
+            "title": "ep_loop_protection — Endpoint Controls -> EP Loop Protection."
         },
         "SystemSettings:EndpointControls:IpAging": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Endpoint Controls => IP Aging.",
+            "description": "Endpoint Controls -> IP Aging.",
             "properties": {
                 "administrative_state": {
                     "type": "string",
@@ -290,12 +290,12 @@
                     "title": "administrative_state"
                 }
             },
-            "title": "ip_aging - Endpoint Controls => IP Aging."
+            "title": "ip_aging — Endpoint Controls -> IP Aging."
         },
         "SystemSettings:EndpointControls:RougeEpControl": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Endpoint Controls => Rouge EP Control.",
+            "description": "Endpoint Controls -> Rouge EP Control.",
             "properties": {
                 "administrative_state": {
                     "type": "string",
@@ -332,7 +332,7 @@
                     "title": "rouge_multiplier"
                 }
             },
-            "title": "rouge_ep_control - Endpoint Controls => Rouge EP Control."
+            "title": "rouge_ep_control — Endpoint Controls -> Rouge EP Control."
         },
         "SystemSettings:FabricWideSettings": {
             "type": "object",
@@ -350,7 +350,7 @@
                 "disable_remote_ep_learning": {
                     "type": "boolean",
                     "default": true,
-                    "description": "You should enable this policy in fabrics which include the Cisco Nexus 9000 series switches, 93128TX, 9396PX, or 9396TX switches with the N9K-M12PQ uplink module, after all the nodes have been successfully upgraded to APIC Release 2.2(2x).\n  * Note: After any of the following configuration changes, you may need to manually flush previously learned IP endpoints:\n    - Remote IP endpoint learning is disabled.\n    - The VRF is configured for ingress policy enforcement.\n    - At least one Layer 3 interface exists in the VRF.\n  * To manually flush previously learned IP endpoints, enter the following command on both VPC peers: vsh -c 'clear system internal epm endpoint vrf <vrf-name> remote'",
+                    "description": "You should enable this policy in fabrics which include the Cisco Nexus 9000 series switches, 93128TX, 9396PX, or 9396TX switches with the N9K-M12PQ uplink module, after all the nodes have been successfully upgraded to APIC Release 2.2(2x).\n  * Note: After any of the following configuration changes, you may need to manually flush previously learned IP endpoints:\n  * Remote IP endpoint learning is disabled.\n  * The VRF is configured for ingress policy enforcement.\n  * At least one Layer 3 interface exists in the VRF.\n  * To manually flush previously learned IP endpoints, enter the following command on both VPC peers: vsh -c 'clear system internal epm endpoint vrf <vrf-name> remote'",
                     "title": "disable_remote_ep_learning"
                 },
                 "enforce_domain_validation": {
@@ -431,10 +431,10 @@
                             "title": "TLSv1_2"
                         }
                     },
-                    "title": "ssl_opflex_versions - SSL Opflex Versions."
+                    "title": "ssl_opflex_versions — SSL Opflex Versions."
                 }
             },
-            "title": "fabric_wide_settings - Fabric Wide Settings."
+            "title": "fabric_wide_settings — Fabric Wide Settings."
         },
         "SystemSettings:GlobalAesEncryptionSettings": {
             "type": "object",
@@ -480,7 +480,7 @@
                     "title": "passphrase_key_derivation_version"
                 }
             },
-            "title": "global_aes_encryption_settings - Global AES Encryption Settings."
+            "title": "global_aes_encryption_settings — Global AES Encryption Settings."
         },
         "SystemSettings:ISISPolicy": {
             "type": "object",
@@ -570,7 +570,7 @@
                     "title": "sfp_computation_frequency_second_wait_interval"
                 }
             },
-            "title": "isis_policy - ISIS Policy."
+            "title": "isis_policy — ISIS Policy."
         },
         "SystemSettings:PortTracking": {
             "type": "object",
@@ -618,7 +618,7 @@
                     "title": "port_tracking_state"
                 }
             },
-            "title": "port_tracking - Port Tracking."
+            "title": "port_tracking — Port Tracking."
         },
         "SystemSettings:PtpAndLatencyMeasurement": {
             "type": "object",
@@ -711,7 +711,7 @@
                     "title": "sync_interval"
                 }
             },
-            "title": "ptp_and_latency_measurementity_preference - PTP and Latency Measurement."
+            "title": "ptp_and_latency_measurementity_preference — PTP and Latency Measurement."
         },
         "SystemSettings:RecommendedSettings": {
             "type": "object",
@@ -727,7 +727,7 @@
                 "endpoint_controls": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "endpoint_controls - Attributes are:\n  * ep_loop_protection\n  * ip_aging\n  * rouge_ep_control",
+                    "description": "endpoint_controls — Attributes are:\n  * ep_loop_protection\n  * ip_aging\n  * rouge_ep_control",
                     "properties": {
                         "ep_loop_protection": {
                             "type": "boolean",
@@ -748,7 +748,7 @@
                             "title": "rouge_ep_control"
                         }
                     },
-                    "title": "endpoint_controls - Endpoint Controls"
+                    "title": "endpoint_controls — Endpoint Controls"
                 },
                 "fabric_wide_settings": {
                     "type": "boolean",
@@ -781,7 +781,7 @@
                     "title": "ptp_and_latency_measurement"
                 }
             },
-            "title": "recommended_settings - Recommended Settings."
+            "title": "recommended_settings — Recommended Settings."
         }
     }
 }
