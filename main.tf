@@ -67,7 +67,7 @@ module "built_in_tenants" {
     module.access
   ]
   source  = "terraform-cisco-modules/tenants/aci"
-  version = "2.0.3"
+  version = "2.0.5"
 
   for_each = {
     for v in lookup(local.model, "tenants", []) : v.name => v if length(
@@ -107,14 +107,22 @@ module "fabric" {
   depends_on = [
     module.built_in_tenants
   ]
-  source  = "terraform-cisco-modules/fabric/aci"
-  version = "2.0.1"
-
-  annotation      = var.annotation
-  annotations     = var.annotations
+  #source = "../terraform-aci-fabric"
+  source          = "terraform-cisco-modules/fabric/aci"
+  version         = "2.1.0"
+  for_each        = { for v in ["default"] : v => v if length(lookup(local.model, "fabric", {})) > 0 }
+  fabric          = lookup(local.model, "fabric", {})
   management_epgs = var.management_epgs
-  model           = local.model
   # Sensitive Variables for Fabric Policies
+  # APIC Certificate Sensitive Variables
+  apic_certificate_1 = fileexists(var.apic_certificate_1) ? file(var.apic_certificate_1) : var.apic_certificate_1
+  apic_certificate_2 = fileexists(var.apic_certificate_2) ? file(var.apic_certificate_2) : var.apic_certificate_2
+  apic_intermediate_plus_root_ca_1 = fileexists(var.apic_intermediate_plus_root_ca_1
+  ) ? file(var.apic_intermediate_plus_root_ca_1) : var.apic_intermediate_plus_root_ca_1
+  apic_intermediate_plus_root_ca_2 = fileexists(var.apic_intermediate_plus_root_ca_2
+  ) ? file(var.apic_intermediate_plus_root_ca_2) : var.apic_intermediate_plus_root_ca_2
+  apic_private_key_1 = fileexists(var.apic_private_key_1) ? file(var.apic_private_key_1) : var.apic_private_key_1
+  apic_private_key_2 = fileexists(var.apic_private_key_2) ? file(var.apic_private_key_2) : var.apic_private_key_2
   # Date and Time/NTP Sensitive Variables
   ntp_key_1 = var.ntp_key_1
   ntp_key_2 = var.ntp_key_2
@@ -168,7 +176,7 @@ module "tenants" {
     module.built_in_tenants
   ]
   source  = "terraform-cisco-modules/tenants/aci"
-  version = "2.0.3"
+  version = "2.0.5"
 
   for_each = {
     for v in lookup(local.model, "tenants", []) : v.name => v if length(

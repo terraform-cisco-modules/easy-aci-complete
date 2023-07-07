@@ -29,13 +29,19 @@ fabric:
           management_epg: ooband
           name: default
     pod:
+      apic_certificates:
+        - activate_certificate: true
+          modulus: 2048
+          name: default
+          trustpoint: default
+          var_identity: 1
       date_and_time:
         - management_epg: ooband
           name: default
           ntp_servers:
-            - ntp_server: 10.101.128.15
+            - hostname: 10.101.128.15
               preferred: false
-            - ntp_server: 10.101.128.16
+            - hostname: 10.101.128.16
               preferred: true
           time_zone: America/Detroit
       snmp:

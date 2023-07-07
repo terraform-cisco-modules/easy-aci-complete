@@ -89,7 +89,7 @@ ________________________________________________________________________________
 
 variable "annotation" {
   default     = "orchestrator:terraform"
-  description = "The Version of this Script."
+  description = "Depricated.  Removing from Module."
   type        = string
 }
 
@@ -228,6 +228,54 @@ variable "ssh_key_contents" {
 variable "ssh_key_passphrase" {
   default     = ""
   description = "SSH Private Key Based Authentication Passphrase."
+  sensitive   = true
+  type        = string
+}
+
+
+/*_____________________________________________________________________________________________________________________
+
+Fabric > Policies > Pod > Management Access: default - Sensitive Variables
+_______________________________________________________________________________________________________________________
+*/
+variable "apic_certificate_1" {
+  default     = ""
+  description = "APIC Certificate 1."
+  sensitive   = true
+  type        = string
+}
+
+variable "apic_certificate_2" {
+  default     = ""
+  description = "APIC Certificate 2."
+  sensitive   = true
+  type        = string
+}
+
+variable "apic_intermediate_plus_root_ca_1" {
+  default     = ""
+  description = "Intermediate and Root CA Certificate 1."
+  sensitive   = true
+  type        = string
+}
+
+variable "apic_intermediate_plus_root_ca_2" {
+  default     = ""
+  description = "Intermediate and Root CA Certificate 2."
+  sensitive   = true
+  type        = string
+}
+
+variable "apic_private_key_1" {
+  default     = ""
+  description = "APIC Private Key 1."
+  sensitive   = true
+  type        = string
+}
+
+variable "apic_private_key_2" {
+  default     = ""
+  description = "APIC Private Key 2."
   sensitive   = true
   type        = string
 }

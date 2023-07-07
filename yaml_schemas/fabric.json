@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$ref": "#/definitions/FabricWelcome",
+    "$ref": "#/definitions/CiscoAci",
     "definitions": {
-        "FabricWelcome": {
+        "CiscoAci": {
             "type": "object",
             "description": "",
             "additionalProperties": false,
@@ -14,7 +14,7 @@
             "required": [
                 "fabric"
             ],
-            "title": "fabric"
+            "title": "Cisco ACI: Fabric Policies YAML Schema"
         },
         "Fabric": {
             "type": "object",
@@ -22,19 +22,16 @@
             "additionalProperties": false,
             "properties": {
                 "pods": {
-                    "description": "Object Types are:\n  * policy_group\n  * profile",
                     "$ref": "#/definitions/Fabric:Pods"
                 },
                 "policies": {
-                    "description": "Object Types are:\n  * global\n  * interface\n  * monitoring\n  * pod",
                     "$ref": "#/definitions/Fabric:Policies"
                 },
                 "recommended_settings": {
-                    "description": "Object Types are:\n  * fabric_node_controls\n  * l3_interface\n  * pods\n  These Default Setting Values can be seen in defaults/fabric.yaml.",
                     "$ref": "#/definitions/Fabric:RecommendedSettings"
                 }
             },
-            "title": "fabric — Fabric -> Fabric Policies"
+            "title": "Fabric -> Fabric Policies"
         },
         "Fabric:Pods": {
             "type": "object",
@@ -43,12 +40,12 @@
             "properties": {
                 "policy_group": {
                     "type": "object",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * bgp_route_reflector_policy\n  * coop_group_policy\n  * date_time_policy\n  * description\n  * isis_policy\n  * macsec_policy\n  * management_access_policy\n  * snmp_policy",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * bgp_route_reflector_policy\n  * coop_group_policy\n  * date_time_policy\n  * description\n  * isis_policy\n  * macsec_policy\n  * management_access_policy\n  * snmp_policy",
                     "$ref": "#/definitions/Fabric:Pods:PolicyGroup"
                 },
                 "profile": {
                     "type": "object",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * policy_group\n  * pod_selector_type\n  * pods",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * description\n  * policy_group\n  * pod_selector_type\n  * pods",
                     "$ref": "#/definitions/Fabric:Pods:Profile"
                 }
             },
@@ -59,14 +56,6 @@
             "additionalProperties": false,
             "description": "",
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "bgp_route_reflector_policy": {
                     "type": "string",
                     "default": "default",
@@ -224,7 +213,7 @@
         },
         "Fabric:Policies": {
             "type": "object",
-            "description": "",
+            "description": "Object Types are:\n  * global\n  * interface\n  * monitoring\n  * pod",
             "additionalProperties": false,
             "properties": {
                 "global": {
@@ -257,7 +246,7 @@
             "properties": {
                 "dns_profiles": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * dns_domains\n  * dns_providers\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * ip_version_preference\n  * management_epg",
+                    "description": "Required Attributes are:\n  * dns_domains\n  * dns_providers\n  * name\n\nOptional Attributes are:\n  * description\n  * ip_version_preference\n  * management_epg",
                     "items": {
                         "$ref": "#/definitions/Fabric:Policies:Global:DnsProfiles"
                     },
@@ -271,14 +260,6 @@
             "additionalProperties": false,
             "description": "",
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "description": {
                     "type": "string",
                     "default": "default",
@@ -421,14 +402,6 @@
             "additionalProperties": false,
             "description": "",
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "bfd_isis_policy_configuration": {
                     "default": "enabled",
                     "description": "State ( enabled or disabled) of the BFD-IS-IS policy configuration.\n  * enabled: (default)\n  * disabled",
@@ -459,7 +432,7 @@
             "properties": {
                 "fabric_node_controls": {
                     "type": "object",
-                    "description": "Attributes are:\n  * annotation\n  * description\n  * enable_dom\n  * feature_selections",
+                    "description": "Attributes are:\n  * description\n  * enable_dom\n  * feature_selections",
                     "$ref": "#/definitions/Fabric:Policies:Monitoring:FabricNodeControls"
                 }
             },
@@ -470,14 +443,6 @@
             "additionalProperties": false,
             "description": "",
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "description": {
                     "type": "string",
                     "description": "Description to add to the Object.  The description can be up to 128 characters.",
@@ -511,9 +476,17 @@
             "description": "Object Types are:\n  * date_and_time\n  * snmp",
             "additionalProperties": false,
             "properties": {
+                "apic_certificates": {
+                    "type": "array",
+                    "description": "Required Attributes are:\n  * activate_certificate\n  * modulus\n  * trustpoint\n  * var_identity",
+                    "items": {
+                        "$ref": "#/definitions/Fabric:Policies:Pod:ApicCertificates"
+                    },
+                    "title": "apic_certificates — Policies -> Pod -> Management Access -> default: Web Access."
+                },
                 "date_and_time": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n  * ntp_servers\n\nOptional Attributes are:\n  * annotation\n  * administrative_state\n  * authentication_keys\n  * description\n  * display_format\n  * master_mode\n  * key_id\n  * management_epg\n  * maximum_polling_interval\n  * minimum_polling_interval\n  * offset_state\n  * server_state\n  * stratum_value\n  * time_zone",
+                    "description": "Required Attributes are:\n  * name\n  * ntp_servers\n\nOptional Attributes are:\n  * administrative_state\n  * authentication_keys\n  * description\n  * display_format\n  * master_mode\n  * key_id\n  * management_epg\n  * maximum_polling_interval\n  * minimum_polling_interval\n  * offset_state\n  * server_state\n  * stratum_value\n  * time_zone",
                     "items": {
                         "$ref": "#/definitions/Fabric:Policies:Pod:DateAndTime"
                     },
@@ -521,7 +494,7 @@
                 },
                 "snmp": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n  * snmp_client_groups\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * contact\n  * description\n  * include_types\n  * location\n  * snmp_communities\n  * snmp_destinations\n  * users",
+                    "description": "Required Attributes are:\n  * name\n  * snmp_client_groups\n\nOptional Attributes are:\n  * admin_state\n  * contact\n  * description\n  * include_types\n  * location\n  * snmp_communities\n  * snmp_destinations\n  * users",
                     "items": {
                         "$ref": "#/definitions/Fabric:Policies:Pod:SNMP"
                     },
@@ -529,6 +502,67 @@
                 }
             },
             "title": "pod — Policies -> Pod"
+        },
+        "Fabric:Policies:Pod:ApicCertificates": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "activate_certificate": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Flag to specify that this should become the Active Certificate for the APIC GUI Management.\nDownload the Certificate chain from the Certificate authority.  Add the intermediate/Root Certificated to the file\n########################################################\n# Example /home/user/sensitive/intermediate_root_ca.pem\n########################################################\n-----BEGIN CERTIFICATE-----\n \n[this is the intermediate cert]\n \n-----END CERTIFICATE-----\n-----BEGIN CERTIFICATE-----\n \n[this is the root cert]\n \n-----END CERTIFICATE-----\n\nThen set the Sensitive VAR in the environment\n\n * Linux\n   export TF_VAR_apic_intermediate_plus_root_ca_1=\"/home/user/sensitive/intermediate_root_ca.pem\"\n\n * Windows\n   env:$TF_VAR_apic_intermediate_plus_root_ca_1=\"/home/user/sensitive/intermediate_root_ca.pem\"\n\n########################################################\n# Example /home/user/sensitive/certificate.pem\n########################################################\n\n-----BEGIN CERTIFICATE-----\n[omitted]\n-----END CERTIFICATE-----\"\n * Linux\n   export TF_VAR_apic_certificate_1=\"/home/user/sensitive/certificate.pem\"\n\n * Windows\n   env:$TF_VAR_apic_certificate_1=\"/home/user/sensitive/certificate.pem\"\n\n########################################################\n# Example /home/user/sensitive/private_key.pem\n########################################################\n\n\"-----BEGIN PRIVATE KEY-----\n[omitted as well :)]\n-----END PRIVATE KEY-----\"\n\n * Linux\n   export TF_VAR_apic_private_key_1=\"/home/user/sensitive/private_key.pem\"\n\n * Windows\n   env:$TF_VAR_apic_private_key_1=\"/home/user/sensitive/private_key.pem\"",
+                    "title": "activate_certificate"
+                },
+                "modulus": {
+                    "type": "integer",
+                    "default": 2048,
+                    "description": "The length of the encryption keys. A longer key length increases the difficulty of breaking the key.",
+                    "enum": [
+                        512,
+                        1024,
+                        1536,
+                        2048
+                    ],
+                    "title": "modulus"
+                },
+                "name": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "Name for the Certificate.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "name"
+                },
+                "trustpoint": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "Name for the CA TrustPoint.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "trustpoint"
+                },
+                "var_identity": {
+                    "type": "integer",
+                    "default": 1,
+                    "description": "This value tells the script to use either use\n  * apic_intermediate_plus_root_ca_1\n  * apic_certificate_1\n  * apic_private_key_1\n\n Or\n  * apic_intermediate_plus_root_ca_2\n  * apic_certificate_2\n  * apic_private_key_2\n ",
+                    "enum": [
+                        1,
+                        2
+                    ],
+                    "title": "modulus"
+                }
+            },
+            "required": [
+                "activate_certificate",
+                "modulus",
+                "name",
+                "trustpoint",
+                "var_identity"
+            ],
+            "title": "apic_certificates — Policies -> Pod -> Date and Time."
         },
         "Fabric:Policies:Pod:DateAndTime": {
             "type": "object",
@@ -544,14 +578,6 @@
                         "enabled"
                     ],
                     "title": "administrative_state"
-                },
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
                 },
                 "authentication_keys": {
                     "type": "array",
@@ -658,7 +684,7 @@
                 "ntp_servers": {
                     "type": "array",
                     "additionalProperties": false,
-                    "description": "Required Attributes are:\n  * ntp_server\n\nOptional Attributes are:\n  * description\n  * key_id\n  * preferred",
+                    "description": "Required Attributes are:\n  * hostname\n\nOptional Attributes are:\n  * description\n  * key_id\n  * preferred",
                     "items": {
                         "type": "object",
                         "additionalProperties": false,
@@ -672,6 +698,14 @@
                                 "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
                                 "title": "administrative_state"
                             },
+                            "hostname": {
+                                "type": "string",
+                                "description": "Hostname/IP Address of the NTP Server",
+                                "minLength": 7,
+                                "maxLength": 128,
+                                "pattern": "(^(((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|((([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)+([A-Za-z|[A-Za-z][A-Za-z0-9\\-]*[A-Za-z0-9])))$|(?:^|(?<=\\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\\s|$))",
+                                "title": "hostname"
+                            },
                             "key_id": {
                                 "type": "integer",
                                 "default": 0,
@@ -679,14 +713,6 @@
                                 "minimum": 0,
                                 "maximum": 5,
                                 "title": "key_id"
-                            },
-                            "ntp_server": {
-                                "type": "string",
-                                "description": "Hostname/IP Address of the NTP Server",
-                                "minLength": 7,
-                                "maxLength": 128,
-                                "pattern": "(^(((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))|((([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)+([A-Za-z|[A-Za-z][A-Za-z0-9\\-]*[A-Za-z0-9])))$|(?:^|(?<=\\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\\s|$))",
-                                "title": "ntp_server"
                             },
                             "preferred": {
                                 "type": "boolean",
@@ -696,7 +722,7 @@
                             }
                         },
                         "required": [
-                            "ntp_server"
+                            "hostname"
                         ]
                     },
                     "title": "ntp_servers"
@@ -1175,14 +1201,6 @@
                     ],
                     "title": "admin_state"
                 },
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "contact": {
                     "type": "string",
                     "description": "The contact information for the SNMP policy.",
@@ -1527,7 +1545,7 @@
         "Fabric:RecommendedSettings": {
             "type": "object",
             "additionalProperties": false,
-            "description": "",
+            "description": "Object Types are:\n  * fabric_node_controls\n  * l3_interface\n  * pods\n  These Default Setting Values can be seen in defaults/fabric.yaml.",
             "properties": {
                 "fabric_node_controls": {
                     "type": "boolean",
