@@ -1,7 +1,7 @@
 ---
 switch:
   switch_profiles:
-    - node: 202
+    - node_id: 202
       inband_addressing:
           ipv4_address: 10.92.0.202/24
           ipv4_gateway: 10.92.0.254
@@ -62,7 +62,7 @@ switch:
         - interface: 1/35
         - interface: 1/36
       name: asgard-leaf202
-      node_type: leaf
+      node_type: unspecified
       ooband_addressing:
           ipv4_address: 192.168.64.10/23
           ipv4_gateway: 192.168.64.1

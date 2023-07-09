@@ -8,34 +8,34 @@ terraform {
   required_providers {
     aci = {
       source  = "CiscoDevNet/aci"
-      version = "2.8.0"
+      version = "2.9.0"
     }
     mso = {
       source  = "CiscoDevNet/mso"
-      version = "0.10.0"
+      version = "0.11.0"
     }
     utils = {
       source  = "netascode/utils"
-      version = ">= 0.1.2"
+      version = "0.2.5"
     }
   }
   required_version = ">= 1.3.0"
 }
 
 provider "aci" {
-  cert_name   = var.certName
-  password    = var.apicPass
-  private_key = var.privateKey
-  url         = "https://${var.apicHostname}"
-  username    = var.apicUser
+  cert_name   = var.cert_name
+  password    = var.apic_pass
+  private_key = var.private_key
+  url         = "https://${var.apic_hostname}"
+  username    = var.apic_user
   insecure    = true
 }
 
 provider "mso" {
-  domain   = var.ndoDomain
+  domain   = var.ndo_domain
   insecure = true
-  password = var.ndoPass
+  password = var.ndo_pass
   platform = "nd"
-  url      = "https://${var.ndoHostname}"
-  username = var.ndoUser
+  url      = "https://${var.ndo_hostname}"
+  username = var.ndo_user
 }

@@ -1,21 +1,39 @@
 ---
+#======================================
+#   Virtual Networking - Variables
+#======================================
 virtual_networking:
-  - virtual_switch_name: Asgard
-    controllers:
-      - hostname: asgard-vcenter.rich.ciscolabs.com
-        datacenter: Asgard
-        dvs_version: '7.0'
-        management_epg: ooband
-        stats_collection: enabled
-        trigger_inventory_sync: untriggered
+  vmm:
+  - controllers:
+    - datacenter: Asgard
+      dvs_version: '7.0'
+      hostname: asgard-vcenter.rich.ciscolabs.com
+      management_epg: ooband
+      monitoring_policy: default
+      stats_collection: enabled
+      switch_scope: vm
+      trigger_inventory_sync: untriggered
     credentials:
-      - username: administrator@rich.local
-        password: 1
+    - domain_name: Asgard
+      username: administrator@rich.local
     domain:
-      - enable_tag_collection: true
-        enable_vm_folder_data_retrieval: true
-        vlan_pool: all-vlans
+    - access_mode: read-write
+      delimiter: '|'
+      enable_tag_collection: false
+      enable_vm_folder_data_retrieval: false
+      endpoint_retention_time: 0
+      name: Asgard
+      site_group: '1'
+      switch_mode: default
+      switch_provider: VMware
+      vlan_pool: all-vlans
+    enhanced_lag_policy:
+    - load_balancing_mode: src-dst-ip
+      mode: active
+      number_of_links: '2'
+    name: Asgard
     vswitch_policy:
-      - cdp_interface_policy: cdpEnabled
-        lldp_interface_policy: lldpEnabled
-        port_channel_policy: macPin
+    - cdp_interface_policy: cdpEnabled
+      lldp_interface_policy: lldpEnabled
+      mtu_policy: default
+      port_channel_policy: macPin

@@ -3,33 +3,33 @@
 ACI Provider Settings
 _______________________________________________________________________________________________________________________
 */
-variable "apicHostname" {
+variable "apic_hostname" {
   default     = "apic.example.com"
   description = "Cisco APIC Hostname"
   type        = string
 }
 
-variable "apicPass" {
+variable "apic_pass" {
   default     = "dummydummy"
   description = "Password for User based Authentication."
   sensitive   = true
   type        = string
 }
 
-variable "apicUser" {
+variable "apic_user" {
   default     = "admin"
   description = "Username for User based Authentication."
   type        = string
 }
 
-variable "certName" {
+variable "cert_name" {
   default     = ""
   description = "Cisco ACI Certificate Name for SSL Based Authentication"
   sensitive   = true
   type        = string
 }
 
-variable "privateKey" {
+variable "private_key" {
   default     = ""
   description = "Cisco ACI Private Key for SSL Based Authentication."
   sensitive   = true
@@ -48,27 +48,27 @@ variable "apic_version" {
 Nexus Dashboard Orchestrator Provider Settings
 _______________________________________________________________________________________________________________________
 */
-variable "ndoDomain" {
+variable "ndo_domain" {
   default     = "local"
   description = "Authentication Domain for Nexus Dashboard Orchestrator Authentication."
   sensitive   = true
   type        = string
 }
 
-variable "ndoHostname" {
+variable "ndo_hostname" {
   default     = "ndo.example.com"
   description = "Cisco Nexus Dashboard Orchestrator Hostname"
   type        = string
 }
 
-variable "ndoPass" {
+variable "ndo_pass" {
   default     = "dummydummy"
   description = "Password for Nexus Dashboard Orchestrator Authentication."
   sensitive   = true
   type        = string
 }
 
-variable "ndoUser" {
+variable "ndo_user" {
   default     = "admin"
   description = "Username for Nexus Dashboard Orchestrator Authentication."
   type        = string
@@ -239,42 +239,42 @@ Fabric > Policies > Pod > Management Access: default - Sensitive Variables
 _______________________________________________________________________________________________________________________
 */
 variable "apic_certificate_1" {
-  default     = ""
+  default     = "blah.txt"
   description = "APIC Certificate 1."
   sensitive   = true
   type        = string
 }
 
 variable "apic_certificate_2" {
-  default     = ""
+  default     = "blah.txt"
   description = "APIC Certificate 2."
   sensitive   = true
   type        = string
 }
 
 variable "apic_intermediate_plus_root_ca_1" {
-  default     = ""
+  default     = "blah.txt"
   description = "Intermediate and Root CA Certificate 1."
   sensitive   = true
   type        = string
 }
 
 variable "apic_intermediate_plus_root_ca_2" {
-  default     = ""
+  default     = "blah.txt"
   description = "Intermediate and Root CA Certificate 2."
   sensitive   = true
   type        = string
 }
 
 variable "apic_private_key_1" {
-  default     = ""
+  default     = "blah.txt"
   description = "APIC Private Key 1."
   sensitive   = true
   type        = string
 }
 
 variable "apic_private_key_2" {
-  default     = ""
+  default     = "blah.txt"
   description = "APIC Private Key 2."
   sensitive   = true
   type        = string

@@ -39,38 +39,6 @@
             },
             "title": "access"
         },
-        "Access:Domain": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$"
-                },
-                "name": {
-                    "type": "string",
-                    "description": "Name of the Domain.",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
-                },
-                "vlan_pool": {
-                    "type": "string",
-                    "description": "Name of the VLAN Pool to Associate to the Domain.",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$"
-                }
-            },
-            "required": [
-                "name",
-                "vlan_pool"
-            ],
-            "title": "L3 and Physical Domains"
-        },
         "Access:Interfaces": {
             "type": "object",
             "description": "Object Types are:\n  * leaf\n  * spine",
@@ -106,7 +74,7 @@
             "properties": {
                 "access": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * annotation\n  * cdp_interface_policy\n  * copp_interface_policy\n  * data_plane_policing_egress\n  * data_plane_policing_ingress\n  * description\n  * dot1x_port_authentication_policy\n  * dwdm_policy\n  * fibre_channel_interface_policy\n  * global_alias\n  * l2_interface_policy\n  * link_flap_policy\n  * link_level_flow_control_policy\n  * link_level_policy\n  * lldp_interface_policy\n  * macsec_policy\n  * mcp_interface_policy\n  * monitoring_policy\n  * netflow_monitor_policies\n  * poe_interface_policy\n  * port_security_policy\n  * priority_flow_control_policy\n  * slow_drain_policy\n  * span_destination_groups\n  * span_source_groups\n  * spanning_tree_interface_policy\n  * storm_control_policy\n  * synce_interface_policy",
+                    "description": "Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * cdp_interface_policy\n  * copp_interface_policy\n  * data_plane_policing_egress\n  * data_plane_policing_ingress\n  * description\n  * dot1x_port_authentication_policy\n  * dwdm_policy\n  * fibre_channel_interface_policy\n  * global_alias\n  * l2_interface_policy\n  * link_flap_policy\n  * link_level_flow_control_policy\n  * link_level_policy\n  * lldp_interface_policy\n  * macsec_policy\n  * mcp_interface_policy\n  * monitoring_policy\n  * netflow_monitor_policies\n  * poe_interface_policy\n  * port_security_policy\n  * priority_flow_control_policy\n  * slow_drain_policy\n  * span_destination_groups\n  * span_source_groups\n  * spanning_tree_interface_policy\n  * storm_control_policy\n  * synce_interface_policy",
                     "items": {
                         "$ref": "#/definitions/Access:Interfaces:LeafInterfaces:PolicyGroups:LeafAccessPort"
                     },
@@ -114,7 +82,7 @@
                 },
                 "breakout": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * breakout_map\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description",
+                    "description": "Required Attributes are:\n  * breakout_map\n  * name\n\nOptional Attributes are:\n  * description",
                     "items": {
                         "$ref": "#/definitions/Access:Interfaces:LeafInterfaces:PolicyGroups:LeafBreakoutPortGroup"
                     },
@@ -122,7 +90,7 @@
                 },
                 "bundle": {
                     "type": "array",
-                    "description": "bundle — Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * annotation\n  * cdp_interface_policy\n  * copp_interface_policy\n  * data_plane_policing_egress\n  * data_plane_policing_ingress\n  * description\n  * dot1x_port_authentication_policy\n  * dwdm_policy\n  * fibre_channel_interface_policy\n  * global_alias\n  * l2_interface_policy\n  * link_flap_policy\n  * link_level_flow_control_policy\n  * link_level_policy\n  * lldp_interface_policy\n  * macsec_policy\n  * mcp_interface_policy\n  * monitoring_policy\n  * netflow_monitor_policies\n  * poe_interface_policy\n  * port_security_policy\n  * priority_flow_control_policy\n  * slow_drain_policy\n  * span_destination_groups\n  * span_source_groups\n  * spanning_tree_interface_policy\n  * storm_control_policy\n  * synce_interface_policy",
+                    "description": "bundle — Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * cdp_interface_policy\n  * copp_interface_policy\n  * data_plane_policing_egress\n  * data_plane_policing_ingress\n  * description\n  * dot1x_port_authentication_policy\n  * dwdm_policy\n  * fibre_channel_interface_policy\n  * global_alias\n  * l2_interface_policy\n  * link_flap_policy\n  * link_level_flow_control_policy\n  * link_level_policy\n  * lldp_interface_policy\n  * macsec_policy\n  * mcp_interface_policy\n  * monitoring_policy\n  * netflow_monitor_policies\n  * poe_interface_policy\n  * port_security_policy\n  * priority_flow_control_policy\n  * slow_drain_policy\n  * span_destination_groups\n  * span_source_groups\n  * spanning_tree_interface_policy\n  * storm_control_policy\n  * synce_interface_policy",
                     "items": {
                         "$ref": "#/definitions/Access:Interfaces:LeafInterfaces:PolicyGroups:LeafBundleInterface"
                     },
@@ -135,14 +103,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "attachable_entity_profile": {
                     "type": "string",
                     "default": "default",
@@ -318,7 +278,7 @@
                     "minLength": 1,
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "annotation"
+                    "title": "name"
                 },
                 "poe_interface_policy": {
                     "type": "string",
@@ -418,14 +378,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "breakout_map": {
                     "default": "25g-4x",
                     "description": "Enable the port as a breakout port with one of the following options:\n  * 10g-4x\n  * 25g-4x\n  * 50g-8x\n  * 100g-2x\n  * 100g-4x",
@@ -436,7 +388,7 @@
                         "100g-2x",
                         "100g-4x"
                     ],
-                    "title": "annotation"
+                    "title": "breakout_map"
                 },
                 "description": {
                     "type": "string",
@@ -444,7 +396,7 @@
                     "minLength": 1,
                     "maxLength": 128,
                     "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
+                    "title": "description"
                 },
                 "name": {
                     "type": "string",
@@ -452,7 +404,7 @@
                     "minLength": 1,
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "annotation"
+                    "title": "name"
                 }
             },
             "title": "breakout — Leaf Breakout Port Group Attributes"
@@ -460,16 +412,8 @@
         "Access:Interfaces:LeafInterfaces:PolicyGroups:LeafBundleInterface": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * annotation\n  * cdp_interface_policy\n  * copp_interface_policy\n  * data_plane_policing_egress\n  * data_plane_policing_ingress\n  * description\n  * fibre_channel_interface_policy\n  * l2_interface_policy\n  * link_aggregation_type\n  * link_flap_policy\n  * link_level_flow_control_policy\n  * link_level_policy\n  * lldp_interface_policy\n  * macsec_policy\n  * mcp_interface_policy\n  * monitoring_policy\n  * netflow_monitor_policies\n  * port_channel_policy\n  * port_security_policy\n  * priority_flow_control_policy\n  * slow_drain_policy\n  * span_destination_groups\n  * span_source_groups\n  * spanning_tree_interface_policy\n  * storm_control_policy",
+            "description": "Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * cdp_interface_policy\n  * copp_interface_policy\n  * data_plane_policing_egress\n  * data_plane_policing_ingress\n  * description\n  * fibre_channel_interface_policy\n  * l2_interface_policy\n  * link_aggregation_type\n  * link_flap_policy\n  * link_level_flow_control_policy\n  * link_level_policy\n  * lldp_interface_policy\n  * macsec_policy\n  * mcp_interface_policy\n  * monitoring_policy\n  * netflow_monitor_policies\n  * port_channel_policy\n  * port_security_policy\n  * priority_flow_control_policy\n  * slow_drain_policy\n  * span_destination_groups\n  * span_source_groups\n  * spanning_tree_interface_policy\n  * storm_control_policy",
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "attachable_entity_profile": {
                     "type": "string",
                     "default": "default",
@@ -513,7 +457,7 @@
                     "minLength": 1,
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "annotation"
+                    "title": "data_plane_policing_ingress"
                 },
                 "description": {
                     "type": "string",
@@ -755,7 +699,7 @@
             "properties": {
                 "policy_groups": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * annotation\n  * cdp_interface_policy\n  * description\n  * global_alias\n  * link_flap_policy\n  * link_level_policy\n  * macsec_policy",
+                    "description": "Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * cdp_interface_policy\n  * description\n  * global_alias\n  * link_flap_policy\n  * link_level_policy\n  * macsec_policy",
                     "items": {
                         "$ref": "#/definitions/Access:Interfaces:SpineInterfaces:PolicyGroups"
                     },
@@ -771,14 +715,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "attachable_entity_profile": {
                     "type": "string",
                     "default": "default",
@@ -854,22 +790,49 @@
             "properties": {
                 "l3_domains": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n  * vlan_pool\n\nOptional Attributes are:\n  * annotation",
+                    "description": "Required Attributes are:\n  * name\n  * vlan_pool\n\nOptional Attributes are:",
                     "items": {
-                        "$ref": "#/definitions/Domain"
+                        "$ref": "#/definitions/Access:PhysicalAndExternalDomains:Domain"
                     },
                     "title": "l3_domains — Physical and External Domains -> L3 Domains."
                 },
                 "physical_domains": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n  * vlan_pool\n\nOptional Attributes are:\n  * annotation",
+                    "description": "Required Attributes are:\n  * name\n  * vlan_pool\n\nOptional Attributes are:",
                     "items": {
-                        "$ref": "#/definitions/Domain"
+                        "$ref": "#/definitions/Access:PhysicalAndExternalDomains:Domain"
                     },
                     "title": "physical_domains — Physical and External Domains -> Physical Domains."
                 }
             },
             "title": "physical_and_external_domains — Physical and External Domains"
+        },
+        "Access:PhysicalAndExternalDomains:Domain": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the Domain.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "name"
+                },
+                "vlan_pool": {
+                    "type": "string",
+                    "description": "Name of the VLAN Pool to Associate to the Domain.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "vlan_pool"
+                }
+            },
+            "required": [
+                "name",
+                "vlan_pool"
+            ],
+            "title": "L3 and Physical Domains"
         },
         "Access:Policies": {
             "type": "object",
@@ -895,7 +858,7 @@
             "properties": {
                 "attachable_access_entity_profiles": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * l3_domains\n  * physical_domains\n  * vmm_domains",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * description\n  * l3_domains\n  * physical_domains\n  * vmm_domains",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Global:AttachableAccessEntityProfile"
                     },
@@ -903,7 +866,7 @@
                 },
                 "dhcp_relay": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * dhcp_servers\n  * epg\n\nOptional Attributes are:\n  * annotation\n  * application_profile\n  * description\n  * epg_type\n  * l3out\n  * mode\n  * tenant",
+                    "description": "Required Attributes are:\n  * dhcp_servers\n  * epg\n\nOptional Attributes are:\n  * application_profile\n  * description\n  * epg_type\n  * l3out\n  * mode\n  * tenant",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Global:DHCPRelay"
                     },
@@ -911,7 +874,7 @@
                 },
                 "error_disabled_recovery": {
                     "type": "array",
-                    "description": "error_disabled_recovery — Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * error_disable_recovery_interval\n  * events",
+                    "description": "error_disabled_recovery — Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * error_disable_recovery_interval\n  * events",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Global:ErrorDisabledRecovery"
                     },
@@ -919,7 +882,7 @@
                 },
                 "mcp_instance": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * description\n  * enable_mcp_pdu_per_vlan\n  * loop_detect_multiplication_factor\n  * loop_protect_action\n  * transmission_frequency",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * admin_state\n  * description\n  * enable_mcp_pdu_per_vlan\n  * loop_detect_multiplication_factor\n  * loop_protect_action\n  * transmission_frequency",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Global:McpInstance"
                     },
@@ -927,7 +890,7 @@
                 },
                 "qos_class": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * elephant_trap_age_period\n  * elephant_trap_bandwidth_threshold\n  * elephant_trap_byte_count\n  * elephant_trap_state\n  * fabric_flush_interval\n  * fabric_flush_state\n  * micro_burst_spine_queues\n  * micro_burst_leaf_queues\n  * preserve_cos",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * description\n  * elephant_trap_age_period\n  * elephant_trap_bandwidth_threshold\n  * elephant_trap_byte_count\n  * elephant_trap_state\n  * fabric_flush_interval\n  * fabric_flush_state\n  * micro_burst_spine_queues\n  * micro_burst_leaf_queues\n  * preserve_cos",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Global:QosClass"
                     },
@@ -936,7 +899,7 @@
                 "recommended_policies": {
                     "type": "object",
                     "description": "recommended_policies — Required Attributes are:\n  * error_disabled_recovery_policy\n  * mcp_instance_policy\n  * qos_class\n  * vpc_domain",
-                    "$ref": "#/definitions/Policies:Global:RecommendedPolicies"
+                    "$ref": "#/definitions/Access:Policies:Global:RecommendedPolicies"
                 }
             },
             "title": "Policies -> Global"
@@ -944,14 +907,6 @@
         "Access:Policies:Global:AttachableAccessEntityProfile": {
             "type": "object",
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "description": {
                     "type": "string",
                     "default": "default",
@@ -1025,14 +980,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "description": {
                     "type": "string",
                     "default": "default",
@@ -1111,14 +1058,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "error_disable_recovery_interval": {
                     "type": "integer",
                     "default": 300,
@@ -1180,14 +1119,6 @@
                         "enabled"
                     ],
                     "title": "admin_state"
-                },
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
                 },
                 "description": {
                     "type": "string",
@@ -1268,14 +1199,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "description": {
                     "type": "string",
                     "default": "default",
@@ -1410,7 +1333,7 @@
             "properties": {
                 "cdp_interface": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * description\n  * global_alias",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * admin_state\n  * description\n  * global_alias",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Interface:CdpInterface"
                     },
@@ -1423,7 +1346,7 @@
                 },
                 "fibre_channel_interface": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * auto_max_speed\n  * description\n  * fill_pattern\n  * port_mode\n  * receive_buffer_credit\n  * speed\n  * trunk_mode",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * auto_max_speed\n  * description\n  * fill_pattern\n  * port_mode\n  * receive_buffer_credit\n  * speed\n  * trunk_mode",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Interface:FibreChannelInterface"
                     },
@@ -1431,7 +1354,7 @@
                 },
                 "l2_interface": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * qinq\n  * reflective_relay\n  * vlan_scope",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * description\n  * qinq\n  * reflective_relay\n  * vlan_scope",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Interface:L2Interface"
                     },
@@ -1439,7 +1362,7 @@
                 },
                 "link_level": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * auto_negotiation\n  * description\n  * forwarding_error_correction\n  * global_alias\n  * link_debounce_interval\n  * speed",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * auto_negotiation\n  * description\n  * forwarding_error_correction\n  * global_alias\n  * link_debounce_interval\n  * speed",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Interface:LinkLevel"
                     },
@@ -1447,7 +1370,7 @@
                 },
                 "lldp_interface": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * global_alias\n  * receive_state\n  * transmit_state",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * description\n  * global_alias\n  * receive_state\n  * transmit_state",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Interface:LldpInterface"
                     },
@@ -1455,7 +1378,7 @@
                 },
                 "mcp_interface": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * description",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * admin_state\n  * description",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Interface:McpInterface"
                     },
@@ -1463,7 +1386,7 @@
                 },
                 "port_channel": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * control\n  * description\n  * global_alias\n  * maximum_number_of_links\n  * minimum_number_of_links\n  * mode",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * control\n  * description\n  * global_alias\n  * maximum_number_of_links\n  * minimum_number_of_links\n  * mode",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Interface:PortChannel"
                     },
@@ -1471,7 +1394,7 @@
                 },
                 "port_security": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * maximum_endpoints\n  * port_security_timeout",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * description\n  * maximum_endpoints\n  * port_security_timeout",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Interface:PortSecurity"
                     },
@@ -1479,7 +1402,7 @@
                 },
                 "spanning_tree_interface": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * bpdu_filter\n  * bpdu_guard\n  * description\n  * global_alias",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * bpdu_filter\n  * bpdu_guard\n  * description\n  * global_alias",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Interface:SpanningTreeInterface"
                     },
@@ -1501,14 +1424,6 @@
                         "enabled"
                     ],
                     "title": "admin_state"
-                },
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
                 },
                 "description": {
                     "type": "string",
@@ -1618,14 +1533,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "auto_max_speed": {
                     "type": "string",
                     "default": "32G",
@@ -1731,14 +1638,6 @@
                     ],
                     "title": "admin_state"
                 },
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "description": {
                     "type": "string",
                     "default": "default",
@@ -1799,14 +1698,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "auto_negotiation": {
                     "type": "string",
                     "default": "on",
@@ -1897,14 +1788,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "description": {
                     "type": "string",
                     "default": "default",
@@ -1971,14 +1854,6 @@
                     ],
                     "title": "admin_state"
                 },
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "description": {
                     "type": "string",
                     "default": "default",
@@ -2007,14 +1882,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "control": {
                     "type": "object",
                     "description": "LACP Control Parameters.  Parameters are: \n  * fast_select_hot_standby_ports\n  * graceful_convergence\n  * load_defer_member_ports\n  * suspend_individual_port\n  * symmetric_hashing",
@@ -2117,14 +1984,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "description": {
                     "type": "string",
                     "default": "default",
@@ -2169,14 +2028,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "bpdu_filter": {
                     "type": "string",
                     "default": "disabled",
@@ -2236,9 +2087,9 @@
             "properties": {
                 "vpc_domain": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * dead_interval\n  * description",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * dead_interval\n  * description",
                     "items": {
-                        "$ref": "#/definitions/Policies:Switch:VPCDomain"
+                        "$ref": "#/definitions/Access:Policies:Switch:VPCDomain"
                     },
                     "title": "vpc_domain — Policies -> Switch -> VPC Domain"
                 }
@@ -2249,14 +2100,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "dead_interval": {
                     "type": "integer",
                     "default": 200,
@@ -2295,7 +2138,7 @@
             "properties": {
                 "vlan": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * encap_blocks\n  * name\n\nOptional Attributes are:\n  * allocation_mode\n  * annotation\n  * description",
+                    "description": "Required Attributes are:\n  * encap_blocks\n  * name\n\nOptional Attributes are:\n  * allocation_mode\n  * description",
                     "items": {
                         "$ref": "#/definitions/Access:Pools:VLAN"
                     },
@@ -2321,14 +2164,6 @@
                     ],
                     "title": "allocation_mode"
                 },
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "description": {
                     "type": "string",
                     "default": "default",
@@ -2342,7 +2177,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * vlan_range\n\nOptional Attributes are:\n  * allocation_mode\n  * description\n  * role",
                     "items": {
-                        "$ref": "#/definitions/Pools:VLAN:EncapBlock"
+                        "$ref": "#/definitions/Access:Pools:VLAN:EncapBlock"
                     },
                     "title": "encap_blocks"
                 },
@@ -2424,7 +2259,7 @@
             "properties": {
                 "policy_groups": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * bfd_ipv4_policy\n  * bfd_ipv6_policy\n  * bfd_multihop_ipv4_policy\n  * bfd_multihop_ipv6_policy\n  * cdp_interface_policy\n  * copp_leaf_policy\n  * copp_pre_filter\n  * description\n  * dot1x_node_authentication_policy\n  * equipment_flash_config\n  * fast_link_failover_policy\n  * fibre_channel_node_policy\n  * fibre_channel_san_policy\n  * forward_scale_profile_policy\n  * lldp_interface_policy\n  * monitoring_policy\n  * netflow_node_policy\n  * poe_node_policy\n  * ptp_node_policy\n  * spanning_tree_interface_policy\n  * synce_node_policy\n  * usb_configuration_policy",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * bfd_ipv4_policy\n  * bfd_ipv6_policy\n  * bfd_multihop_ipv4_policy\n  * bfd_multihop_ipv6_policy\n  * cdp_interface_policy\n  * copp_leaf_policy\n  * copp_pre_filter\n  * description\n  * dot1x_node_authentication_policy\n  * equipment_flash_config\n  * fast_link_failover_policy\n  * fibre_channel_node_policy\n  * fibre_channel_san_policy\n  * forward_scale_profile_policy\n  * lldp_interface_policy\n  * monitoring_policy\n  * netflow_node_policy\n  * poe_node_policy\n  * ptp_node_policy\n  * spanning_tree_interface_policy\n  * synce_node_policy\n  * usb_configuration_policy",
                     "items": {
                         "$ref": "#/definitions/Access:Switches:LeafSwitches:PolicyGroups"
                     },
@@ -2440,14 +2275,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "bfd_ipv4_policy": {
                     "type": "string",
                     "default": "default",
@@ -2666,7 +2493,7 @@
             "properties": {
                 "policy_groups": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * bfd_ipv4_policy\n  * bfd_ipv6_policy\n  * cdp_interface_policy\n  * copp_pre_filter\n  * copp_spine_policy\n  * description\n  * lldp_interface_policy\n  * usb_configuration_policy",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * bfd_ipv4_policy\n  * bfd_ipv6_policy\n  * cdp_interface_policy\n  * copp_pre_filter\n  * copp_spine_policy\n  * description\n  * lldp_interface_policy\n  * usb_configuration_policy",
                     "items": {
                         "$ref": "#/definitions/Access:Switches:SpineSwitches:PolicyGroups"
                     },
@@ -2682,14 +2509,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "bfd_ipv4_policy": {
                     "type": "string",
                     "default": "default",

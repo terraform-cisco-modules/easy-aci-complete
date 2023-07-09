@@ -1,33 +1,42 @@
 ---
+#======================================
+#   Access -> Policies - Variables
+#======================================
 access:
   policies:
     global:
+      attachable_access_entity_profiles:
+      - description: Default AEP
+        infra_vlan: false
+        l3_domains:
+        - l3out
+        name: accessAep
+        physical_domains:
+        - access
+      - description: AEP for EPG Assignment
+        infra_vlan: false
+        name: trunkAep
+        physical_domains:
+        - access
+        vmm_domains:
+        - Asgard
+      - description: AEP for Infra Trunk
+        infra_vlan: true
+        name: infraAep
+        physical_domains:
+        - access
+      dhcp_relay:
+      - epg: prod
+        epg_type: external_epg
+        l3out: asgard-prod
+        dhcp_servers:
+        - 10.101.128.15
+        - 10.101.128.16
       recommended_policies:
         error_disabled_recovery_policy: true
         mcp_instance_policy: true
         qos_class: true
         vpc_domain: true # VPC Domain is under Switch but for simplicity added here
-      attachable_access_entity_profiles:
-        - name: accessAep
-          description: 'Default AAEP'
-          l3_domains: [l3out]
-          physical_domains: [access]
-        - name: infraAep
-          description: 'AAEP for Infra Trunk'
-          infra_vlan: true
-          physical_domains: [access]
-        - name: trunkAep
-          description: 'AAEP for EPG Assignment'
-          physical_domains: [access]
-          vmm_domains: [Asgard]
-      dhcp_relay:
-        - dhcp_servers: 
-            - 10.101.128.15
-            - 10.101.128.15
-          epg: prod
-          epg_type: external_epg
-          l3out: asgard-prod
-          tenant: 'infra'
     interface:
       create_pre_built_interface_policies:
         cdp_interface: true

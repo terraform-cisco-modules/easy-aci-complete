@@ -1,9 +1,68 @@
 ---
 tenants:
-  - name: common
-    annotations:
+  - annotations:
       - key: key_name
         value: key_value
+    contracts:
+      contracts:
+      - contract_type: taboo
+        description: A Taboo Contract
+        name: taboo_contract
+        qos_class: unspecified
+        scope: global
+        subjects:
+        - action: permit
+          apply_both_directions: true
+          contract_type: taboo
+          directives:
+            enable_policy_compression: false
+            log: false
+          filters:
+          - any
+          label_match_criteria: AtleastOne
+          name: taboo_contract
+          qos_class: unspecified
+          target_dscp: unspecified
+        target_dscp: unspecified
+      - contract_type: standard
+        description: Any Contract
+        name: any
+        qos_class: unspecified
+        scope: global
+        subjects:
+        - action: permit
+          apply_both_directions: true
+          contract_type: standard
+          directives:
+            enable_policy_compression: false
+            log: false
+          filters:
+          - any
+          label_match_criteria: AtleastOne
+          name: any
+          qos_class: unspecified
+          target_dscp: unspecified
+        target_dscp: unspecified
+      filters:
+      - description: Default Filter
+        filter_entries:
+        - arp_flag: unspecified
+          description: Allow Any
+          destination_port_from: unspecified
+          destination_port_to: unspecified
+          ethertype: unspecified
+          icmpv4_type: unspecified
+          icmpv6_type: unspecified
+          ip_protocol: unspecified
+          match_dscp: unspecified
+          match_only_fragments: false
+          name: any
+          source_port_from: unspecified
+          source_port_to: unspecified
+          stateful: false
+        name: any
+    create: false
+    name: common
     networking:
       l3outs:
         - name: asgard-dmz

@@ -2,12 +2,12 @@
 system_settings:
   apic_connectivity_preference:
     interface_to_use_for_external_connections: inband
-  bgp:
+  bgp_route_reflector:
     autonomous_system_number: 65501
-  bgp_route_reflectors:
+    route_reflector_nodes:
       pods:
       - pod_id: 1
-        route_reflector_nodes: [101, 102]
+        nodes: [101, 102]
   coop_group:
     description: default
     type: strict

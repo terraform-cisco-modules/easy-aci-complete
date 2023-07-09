@@ -12,6 +12,7 @@ output "built_in_tenants" {
   description = "Built-In Tenants module outputs (common|infra|mgmt)."
   value       = module.built_in_tenants
 }
+
 output "fabric" {
   description = "Fabric module outputs."
   value       = module.fabric
