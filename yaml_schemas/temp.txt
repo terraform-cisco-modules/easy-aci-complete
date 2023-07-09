@@ -1,0 +1,12 @@
+
+
+
+Upgrade status
+Paused
+1
+paused
+Scheduler is paused, waiting for admin intervention. Admin can resume the scheduler.
+Running
+0
+running
+Scheduler is running, scheduling maintenance operations in suitable windows.

@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$ref": "#/definitions/AccessWelcome",
+    "$ref": "#/definitions/CiscoAci",
     "definitions": {
-        "AccessWelcome": {
+        "CiscoAci": {
             "type": "object",
             "description": "Fabric -> Access Policies.",
             "additionalProperties": false,
@@ -14,32 +14,32 @@
             "required": [
                 "access"
             ],
-            "title": "access"
+            "title": "Cisco ACI: Access YAML Schema"
         },
         "Access": {
             "type": "object",
-            "description": "Object Types are:\n  * interfaces\n  * physical_and_external_domains\n  * policies\n  * pools\n  * switches",
+            "description": "Fabric -> Access Policies.  Object Types are:\n  * interfaces\n  * physical_and_external_domains\n  * policies\n  * pools\n  * switches",
             "additionalProperties": false,
             "properties": {
                 "interfaces": {
-                    "$ref": "#/definitions/Interfaces"
+                    "$ref": "#/definitions/Access:Interfaces"
                 },
                 "physical_and_external_domains": {
-                    "$ref": "#/definitions/PhysicalAndExternalDomains"
+                    "$ref": "#/definitions/Access:PhysicalAndExternalDomains"
                 },
                 "policies": {
-                    "$ref": "#/definitions/Policies"
+                    "$ref": "#/definitions/Access:Policies"
                 },
                 "pools": {
-                    "$ref": "#/definitions/Pools"
+                    "$ref": "#/definitions/Access:Pools"
                 },
                 "switches": {
-                    "$ref": "#/definitions/Switches"
+                    "$ref": "#/definitions/Access:Switches"
                 }
             },
-            "title": "Fabric -> Access Policies"
+            "title": "access"
         },
-        "Domain": {
+        "Access:Domain": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -71,27 +71,27 @@
             ],
             "title": "L3 and Physical Domains"
         },
-        "Interfaces": {
+        "Access:Interfaces": {
             "type": "object",
             "description": "Object Types are:\n  * leaf\n  * spine",
             "additionalProperties": false,
             "properties": {
                 "leaf": {
-                    "$ref": "#/definitions/Interfaces:LeafInterfaces"
+                    "$ref": "#/definitions/Access:Interfaces:LeafInterfaces"
                 },
                 "spine": {
-                    "$ref": "#/definitions/Interfaces:SpineInterfaces"
+                    "$ref": "#/definitions/Access:Interfaces:SpineInterfaces"
                 }
             },
             "title": "interfaces — Fabric -> Access Policies -> Interfaces"
         },
-        "Interfaces:LeafInterfaces": {
+        "Access:Interfaces:LeafInterfaces": {
             "type": "object",
             "description": "Object Types are:\n  * policy_groups",
             "additionalProperties": false,
             "properties": {
                 "policy_groups": {
-                    "$ref": "#/definitions/Interfaces:LeafInterfaces:PolicyGroups"
+                    "$ref": "#/definitions/Access:Interfaces:LeafInterfaces:PolicyGroups"
                 }
             },
             "required": [
@@ -99,7 +99,7 @@
             ],
             "title": "leaf — Access-> Access Policies -> Interfaces -> Leaf Interfaces"
         },
-        "Interfaces:LeafInterfaces:PolicyGroups": {
+        "Access:Interfaces:LeafInterfaces:PolicyGroups": {
             "type": "object",
             "description": "Object Types are:\n  * access\n  * breakout\n  * bundle",
             "additionalProperties": false,
@@ -108,7 +108,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * annotation\n  * cdp_interface_policy\n  * copp_interface_policy\n  * data_plane_policing_egress\n  * data_plane_policing_ingress\n  * description\n  * dot1x_port_authentication_policy\n  * dwdm_policy\n  * fibre_channel_interface_policy\n  * global_alias\n  * l2_interface_policy\n  * link_flap_policy\n  * link_level_flow_control_policy\n  * link_level_policy\n  * lldp_interface_policy\n  * macsec_policy\n  * mcp_interface_policy\n  * monitoring_policy\n  * netflow_monitor_policies\n  * poe_interface_policy\n  * port_security_policy\n  * priority_flow_control_policy\n  * slow_drain_policy\n  * span_destination_groups\n  * span_source_groups\n  * spanning_tree_interface_policy\n  * storm_control_policy\n  * synce_interface_policy",
                     "items": {
-                        "$ref": "#/definitions/Interfaces:LeafInterfaces:PolicyGroups:LeafAccessPort"
+                        "$ref": "#/definitions/Access:Interfaces:LeafInterfaces:PolicyGroups:LeafAccessPort"
                     },
                     "title": "access — Leaf Access Port."
                 },
@@ -116,7 +116,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * breakout_map\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description",
                     "items": {
-                        "$ref": "#/definitions/Interfaces:LeafInterfaces:PolicyGroups:LeafBreakoutPortGroup"
+                        "$ref": "#/definitions/Access:Interfaces:LeafInterfaces:PolicyGroups:LeafBreakoutPortGroup"
                     },
                     "title": "breakout — Leaf Breakout Port Group."
                 },
@@ -124,14 +124,14 @@
                     "type": "array",
                     "description": "bundle — Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * annotation\n  * cdp_interface_policy\n  * copp_interface_policy\n  * data_plane_policing_egress\n  * data_plane_policing_ingress\n  * description\n  * dot1x_port_authentication_policy\n  * dwdm_policy\n  * fibre_channel_interface_policy\n  * global_alias\n  * l2_interface_policy\n  * link_flap_policy\n  * link_level_flow_control_policy\n  * link_level_policy\n  * lldp_interface_policy\n  * macsec_policy\n  * mcp_interface_policy\n  * monitoring_policy\n  * netflow_monitor_policies\n  * poe_interface_policy\n  * port_security_policy\n  * priority_flow_control_policy\n  * slow_drain_policy\n  * span_destination_groups\n  * span_source_groups\n  * spanning_tree_interface_policy\n  * storm_control_policy\n  * synce_interface_policy",
                     "items": {
-                        "$ref": "#/definitions/Interfaces:LeafInterfaces:PolicyGroups:LeafBundleInterface"
+                        "$ref": "#/definitions/Access:Interfaces:LeafInterfaces:PolicyGroups:LeafBundleInterface"
                     },
                     "title": "bundle — PC Interface/VPC Interface."
                 }
             },
             "title": "policy_groups — Policy Groups"
         },
-        "Interfaces:LeafInterfaces:PolicyGroups:LeafAccessPort": {
+        "Access:Interfaces:LeafInterfaces:PolicyGroups:LeafAccessPort": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -307,7 +307,7 @@
                     "type": "array",
                     "description": "List of Objects to assign Netflow Monitor Policies to the Policy Group.\nRequired Attributes:\n netflow_monitor_policy\n\nOptional Attributes:\nip_filter_type",
                     "items": {
-                        "$ref": "#/definitions/NetflowMonitorPolicies"
+                        "$ref": "#/definitions/Access:Interfaces:LeafIntefaces:PolicyGroups:NetflowMonitorPolicies"
                     },
                     "title": "netflow_monitor_policies"
                 },
@@ -414,7 +414,7 @@
             ],
             "title": "access — Leaf Access Port Attributes"
         },
-        "Interfaces:LeafInterfaces:PolicyGroups:LeafBreakoutPortGroup": {
+        "Access:Interfaces:LeafInterfaces:PolicyGroups:LeafBreakoutPortGroup": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -457,7 +457,7 @@
             },
             "title": "breakout — Leaf Breakout Port Group Attributes"
         },
-        "Interfaces:LeafInterfaces:PolicyGroups:LeafBundleInterface": {
+        "Access:Interfaces:LeafInterfaces:PolicyGroups:LeafBundleInterface": {
             "type": "object",
             "additionalProperties": false,
             "description": "Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * annotation\n  * cdp_interface_policy\n  * copp_interface_policy\n  * data_plane_policing_egress\n  * data_plane_policing_ingress\n  * description\n  * fibre_channel_interface_policy\n  * l2_interface_policy\n  * link_aggregation_type\n  * link_flap_policy\n  * link_level_flow_control_policy\n  * link_level_policy\n  * lldp_interface_policy\n  * macsec_policy\n  * mcp_interface_policy\n  * monitoring_policy\n  * netflow_monitor_policies\n  * port_channel_policy\n  * port_security_policy\n  * priority_flow_control_policy\n  * slow_drain_policy\n  * span_destination_groups\n  * span_source_groups\n  * spanning_tree_interface_policy\n  * storm_control_policy",
@@ -619,7 +619,7 @@
                     "type": "array",
                     "description": "Map of Objects to assign Netflow Monitor Policies to the Policy Group.\nRequired Attributes:\n netflow_monitor_policy\n\nOptional Attributes:\nip_filter_type",
                     "items": {
-                        "$ref": "#/definitions/NetflowMonitorPolicies"
+                        "$ref": "#/definitions/Access:Interfaces:LeafIntefaces:PolicyGroups:NetflowMonitorPolicies"
                     },
                     "title": "netflow_monitor_policies"
                 },
@@ -723,7 +723,32 @@
             ],
             "title": "bundle — PC Interface|VPC Interface Attributes."
         },
-        "Interfaces:SpineInterfaces": {
+        "Access:Interfaces:LeafIntefaces:PolicyGroups:NetflowMonitorPolicies": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "ip_filter_type": {
+                    "default": "ce",
+                    "description": "IP Filter Type.  Options are:\n*  ce\n*  ipv4\n*  ipv6",
+                    "enum": [
+                        "ce",
+                        "ipv4",
+                        "ipv6"
+                    ],
+                    "title": "ip_filter_type"
+                },
+                "netflow_monitor_policy": {
+                    "type": "string",
+                    "description": "The Name of the Netflow Monitor Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "netflow_monitor_policy"
+                }
+            },
+            "title": "Netflow Monitor Policies."
+        },
+        "Access:Interfaces:SpineInterfaces": {
             "type": "object",
             "description": "Object Types are:\n  * policy_groups",
             "additionalProperties": false,
@@ -732,7 +757,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * attachable_entity_profile\n  * name\n\nOptional Attributes are:\n  * annotation\n  * cdp_interface_policy\n  * description\n  * global_alias\n  * link_flap_policy\n  * link_level_policy\n  * macsec_policy",
                     "items": {
-                        "$ref": "#/definitions/Interfaces:SpineInterfaces:PolicyGroups"
+                        "$ref": "#/definitions/Access:Interfaces:SpineInterfaces:PolicyGroups"
                     },
                     "title": "policy_groups — Access-> Access Policies -> Interfaces -> Spine Interfaces -> Policy Groups"
                 }
@@ -742,7 +767,7 @@
             ],
             "title": "spine — Access-> Access Policies -> Interfaces -> Spine Interfaces"
         },
-        "Interfaces:SpineInterfaces:PolicyGroups": {
+        "Access:Interfaces:SpineInterfaces:PolicyGroups": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -822,32 +847,7 @@
             ],
             "title": "policy_groups — Spine Policy Groups"
         },
-        "NetflowMonitorPolicies": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "ip_filter_type": {
-                    "default": "ce",
-                    "description": "IP Filter Type.  Options are:\n*  ce\n*  ipv4\n*  ipv6",
-                    "enum": [
-                        "ce",
-                        "ipv4",
-                        "ipv6"
-                    ],
-                    "title": "ip_filter_type"
-                },
-                "netflow_monitor_policy": {
-                    "type": "string",
-                    "description": "The Name of the Netflow Monitor Policy.",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "netflow_monitor_policy"
-                }
-            },
-            "title": "Netflow Monitor Policies."
-        },
-        "PhysicalAndExternalDomains": {
+        "Access:PhysicalAndExternalDomains": {
             "type": "object",
             "description": "Object Types are:\n  * l3_domains\n  * physical_domains",
             "additionalProperties": false,
@@ -871,24 +871,24 @@
             },
             "title": "physical_and_external_domains — Physical and External Domains"
         },
-        "Policies": {
+        "Access:Policies": {
             "type": "object",
             "additionalProperties": false,
             "description": "Object Types are:\n  * global\n  * interface\n  * switch",
             "properties": {
                 "global": {
-                    "$ref": "#/definitions/Policies:Global"
+                    "$ref": "#/definitions/Access:Policies:Global"
                 },
                 "interface": {
-                    "$ref": "#/definitions/Policies:Interface"
+                    "$ref": "#/definitions/Access:Policies:Interface"
                 },
                 "switch": {
-                    "$ref": "#/definitions/Policies:Switch"
+                    "$ref": "#/definitions/Access:Policies:Switch"
                 }
             },
             "title": "Policies"
         },
-        "Policies:Global": {
+        "Access:Policies:Global": {
             "type": "object",
             "description": "Object Types are:\n  * attachable_access_entity_profiles\n  * dhcp_relay\n  * error_disabled_recovery\n  * mcp_instance\n  * dhcp_relay\n  * qos_class\n  * recommended_policies",
             "additionalProperties": false,
@@ -897,7 +897,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * l3_domains\n  * physical_domains\n  * vmm_domains",
                     "items": {
-                        "$ref": "#/definitions/Policies:Global:AttachableAccessEntityProfile"
+                        "$ref": "#/definitions/Access:Policies:Global:AttachableAccessEntityProfile"
                     },
                     "title": "attachable_access_entity_profiles — Policies -> Global -> Attachable Access Entity Profiles."
                 },
@@ -905,7 +905,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * dhcp_servers\n  * epg\n\nOptional Attributes are:\n  * annotation\n  * application_profile\n  * description\n  * epg_type\n  * l3out\n  * mode\n  * tenant",
                     "items": {
-                        "$ref": "#/definitions/Policies:Global:DHCPRelay"
+                        "$ref": "#/definitions/Access:Policies:Global:DHCPRelay"
                     },
                     "title": "dhcp_relay — Policies -> Global -> DHCP Relay."
                 },
@@ -913,7 +913,7 @@
                     "type": "array",
                     "description": "error_disabled_recovery — Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * error_disable_recovery_interval\n  * events",
                     "items": {
-                        "$ref": "#/definitions/Policies:Global:ErrorDisabledRecovery"
+                        "$ref": "#/definitions/Access:Policies:Global:ErrorDisabledRecovery"
                     },
                     "title": "Policies -> Global -> Error Disabled Recovery."
                 },
@@ -921,7 +921,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * description\n  * enable_mcp_pdu_per_vlan\n  * loop_detect_multiplication_factor\n  * loop_protect_action\n  * transmission_frequency",
                     "items": {
-                        "$ref": "#/definitions/Policies:Global:McpInstance"
+                        "$ref": "#/definitions/Access:Policies:Global:McpInstance"
                     },
                     "title": "mcp_instance — Policies -> Global -> MCP Instance default."
                 },
@@ -929,7 +929,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * elephant_trap_age_period\n  * elephant_trap_bandwidth_threshold\n  * elephant_trap_byte_count\n  * elephant_trap_state\n  * fabric_flush_interval\n  * fabric_flush_state\n  * micro_burst_spine_queues\n  * micro_burst_leaf_queues\n  * preserve_cos",
                     "items": {
-                        "$ref": "#/definitions/Policies:Global:QosClass"
+                        "$ref": "#/definitions/Access:Policies:Global:QosClass"
                     },
                     "title": "qos_class — Policies -> Global -> QOS Class."
                 },
@@ -941,7 +941,7 @@
             },
             "title": "Policies -> Global"
         },
-        "Policies:Global:AttachableAccessEntityProfile": {
+        "Access:Policies:Global:AttachableAccessEntityProfile": {
             "type": "object",
             "properties": {
                 "annotation": {
@@ -1021,7 +1021,7 @@
             ],
             "title": "attachable_access_entity_profiles — Policies -> Global -> Attachable Access Entity Profile"
         },
-        "Policies:Global:DHCPRelay": {
+        "Access:Policies:Global:DHCPRelay": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -1107,7 +1107,7 @@
             ],
             "title": "dhcp_relay — DHCP Relay"
         },
-        "Policies:Global:ErrorDisabledRecovery": {
+        "Access:Policies:Global:ErrorDisabledRecovery": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -1167,7 +1167,7 @@
             ],
             "title": "error_disabled_recovery_policy — Error Disabled Recovery — default."
         },
-        "Policies:Global:McpInstance": {
+        "Access:Policies:Global:McpInstance": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -1264,7 +1264,7 @@
             ],
             "title": "mcp_instance — MCP Instance — default"
         },
-        "Policies:Global:QosClass": {
+        "Access:Policies:Global:QosClass": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -1366,7 +1366,7 @@
             ],
             "title": "qos_class — QOS Class — default"
         },
-        "Policies:Global:RecommendedPolicies": {
+        "Access:Policies:Global:RecommendedPolicies": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -1403,7 +1403,7 @@
             ],
             "title": "Policies to Apply Recommended Settings to"
         },
-        "Policies:Interface": {
+        "Access:Policies:Interface": {
             "type": "object",
             "description": "Object Types are:\n  * cdp_interface\n  * create_pre_built_interface_policies\n  * fibre_channel_interface\n  * l2_interface\n  * link_level\n  * lldp_interface\n  * mcp_interface\n  * port_channel\n  * port_security\n  * spanning_tree_interface",
             "additionalProperties": false,
@@ -1412,20 +1412,20 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * description\n  * global_alias",
                     "items": {
-                        "$ref": "#/definitions/Policies:Interface:CdpInterface"
+                        "$ref": "#/definitions/Access:Policies:Interface:CdpInterface"
                     },
                     "title": "cdp_interface — Policies -> Interface -> CDP Interface"
                 },
                 "create_pre_built_interface_policies": {
                     "type": "object",
                     "description": "Option to Create pre-defined Policies.  Policy Types are:\n  * cdp_interface\n  * fibre_channel_interface\n  * l2_interface\n  * link_level\n  * lldp_interface\n  * mcp_interface\n  * port_channel\n  * port_security\n  * spanning_tree_interface",
-                    "$ref": "#/definitions/Policies:Interface:CreatePreBuiltInterfacePolicies"
+                    "$ref": "#/definitions/Access:Policies:Interface:CreatePreBuiltInterfacePolicies"
                 },
                 "fibre_channel_interface": {
                     "type": "array",
                     "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * auto_max_speed\n  * description\n  * fill_pattern\n  * port_mode\n  * receive_buffer_credit\n  * speed\n  * trunk_mode",
                     "items": {
-                        "$ref": "#/definitions/Policies:Interface:FibreChannelInterface"
+                        "$ref": "#/definitions/Access:Policies:Interface:FibreChannelInterface"
                     },
                     "title": "fibre_channel_interface — Policies -> Interface -> Fibre Channel Interface"
                 },
@@ -1433,7 +1433,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * qinq\n  * reflective_relay\n  * vlan_scope",
                     "items": {
-                        "$ref": "#/definitions/Policies:Interface:L2Interface"
+                        "$ref": "#/definitions/Access:Policies:Interface:L2Interface"
                     },
                     "title": "l2_interface — Policies -> Interface -> L2 Interface"
                 },
@@ -1441,7 +1441,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * auto_negotiation\n  * description\n  * forwarding_error_correction\n  * global_alias\n  * link_debounce_interval\n  * speed",
                     "items": {
-                        "$ref": "#/definitions/Policies:Interface:LinkLevel"
+                        "$ref": "#/definitions/Access:Policies:Interface:LinkLevel"
                     },
                     "title": "link_level — Policies -> Interface -> Link Level"
                 },
@@ -1449,7 +1449,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * global_alias\n  * receive_state\n  * transmit_state",
                     "items": {
-                        "$ref": "#/definitions/Policies:Interface:LldpInterface"
+                        "$ref": "#/definitions/Access:Policies:Interface:LldpInterface"
                     },
                     "title": "lldp_interface — Policies -> Interface -> LLDP Interface"
                 },
@@ -1457,7 +1457,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * description",
                     "items": {
-                        "$ref": "#/definitions/Policies:Interface:McpInterface"
+                        "$ref": "#/definitions/Access:Policies:Interface:McpInterface"
                     },
                     "title": "mcp_interface — Policies -> Interface -> MCP Interface"
                 },
@@ -1465,7 +1465,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * control\n  * description\n  * global_alias\n  * maximum_number_of_links\n  * minimum_number_of_links\n  * mode",
                     "items": {
-                        "$ref": "#/definitions/Policies:Interface:PortChannel"
+                        "$ref": "#/definitions/Access:Policies:Interface:PortChannel"
                     },
                     "title": "port_channel — Policies -> Interface -> Port Channel"
                 },
@@ -1473,7 +1473,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * description\n  * maximum_endpoints\n  * port_security_timeout",
                     "items": {
-                        "$ref": "#/definitions/Policies:Interface:PortSecurity"
+                        "$ref": "#/definitions/Access:Policies:Interface:PortSecurity"
                     },
                     "title": "port_security — Policies -> Interface -> Port Security"
                 },
@@ -1481,14 +1481,14 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * bpdu_filter\n  * bpdu_guard\n  * description\n  * global_alias",
                     "items": {
-                        "$ref": "#/definitions/Policies:Interface:SpanningTreeInterface"
+                        "$ref": "#/definitions/Access:Policies:Interface:SpanningTreeInterface"
                     },
                     "title": "spanning_tree_interface — Policies -> Interface -> Spanning Tree Interface"
                 }
             },
             "title": "Policies -> Interface"
         },
-        "Policies:Interface:CdpInterface": {
+        "Access:Policies:Interface:CdpInterface": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -1542,7 +1542,7 @@
             ],
             "title": "cdp_interface — CDP Interface Policy."
         },
-        "Policies:Interface:CreatePreBuiltInterfacePolicies": {
+        "Access:Policies:Interface:CreatePreBuiltInterfacePolicies": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -1614,7 +1614,7 @@
             ],
             "title": "CreatePreBuiltInterfacePolicies"
         },
-        "Policies:Interface:FibreChannelInterface": {
+        "Access:Policies:Interface:FibreChannelInterface": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -1717,7 +1717,7 @@
             ],
             "title": "fibre_channel_interface — Fibre-Channel Interface Policy"
         },
-        "Policies:Interface:L2Interface": {
+        "Access:Policies:Interface:L2Interface": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -1795,7 +1795,7 @@
             ],
             "title": "l2_interface — L2 Interface"
         },
-        "Policies:Interface:LinkLevel": {
+        "Access:Policies:Interface:LinkLevel": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -1893,7 +1893,7 @@
             ],
             "title": "link_level — Link Level"
         },
-        "Policies:Interface:LldpInterface": {
+        "Access:Policies:Interface:LldpInterface": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -1957,7 +1957,7 @@
             ],
             "title": "lldp_interface — LLDP Interface Policy."
         },
-        "Policies:Interface:McpInterface": {
+        "Access:Policies:Interface:McpInterface": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -2003,7 +2003,7 @@
             ],
             "title": "mcp_interface — MCP Interface Policy"
         },
-        "Policies:Interface:PortChannel": {
+        "Access:Policies:Interface:PortChannel": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -2113,7 +2113,7 @@
             ],
             "title": "port_channel — Port-Channel Policy."
         },
-        "Policies:Interface:PortSecurity": {
+        "Access:Policies:Interface:PortSecurity": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -2165,7 +2165,7 @@
             ],
             "title": "port_security — Port Security Policy."
         },
-        "Policies:Interface:SpanningTreeInterface": {
+        "Access:Policies:Interface:SpanningTreeInterface": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -2229,7 +2229,7 @@
             ],
             "title": "spanning_tree_interface — Spanning Tree Interface Policy"
         },
-        "Policies:Switch": {
+        "Access:Policies:Switch": {
             "type": "object",
             "description": "Object Types are:\n  * vpc_domain",
             "additionalProperties": false,
@@ -2245,7 +2245,7 @@
             },
             "title": "switch — Policies -> Switch"
         },
-        "Policies:Switch:VPCDomain": {
+        "Access:Policies:Switch:VPCDomain": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -2288,7 +2288,7 @@
             ],
             "title": "vpc_domain — VPC Domain Policy"
         },
-        "Pools": {
+        "Access:Pools": {
             "type": "object",
             "description": "Object Types are:\n  * vlan",
             "additionalProperties": false,
@@ -2297,7 +2297,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * encap_blocks\n  * name\n\nOptional Attributes are:\n  * allocation_mode\n  * annotation\n  * description",
                     "items": {
-                        "$ref": "#/definitions/Pools:VLAN"
+                        "$ref": "#/definitions/Access:Pools:VLAN"
                     },
                     "title": "vlan — Pools -> VLAN"
                 }
@@ -2307,7 +2307,7 @@
             ],
             "title": "pools — Fabric -> Access Policies -> Pools"
         },
-        "Pools:VLAN": {
+        "Access:Pools:VLAN": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -2362,7 +2362,7 @@
             ],
             "title": "vlan — VLAN Pool"
         },
-        "Pools:VLAN:EncapBlock": {
+        "Access:Pools:VLAN:EncapBlock": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -2403,21 +2403,21 @@
             ],
             "title": "encap_blocks — VLAN Pool Encapsulation Blocks"
         },
-        "Switches": {
+        "Access:Switches": {
             "type": "object",
             "description": "Object Types are:\n  * leaf\n  * spine",
             "additionalProperties": false,
             "properties": {
                 "leaf": {
-                    "$ref": "#/definitions/Switches:LeafSwitches"
+                    "$ref": "#/definitions/Access:Switches:LeafSwitches"
                 },
                 "spine": {
-                    "$ref": "#/definitions/Switches:SpineSwitches"
+                    "$ref": "#/definitions/Access:Switches:SpineSwitches"
                 }
             },
             "title": "switches — Fabric -> Access Policies -> Switches"
         },
-        "Switches:LeafSwitches": {
+        "Access:Switches:LeafSwitches": {
             "type": "object",
             "description": "Object Types are:\n  * policy_groups",
             "additionalProperties": false,
@@ -2426,7 +2426,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * bfd_ipv4_policy\n  * bfd_ipv6_policy\n  * bfd_multihop_ipv4_policy\n  * bfd_multihop_ipv6_policy\n  * cdp_interface_policy\n  * copp_leaf_policy\n  * copp_pre_filter\n  * description\n  * dot1x_node_authentication_policy\n  * equipment_flash_config\n  * fast_link_failover_policy\n  * fibre_channel_node_policy\n  * fibre_channel_san_policy\n  * forward_scale_profile_policy\n  * lldp_interface_policy\n  * monitoring_policy\n  * netflow_node_policy\n  * poe_node_policy\n  * ptp_node_policy\n  * spanning_tree_interface_policy\n  * synce_node_policy\n  * usb_configuration_policy",
                     "items": {
-                        "$ref": "#/definitions/Switches:LeafSwitches:PolicyGroups"
+                        "$ref": "#/definitions/Access:Switches:LeafSwitches:PolicyGroups"
                     },
                     "title": "policy_groups — Switches -> Leaf Switches -> Policy Groups."
                 }
@@ -2436,7 +2436,7 @@
             ],
             "title": "leaf — Switches -> Leaf Switches."
         },
-        "Switches:LeafSwitches:PolicyGroups": {
+        "Access:Switches:LeafSwitches:PolicyGroups": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -2659,7 +2659,7 @@
             ],
             "title": "policy_groups — Leaf Switch Policy Groups"
         },
-        "Switches:SpineSwitches": {
+        "Access:Switches:SpineSwitches": {
             "type": "object",
             "description": "Object Types are:\n  * policy_groups",
             "additionalProperties": false,
@@ -2668,7 +2668,7 @@
                     "type": "array",
                     "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * annotation\n  * bfd_ipv4_policy\n  * bfd_ipv6_policy\n  * cdp_interface_policy\n  * copp_pre_filter\n  * copp_spine_policy\n  * description\n  * lldp_interface_policy\n  * usb_configuration_policy",
                     "items": {
-                        "$ref": "#/definitions/Switches:SpineSwitches:PolicyGroups"
+                        "$ref": "#/definitions/Access:Switches:SpineSwitches:PolicyGroups"
                     },
                     "title": "policy_groups — Switches -> Spine Switches -> Policy Groups."
                 }
@@ -2678,7 +2678,7 @@
             ],
             "title": "spine — Switches -> Spine Switches."
         },
-        "Switches:SpineSwitches:PolicyGroups": {
+        "Access:Switches:SpineSwitches:PolicyGroups": {
             "type": "object",
             "additionalProperties": false,
             "properties": {

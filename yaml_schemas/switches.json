@@ -1,420 +1,393 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$ref": "#/definitions/Welcome",
-    "definitions": {},
-    "Welcome": {
-        "type": "object",
-        "additionalProperties": false,
-        "description": "",
-        "properties": {
-            "switch": {
-                "type": "object",
-                "additionalProperties": false,
-                "description": "",
-                "$ref": "#/definitions/Switch"
-            }
+    "$ref": "#/definitions/CiscoAci",
+    "definitions": {
+        "CiscoAci": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Fabric -> Access Policies",
+            "properties": {
+                "switch": {
+                    "$ref": "#/definitions/Switch"
+                }
+            },
+            "required": [
+                "switch"
+            ],
+            "title": "Cisco ACI: Switch Profiles YAML Schema"
         },
-        "required": [
-            "switch"
-        ],
-        "title": "switch"
-    },
-    "Switch": {
-        "type": "object",
-        "additionalProperties": false,
-        "description": "",
-        "properties": {
-            "switch_profiles": {
-                "type": "array",
-                "additionalProperties": false,
-                "description": "",
-                "items": {
-                    "$ref": "#/definitions/Switch:SwitchProfiles"
+        "Switch": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Attributes are:\n  * name_prefix\n  * name_suffix\n  * switch_profiles\n  * vpc_domains",
+            "properties": {
+                "name_prefix": {
+                    "$ref": "#/definitions/Switch:NamePrefixSuffix"
                 },
-                "title": ""
-            },
-            "vpc_domains": {
-                "type": "array",
-                "additionalProperties": false,
-                "description": "",
-                "items": {
-                    "$ref": "#/definitions/Switch:VpcDomains"
+                "name_suffix": {
+                    "$ref": "#/definitions/Switch:NamePrefixSuffix"
                 },
-                "title": ""
-            }
-        },
-        "required": [
-            "switch_profiles",
-            "vpc_domains"
-        ],
-        "title": "Switch"
-    },
-    "Switch:SwitchProfiles": {
-        "type": "object",
-        "additionalProperties": false,
-        "description": "",
-        "properties": {
-            "annotation": {
-                "type": "string",
-                "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                "minLength": 1,
-                "maxLength": 128,
-                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                "title": "annotation"
-            },
-            "description": {
-                "type": "string",
-                "default": "default",
-                "description": "Description to add to the Object.  The description can be up to 128 characters.\"",
-                "minLength": 1,
-                "maxLength": 128,
-                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                "title": "description"
-            },
-            "external_pool_id": {
-                "type": "integer",
-                "default": 1,
-                "description": "",
-                "minimum": 1,
-                "maximum": 64,
-                "title": "external_pool_id"
-            },
-            "inband_addressing": {
-                "type": "object",
-                "additionalProperties": false,
-                "description": "",
-                "$ref": "#/definitions/Switch:SwitchProfiles:BandAddressing"
-            },
-            "interface_profiles_prefix": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "interface_profiles_prefix"
-            },
-            "interface_profiles_suffix": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "interface_profiles_suffix"
-            },
-            "interfaces": {
-                "type": "array",
-                "additionalProperties": false,
-                "description": "",
-                "items": {
-                    "$ref": "#/definitions/Switch:SwitchProfiles:Interfaces"
+                "switch_profiles": {
+                    "type": "array",
+                    "additionalProperties": false,
+                    "description": "List of Switch Profiles.\nRequired Attributes:\n  * interfaces\n  * name\n  * node_id\n  * serial_number\n\nOptional Attributes:\n  * inband_addressing\n  * node_type\n  * ooband_addressing\n  * pod_id\n  * role",
+                    "items": {
+                        "$ref": "#/definitions/Switch:SwitchProfiles"
+                    },
+                    "title": "switch_profiles"
                 },
-                "title": ""
+                "vpc_domains": {
+                    "type": "array",
+                    "additionalProperties": false,
+                    "description": "List of VPC Domains.\nRequired Attributes:\n  * domain_id\n  * name\n  * switches\n\nOptional Attributes:\n  * vpc_domain_policy",
+                    "items": {
+                        "$ref": "#/definitions/Switch:VpcDomains"
+                    },
+                    "title": "vpc_domains"
+                }
             },
-            "leaf_profiles_prefix": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "leaf_profiles_prefix"
-            },
-            "leaf_profiles_suffix": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "leaf_profiles_suffix"
-            },
-            "monitoring_policy": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "monitoring_policy"
-            },
-            "name": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "name"
-            },
-            "node_type": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "node_type"
-            },
-            "ooband_addressing": {
-                "type": "object",
-                "additionalProperties": false,
-                "description": "",
-                "$ref": "#/definitions/Switch:SwitchProfiles:BandAddressing"
-            },
-            "policy_group": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "policy_group"
-            },
-            "pod_id": {
-                "type": "integer",
-                "default": 1,
-                "description": "",
-                "minimum": 1,
-                "maximum": 64,
-                "title": "pod_id"
-            },
-            "role": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "role"
-            },
-            "serial_number": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "serial_number"
-            },
-            "spine_profiles_prefix": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "spine_profiles_prefix"
-            },
-            "spine_profiles_suffix": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "spine_profiles_suffix"
-            },
-            "two_slot_leaf": {
-                "type": "boolean",
-                "default": true,
-                "description": "",
-                "title": "two_slot_leaf"
-            }
+            "title": "Switch"
         },
-        "required": [
-            "annotation",
-            "description",
-            "external_pool_id",
-            "inband_addressing",
-            "interface_profiles_prefix",
-            "interface_profiles_suffix",
-            "interfaces",
-            "leaf_profiles_prefix",
-            "leaf_profiles_suffix",
-            "monitoring_policy",
-            "name",
-            "node_type",
-            "ooband_addressing",
-            "pod_id",
-            "policy_group",
-            "role",
-            "serial_number",
-            "spine_profiles_prefix",
-            "spine_profiles_suffix",
-            "two_slot_leaf"
-        ],
-        "title": "SwitchProfiles"
-    },
-    "Switch:SwitchProfiles:BandAddressing": {
-        "type": "object",
-        "additionalProperties": false,
-        "description": "",
-        "properties": {
-            "ipv4_address": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "ipv4_address"
+        "Switch:NamePrefixSuffix": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "A List of (Pre|Suf)fixes to add to the Switch Profiles.\n Options are:\n  * leaf\n  * spine",
+            "properties": {
+                "leaf": {
+                    "$ref": "#/definitions/Switch:NamePrefixSuffix:Profiles"
+                },
+                "spine": {
+                    "$ref": "#/definitions/Switch:NamePrefixSuffix:Profiles"
+                }
             },
-            "ipv4_gateway": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "ipv4_gateway"
-            },
-            "ipv6_address": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "ipv6_address"
-            },
-            "ipv6_gateway": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "ipv6_gateway"
-            },
-            "management_epg": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "management_epg"
-            }
+            "title": "Name Prefix/Suffix"
         },
-        "required": [
-            "ipv4_address",
-            "ipv4_gateway",
-            "ipv6_address",
-            "ipv6_gateway",
-            "management_epg"
-        ],
-        "title": "BandAddressing"
-    },
-    "Switch:SwitchProfiles:Interfaces": {
-        "type": "object",
-        "additionalProperties": false,
-        "description": "",
-        "properties": {
-            "description": {
-                "type": "string",
-                "default": "default",
-                "description": "Description to add to the Object.  The description can be up to 128 characters.\"",
-                "minLength": 1,
-                "maxLength": 128,
-                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                "title": "description"
+        "Switch:NamePrefixSuffix:Profiles": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "A List of (Pre|Suf)fixes to add to the Profiles.\n Options are:\n  * interface_profiles\n  * switch_profiles",
+            "properties": {
+                "interface_profiles": {
+                    "type": "string",
+                    "default": "",
+                    "description": "A Value to add to Interface Profiles.",
+                    "intersightApi": "",
+                    "minLength": 0,
+                    "maxLength": 12,
+                    "pattern": "^$|^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "interface_profiles"
+                },
+                "switch_profiles": {
+                    "type": "string",
+                    "default": "",
+                    "description": "A Value to add to the Switch Profiles.",
+                    "intersightApi": "",
+                    "minLength": 0,
+                    "maxLength": 12,
+                    "pattern": "^$|^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "switch_profiles"
+                }
             },
-            "interface": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "interface"
-            },
-            "interface_description": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "interface_description"
-            },
-            "policy_group": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "policy_group"
-            },
-            "policy_group_type": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "policy_group_type"
-            },
-            "sub_port": {
-                "type": "boolean",
-                "default": true,
-                "description": "",
-                "title": "sub_port"
-            }
+            "title": "Name Prefix and Suffix"
         },
-        "required": [
-            "description",
-            "interface",
-            "interface_description",
-            "policy_group",
-            "policy_group_type",
-            "sub_port"
-        ],
-        "title": "Interfaces"
-    },
-    "Switch:VpcDomains": {
-        "type": "object",
-        "additionalProperties": false,
-        "description": "",
-        "properties": {
-            "annotation": {
-                "type": "string",
-                "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                "minLength": 1,
-                "maxLength": 128,
-                "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                "title": "annotation"
+        "Switch:SwitchProfiles": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "description"
+                },
+                "external_pool_id": {
+                    "type": "integer",
+                    "default": 1,
+                    "description": "External Pool ID for a remote leaf. Default value: 0.",
+                    "minimum": 1,
+                    "maximum": 64,
+                    "title": "external_pool_id"
+                },
+                "inband_addressing": {
+                    "$ref": "#/definitions/Switch:SwitchProfiles:BandAddressing"
+                },
+                "interfaces": {
+                    "type": "array",
+                    "additionalProperties": false,
+                    "description": "List of Interface Selectors to Assign to the Interface Profile",
+                    "items": {
+                        "$ref": "#/definitions/Switch:SwitchProfiles:Interfaces"
+                    },
+                    "title": "intefaces"
+                },
+                "monitoring_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "Name of the Monitoring Policy to assign to the Profile.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "monitoring_policy"
+                },
+                "name": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Hostname of the Switch.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "name"
+                },
+                "node_id": {
+                    "type": "integer",
+                    "default": 101,
+                    "description": "Default value: `101`.  Node ID Number for the new Fabric Node Member. Allowed value range: 101-4000.",
+                    "minimum": 101,
+                    "maximum": 4000,
+                    "title": "node_id"
+                },
+                "node_type": {
+                    "type": "string",
+                    "default": "unspecified",
+                    "description": "Default value: `unspecified`.  Node type for object Fabric Node member. Allowed values:\n  * remote-leaf-wan\n  * tier-2-leaf\n  * unspecified\n  * virtual - virtual controller",
+                    "enum": [
+                        "remote-leaf-wan",
+                        "tier-2-leaf",
+                        "unspecified",
+                        "virtual"
+                    ],
+                    "title": "node_type"
+                },
+                "ooband_addressing": {
+                    "$ref": "#/definitions/Switch:SwitchProfiles:BandAddressing"
+                },
+                "policy_group": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "Name of the Leaf/Spine Switches -> Policy Groups to Assign to the Switch Profile.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "policy_group"
+                },
+                "pod_id": {
+                    "type": "integer",
+                    "default": 1,
+                    "description": "Pod Identifier",
+                    "minimum": 1,
+                    "maximum": 64,
+                    "title": "pod_id"
+                },
+                "role": {
+                    "type": "string",
+                    "default": "unspecified",
+                    "description": "Default value: `unspecified`.  Role for the new Fabric Node Member. Allowed values:\n  * leaf\n  * spine\n  * unspecified",
+                    "enum": [
+                        "leaf",
+                        "spine",
+                        "unspecified"
+                    ],
+                    "title": "role"
+                },
+                "serial_number": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Serial Number for the new Fabric Node Member.",
+                    "minLength": 9,
+                    "maxLength": 11,
+                    "pattern": "^([A-Z]{3}[2-3]\\d([0][1-9]|[1-4][0-9]|[5][1-3])[\\dA-Z]{4}|TEP-1-[\\d]{3})$",
+                    "title": "serial_number"
+                },
+                "two_slot_leaf": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Flag to inform the switch that the Interface Selectors should be in the format Eth1-001 instead of Eth1-01, in example.",
+                    "title": "two_slot_leaf"
+                }
             },
-            "domain_id": {
-                "type": "integer",
-                "default": 1,
-                "description": "",
-                "minimum": 1,
-                "maximum": 64,
-                "title": "domain_id"
-            },
-            "switches": {
-                "type": "array",
-                "items": {}
-            },
-            "vpc_domain_policy": {
-                "type": "string",
-                "default": "",
-                "description": "",
-                "minLength": 1,
-                "maxLength": 64,
-                "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                "title": "vpc_domain_policy"
-            }
+            "required": [
+                "interfaces",
+                "name",
+                "node_id",
+                "serial_number"
+            ],
+            "title": "SwitchProfiles"
         },
-        "required": [
-            "annotation",
-            "domain_id",
-            "switches",
-            "vpc_domain_policy"
-        ],
-        "title": "VpcDomains"
+        "Switch:SwitchProfiles:BandAddressing": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "IP Settings for Inband/OOBand.  Options are:\n  * ipv4_address\n  * ipv4_gateway\n  * ipv6_address\n  * ipv6_gateway",
+            "properties": {
+                "ipv4_address": {
+                    "type": "string",
+                    "default": "198.18.1.11/24",
+                    "description": "IPv4 Address/Prefix.",
+                    "minLength": 9,
+                    "maxLength": 18,
+                    "pattern": "^(([1-9]|[1-9][0-9]{1}|1[0-9]{2}|2[0-1][0-9]|22[0-3])\\.)(([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))\\.){2}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/(\\d|[1-2]\\d)$",
+                    "title": "ipv4_address"
+                },
+                "ipv4_gateway": {
+                    "type": "string",
+                    "default": "198.18.1.1",
+                    "description": "IPv4 Gateway.",
+                    "minLength": 7,
+                    "maxLength": 15,
+                    "pattern": "^(([1-9]|[1-9][0-9]{1}|1[0-9]{2}|2[0-1][0-9]|22[0-3])\\.)(([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))\\.){2}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$",
+                    "title": "ipv4_gateway"
+                },
+                "ipv6_address": {
+                    "type": "string",
+                    "default": "2001:db8::10/64",
+                    "description": "IPv6 IP Address.",
+                    "minLength": 8,
+                    "maxLength": 43,
+                    "pattern": "^(([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{0,4}|:[0-9A-Fa-f]{1,4})?|(:[0-9A-Fa-f]{1,4}){0,2})|(:[0-9A-Fa-f]{1,4}){0,3})|(:[0-9A-Fa-f]{1,4}){0,4})|:(:[0-9A-Fa-f]{1,4}){0,5})((:[0-9A-Fa-f]{1,4}){2}|:(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])(\\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])){3})|(([0-9A-Fa-f]{1,4}:){1,6}|:):[0-9A-Fa-f]{0,4}|([0-9A-Fa-f]{1,4}:){7}:)/(\\d|\\d\\d|1[0-1]\\d|12[0-4)$",
+                    "title": "ipv6_address"
+                },
+                "ipv6_gateway": {
+                    "type": "string",
+                    "default": "2001:db8::1",
+                    "description": "IPv6 Gateway",
+                    "minLength": 6,
+                    "maxLength": 39,
+                    "pattern": "^(([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{0,4}|:[0-9A-Fa-f]{1,4})?|(:[0-9A-Fa-f]{1,4}){0,2})|(:[0-9A-Fa-f]{1,4}){0,3})|(:[0-9A-Fa-f]{1,4}){0,4})|:(:[0-9A-Fa-f]{1,4}){0,5})((:[0-9A-Fa-f]{1,4}){2}|:(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])(\\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])){3})|(([0-9A-Fa-f]{1,4}:){1,6}|:):[0-9A-Fa-f]{0,4}|([0-9A-Fa-f]{1,4}:){7}:)$",
+                    "title": "ipv6_gateway"
+                },
+                "management_epg": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "Name of the Management EPG to Use for this.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "management_epg"
+                }
+            },
+            "required": [
+                "management_epg"
+            ],
+            "title": "BandAddressing"
+        },
+        "Switch:SwitchProfiles:Interfaces": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "This will apply the description to the Interface Selector.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "description"
+                },
+                "interface": {
+                    "type": "string",
+                    "default": "1/1",
+                    "description": "",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^(\\d|1[0-6])/(\\d|\\d\\d|10[0-8])(/[1-4])?$",
+                    "title": "interface"
+                },
+                "interface_description": {
+                    "type": "string",
+                    "default": "",
+                    "description": "This will apply the description to the Access Port Block that will also display when doing a `show interface status`/`show interface description` on the switch.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "interface_description"
+                },
+                "policy_group": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Name of the Policy Group [Leaf Access Port|Leaf Breakout Port Group|PC Interface|VPC Interface] to assign to the port.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "policy_group"
+                },
+                "policy_group_type": {
+                    "type": "string",
+                    "default": "access",
+                    "description": "Default is `access`.  Type of Policy Group [Leaf Access Port|Leaf Breakout Port Group|PC Interface|VPC Interface] to assign to the port.  Valid values:\n  * access\n  * breakout\n  * bundle",
+                    "enum": [
+                        "access",
+                        "breakout",
+                        "bundle"
+                    ],
+                    "title": "policy_group_type"
+                },
+                "sub_port": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Defualt is `false`.  Flag to Tell the Switch that the port is a breakout port.",
+                    "title": "sub_port"
+                }
+            },
+            "required": [
+                "interface"
+            ],
+            "title": "Interfaces"
+        },
+        "Switch:VpcDomains": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "domain_id": {
+                    "type": "integer",
+                    "default": 1,
+                    "description": "VPC Domain Identifier.",
+                    "minimum": 1,
+                    "maximum": 1000,
+                    "title": "domain_id"
+                },
+                "name": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "Name for the VPC Domain.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "name"
+                },
+                "switches": {
+                    "type": "array",
+                    "additionalProperties": false,
+                    "description": "List of Node Identifiers to assign to the VPC Domain.  This should be a List of two node_id's",
+                    "items": {
+                        "type": "integer",
+                        "default": 101,
+                        "description": "Node Id.",
+                        "minimum": 101,
+                        "maximum": 4000,
+                        "title": "node_id"
+                    }
+                },
+                "vpc_domain_policy": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "Name of the VPC Policy to Assign to the VPC Domain.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "vpc_domain_policy"
+                }
+            },
+            "required": [
+                "domain_id",
+                "name",
+                "switches"
+            ],
+            "title": "VPC Domains"
+        }
     }
 }

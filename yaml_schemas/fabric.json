@@ -148,14 +148,6 @@
             "additionalProperties": false,
             "description": "",
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 0,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "description": {
                     "type": "string",
                     "default": "default",

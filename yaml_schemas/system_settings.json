@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$ref": "#/definitions/SystemSettingsWelcome",
+    "$ref": "#/definitions/CiscoAci",
     "definitions": {
-        "SystemSettingsWelcome": {
+        "CiscoAci": {
             "type": "object",
             "description": "System -> System Settings.",
             "additionalProperties": false,
@@ -14,23 +14,18 @@
             "required": [
                 "system_settings"
             ],
-            "title": "system_settings"
+            "title": "Cisco ACI: System Settings YAML Schema"
         },
         "SystemSettings": {
             "type": "object",
-            "description": "Object Types are:\n  * apic_connectivity_preference\n  * bgp\n  * bgp_route_reflectors\n  * coop_group\n  * endpoint_controls\n  * fabric_wide_settings\n  * global_aes_encryption_settings\n  * isis_policy\n  * port_tracking\n  * ptp_and_latency_measurement\n  * recommended_settings",
+            "description": "Object Types are:\n  * apic_connectivity_preference\n  * bgp_route_reflector\n  * coop_group\n  * endpoint_controls\n  * fabric_wide_settings\n  * global_aes_encryption_settings\n  * isis_policy\n  * port_tracking\n  * ptp_and_latency_measurement\n  * recommended_settings",
             "additionalProperties": false,
             "properties": {
                 "apic_connectivity_preference": {
-                    "description": "Attribute is:\n  * interface_to_use_for_external_connections",
                     "$ref": "#/definitions/SystemSettings:ApicConnectivityPreference"
                 },
-                "bgp": {
-                    "description": "Attribute is:\n  * autonomous_system_number",
-                    "$ref": "#/definitions/SystemSettings:Bgp"
-                },
-                "bgp_route_reflectors": {
-                    "description": "Attribute is:\n  * pods",
+                "bgp_route_reflector": {
+                    "description": "Attributes are:\n  * autonomous_system_number\n * bgp_route_refector",
                     "$ref": "#/definitions/SystemSettings:BgpRouteReflector"
                 },
                 "coop_group": {
@@ -71,7 +66,7 @@
         "SystemSettings:ApicConnectivityPreference": {
             "type": "object",
             "additionalProperties": false,
-            "description": "APIC Connectivity Preference",
+            "description": "Attribute is:\n  * interface_to_use_for_external_connections",
             "properties": {
                 "interface_to_use_for_external_connections": {
                     "type": "string",
@@ -89,10 +84,10 @@
             ],
             "title": "apic_connectivity_preference — APIC Connectivity Preference."
         },
-        "SystemSettings:Bgp": {
+        "SystemSettings:BgpRouteReflector": {
             "type": "object",
             "additionalProperties": false,
-            "description": "BGP Autonomous System Number.",
+            "description": "Attributes are:\n  * autonomous_system_number\n * bgp_route_refector",
             "properties": {
                 "autonomous_system_number": {
                     "default": 65001,
@@ -100,6 +95,12 @@
                     "minimum": 1,
                     "maximum": 4294967294,
                     "title": "autonomous_system_number"
+                },
+                "route_reflector_nodes": {
+                    "items": {
+                        "$ref": "#/definitions/SystemSettings:BgpRouteReflector:RouteReflectorNodes"
+                    },
+                    "title": "route_reflector_nodes"
                 }
             },
             "required": [
@@ -107,10 +108,10 @@
             ],
             "title": "bgp — BGP Autonomous System Number."
         },
-        "SystemSettings:BgpRouteReflector": {
+        "SystemSettings:BgpRouteReflector:RouteReflectorNodes": {
             "type": "object",
             "additionalProperties": false,
-            "description": "",
+            "description": "Attribute is:\n  * pods",
             "properties": {
                 "pods": {
                     "type": "array",

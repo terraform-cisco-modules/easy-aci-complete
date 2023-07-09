@@ -1,57 +1,54 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$ref": "#/definitions/AdminWelcome",
+    "$ref": "#/definitions/CiscoAci",
     "definitions": {
-        "AdminWelcome": {
+        "CiscoAci": {
             "type": "object",
             "description": "Admin.",
             "additionalProperties": false,
             "properties": {
                 "admin": {
-                    "description": "admin — Attributes are:\n  * aaa\n  * external_data_collectors\n  * import_export",
                     "$ref": "#/definitions/Admin"
                 }
             },
             "required": [
                 "admin"
             ],
-            "title": "admin"
+            "title": "Cisco ACI: Admin YAML Schema"
         },
         "Admin": {
             "type": "object",
-            "description": "Admin",
+            "description": "Attributes are:\n  * aaa\n  * external_data_collectors\n  * firmware\n  * import_export",
             "additionalProperties": false,
             "properties": {
                 "aaa": {
-                    "description": "aaa — Attributes are:\n  * authentication\n  * security",
                     "$ref": "#/definitions/Admin:AAA"
                 },
+                "firmware": {
+                    "$ref": "#/definitions/Admin:Firmware"
+                },
                 "external_data_collectors": {
-                    "description": "external_data_collectors — Attributes are:\n  * smart_callhome\n  * syslog",
                     "$ref": "#/definitions/Admin:ExternalDataCollectors"
                 },
                 "import_export": {
-                    "description": "import_export — Attribute is:\n  * configuration_backups",
                     "$ref": "#/definitions/Admin:ImportExport"
                 }
             },
-            "title": "Admin"
+            "title": "Admin\nGUI Location: Admin"
         },
         "Admin:AAA": {
             "type": "object",
-            "description": "Authentication Settings",
+            "description": "Attributes are:\n  * authentication\n  * security",
             "additionalProperties": false,
             "properties": {
                 "authentication": {
-                    "description": "authentication — Attributes are:\n  * authentication_default_settings\n  * radius\n  * tacacs",
                     "$ref": "#/definitions/Admin:AAA:Authentication"
                 },
                 "security": {
-                    "description": "security — Attributes are:\n  * lockout_user\n  * maximum_validity_period\n  * no_change_interval\n  * password_change_interval\n  * password_change_interval_enforce\n  * password_changes_within_interval\n  * password_expiration_warn_time\n  * password_strength_check\n  * user_passwords_to_store_count\n  * web_session_idle_timeout\n  * web_token_timeout",
                     "$ref": "#/definitions/Admin:AAA:Security"
                 }
             },
-            "title": "aaa — Admin -> AAA"
+            "title": "aaa\nGUI Location: Admin -> AAA"
         },
         "Admin:AAA:Authentication": {
             "type": "object",
@@ -59,44 +56,35 @@
             "description": "Authentication",
             "properties": {
                 "authentication_default_settings": {
-                    "description": "Attributes are:\n  * console_authentication\n  * default_authentication\n  * remote_authentication\n",
                     "$ref": "#/definitions/Admin:AAA:Authentication:AuthenticationDefaultSettings"
                 },
                 "radius": {
-                    "description": "Required Attributes are:\n  * hosts\n  * login_domain\n\nOptional Attributes are:\n  * annotation\n  * authorization_protocol\n  * description\n  * management_epg\n  * port\n  * retries\n  * server_monitoring\n  * timeout\n  * type",
+                    "description": "Required Attributes are:\n  * hosts\n  * login_domain\n\nOptional Attributes are:\n  * authorization_protocol\n  * description\n  * management_epg\n  * port\n  * retries\n  * server_monitoring\n  * timeout\n  * type",
                     "items": {
                         "$ref": "#/definitions/Admin:AAA:Authentication:Radius"
                     },
-                    "title": "radius — Admin -> AAA -> Authentication: Login Domains/Providers."
+                    "title": "radius\nGUI Location: Admin -> AAA -> Login Domains/Providers type RADIUS."
                 },
                 "tacacs": {
-                    "description": "Required Attributes are:\n  * hosts\n  * login_domain\n\nOptional Attributes are:\n  * accounting_include\n  * annotation\n  * authorization_protocol\n  * description\n  * management_epg\n  * port\n  * retries\n  * server_monitoring\n  * timeout",
+                    "description": "Required Attributes are:\n  * hosts\n  * login_domain\n\nOptional Attributes are:\n  * accounting_include\n  * authorization_protocol\n  * description\n  * management_epg\n  * port\n  * retries\n  * server_monitoring\n  * timeout",
                     "items": {
                         "$ref": "#/definitions/Admin:AAA:Authentication:Tacacs"
                     },
-                    "title": "tacacs — Admin -> AAA -> Authentication: Login Domains/Providers."
+                    "title": "tacacs\nGUI Location: Admin -> AAA -> Authentication: Login Domains/Providers."
                 }
             },
-            "title": "aaa — Admin -> AAA -> Authentication."
+            "title": "aaa\nGUI Location: Admin -> AAA -> Authentication."
         },
         "Admin:AAA:Authentication:AuthenticationDefaultSettings": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Authentication Default Settings.  \n  * console\n  * default\n  * icmp_reachability\n  * remote_user_login_policy",
+            "description": "Attributes are:\n  * console_authentication\n  * default_authentication\n  * remote_authentication\n",
             "properties": {
                 "console_authentication": {
                     "type": "object",
                     "additionalProperties": false,
                     "description": "Attributes are:\n  * login_domain\n  * realm",
                     "properties": {
-                        "annotation": {
-                            "type": "string",
-                            "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                            "minLength": 1,
-                            "maxLength": 128,
-                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                            "title": "annotation"
-                        },
                         "login_domain": {
                             "type": "string",
                             "default": "default",
@@ -126,21 +114,13 @@
                     "required": [
                         "realm"
                     ],
-                    "title": "console_authentication — Admin -> AAA -> Authentication: Authentication Default Settings: Console Authentication."
+                    "title": "console_authentication\nGUI Location: Admin -> AAA -> Authentication: Authentication Default Settings: Console Authentication."
                 },
                 "default_authentication": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "default — Attributes are:\n  * fallback_check\n  * login_domain\n  * realm",
+                    "description": "Attributes are:\n  * fallback_check\n  * login_domain\n  * realm",
                     "properties": {
-                        "annotation": {
-                            "type": "string",
-                            "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                            "minLength": 1,
-                            "maxLength": 128,
-                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                            "title": "annotation"
-                        },
                         "fallback_check": {
                             "type": "boolean",
                             "default": false,
@@ -176,21 +156,13 @@
                     "required": [
                         "realm"
                     ],
-                    "title": "default_authentication — Admin -> AAA -> Authentication: Authentication Default Settings: Default Authentication."
+                    "title": "default_authentication\nGUI Location: Admin -> AAA -> Authentication: Authentication Default Settings: Default Authentication."
                 },
                 "remote_authentication": {
                     "type": "object",
                     "additionalProperties": false,
                     "description": "Attributes are:\n  * ping_check\n  * remote_user_login_policy\n  * retries\n  * timeout",
                     "properties": {
-                        "annotation": {
-                            "type": "string",
-                            "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                            "minLength": 1,
-                            "maxLength": 128,
-                            "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                            "title": "annotation"
-                        },
                         "ping_check": {
                             "type": "boolean",
                             "default": false,
@@ -224,24 +196,16 @@
                             "title": "timeout"
                         }
                    },
-                   "title": "remote_authentication — Admin -> AAA -> Authentication: Authentication Default Settings: Remote Authentication."
+                   "title": "remote_authentication\nGUI Location: Admin -> AAA -> Authentication: Authentication Default Settings: Remote Authentication."
                 }
             },
-            "title": "authentication_default_settings — Admin -> AAA -> Authentication: Authentication Default Settings"
+            "title": "authentication_default_settings\nGUI Location: Admin -> AAA -> Authentication: Authentication Default Settings"
         },
         "Admin:AAA:Authentication:Radius": {
             "type": "object",
             "additionalProperties": false,
             "description": "RADIUS Providers.",
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "authorization_protocol": {
                     "type": "string",
                     "default": "pap",
@@ -319,7 +283,7 @@
                             "type": "boolean",
                             "default": false,
                             "description": "Administrative State of Server Monitoring.",
-                            "title": "annotation"
+                            "title": "admin_state"
                         },
                         "username": {
                             "type": "string",
@@ -355,8 +319,7 @@
             "required": [
                 "hosts",
                 "login_domain"
-            ],
-            "title": "radius — Admin -> AAA -> Login Domains/Providers type RADIUS."
+            ]
         },
         "Admin:AAA:Authentication:Tacacs": {
             "type": "object",
@@ -394,14 +357,6 @@
                         }
                     },
                     "title": "accounting_include"
-                },
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
                 },
                 "authorization_protocol": {
                     "type": "string",
@@ -516,13 +471,12 @@
             "required": [
                 "hosts",
                 "login_domain"
-            ],
-            "title": "tacacs — Admin -> AAA -> Login Domains/Providers type TACACS."
+            ]
         },
         "Admin:AAA:Security": {
             "type": "object",
             "additionalProperties": false,
-            "description": "AAA -> Security.",
+            "description": "Attributes are:\n  * lockout_user\n  * maximum_validity_period\n  * no_change_interval\n  * password_change_interval\n  * password_change_interval_enforce\n  * password_changes_within_interval\n  * password_expiration_warn_time\n  * password_strength_check\n  * user_passwords_to_store_count\n  * web_session_idle_timeout\n  * web_token_timeout",
             "properties": {
                 "lockout_user": {
                     "type": "object",
@@ -647,29 +601,29 @@
                     "title": "web_token_timeout"
                 }
             },
-            "title": "security — Admin -> AAA -> Security."
+            "title": "security: Admin -> AAA -> Security."
         },
         "Admin:ExternalDataCollectors": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Admin -> External Data Collectors",
+            "description": "external_data_collectors — Attributes are:\n  * smart_callhome\n  * syslog",
             "properties": {
                 "smart_callhome": {
-                    "description": "Required Attributes are:\n  * contract_id\n  * customer_contact_email\n  * name\n  *smart_destinations\n  *smtp_server\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * contact_information\n  * customer_contact_email\n  * customer_id\n  * description\n  * from_email\n  * phone_contact\n  * reply_to_email\n  * site_id\n  * street_address",
+                    "description": "Required Attributes are:\n  * contract_id\n  * customer_contact_email\n  * name\n  *smart_destinations\n  *smtp_server\n\nOptional Attributes are:\n  * admin_state\n  * contact_information\n  * customer_contact_email\n  * customer_id\n  * description\n  * from_email\n  * phone_contact\n  * reply_to_email\n  * site_id\n  * street_address",
                     "items": {
                         "$ref": "#/definitions/Admin:ExternalDataCollectors:SmartCallhome"
                     },
-                    "title": "smart_callhome — Admin -> External Data Collectors -> Smart Callhome."
+                    "title": "smart_callhome\nGUI Location: Admin -> External Data Collectors -> Smart Callhome."
                 },
                 "syslog": {
-                    "description": "Required Attributes are:\n  * name\n  * remote_destinations\n\nOptional Attributes are:\n  * admin_state\n  * annotation\n  * console_destination\n  * description\n  * format\n  * include_types\n  * local_file_destination\n  * min_severity\n  * show_milliseconds_in_timestamp\n  * show_time_zone_in_timestamp",
+                    "description": "Required Attributes are:\n  * name\n  * remote_destinations\n\nOptional Attributes are:\n  * admin_state\n  * console_destination\n  * description\n  * format\n  * include_types\n  * local_file_destination\n  * min_severity\n  * show_milliseconds_in_timestamp\n  * show_time_zone_in_timestamp",
                     "items": {
                         "$ref": "#/definitions/Admin:ExternalDataCollectors:Syslog"
                     },
-                    "title": "syslog — Admin -> External Data Collectors -> Syslog."
+                    "title": "syslog\nGUI Location: Admin -> External Data Collectors -> Syslog."
                 }
             },
-            "title": "external_data_collectors — Admin -> External Data Collectors."
+            "title": "external_data_collectors\nGUI Location: Admin -> External Data Collectors."
         },
         "Admin:ExternalDataCollectors:SmartCallhome": {
             "type": "object",
@@ -685,14 +639,6 @@
                         "enabled"
                     ],
                     "title": "admin_state"
-                },
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
                 },
                 "contact_information": {
                     "type": "string",
@@ -827,7 +773,7 @@
                 "smtp_server": {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "The SMTP Server to Use for sending Smart Callhome messages.  Required Attributes are:\n  * management_epg\n  * name\n\nOptional Attributes are:\n  * port_number\n  username",
+                    "description": "The SMTP Server to Use for sending Smart Callhome messages.  Required Attributes are:\n  * host\n  * management_epg\n\nOptional Attributes are:\n  * port_number\n  * username",
                     "properties": {
                         "host": {
                             "type": "string",
@@ -865,8 +811,8 @@
                         }
                     },
                     "required": [
-                        "management_epg",
-                        "host"
+                        "host",
+                        "management_epg"
                     ],
                     "title": "smtp_server"
                 },
@@ -902,14 +848,6 @@
                         "enabled"
                     ],
                     "title": "admin_state"
-                },
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
                 },
                 "console_destination": {
                     "type": "object",
@@ -1174,13 +1112,201 @@
             ],
             "title": "syslog — Admin -> External Data Collectors -> Syslog."
         },
+        "Admin:Firmware": {
+            "type": "object",
+            "description": "Attributes are:\n  * switches",
+            "additionalProperties": false,
+            "properties": {
+                "switches": {
+                    "$ref": "#/definitions/Admin:Firmware:Switches"
+                }
+            },
+            "title": "firmware\nGUI Location: Admin -> Firmware"
+        },
+        "Admin:Firmware:Switches": {
+            "type": "object",
+            "description": "Attributes are:\n  * firmware_update_groups",
+            "additionalProperties": false,
+            "properties": {
+                "firmware_update_groups": {
+                    "type": "array",
+                    "additionalProperties": false,
+                    "description": "List of Firmware Update Groups to apply Firmware Upgrades/Updates to.\nRequired Attributes:\n  * name\n  * nodes\n  * target_version\n\nOptional Attributes:\n  * administrative_state\n  * description\n  * download_state\n  * effective_on_reboot\n  * graceful_maintenance\n  * ignore_compatibility\n  * notification_condition\n  * scheduler_run_mode\n  * silent_role_package_upgrade\n  * silent_role_package_version\n  * smu_operation_flags\n  * smu_operation_type\n  * target_simulator\n  * version_check_override",
+                    "items": {
+                        "$ref": "#/definitions/Admin:Firmware:Switches:FirmwareUpdates"
+                    },
+                    "title": "firmware_update_groups\nGUI Location: Admin -> Firmware -> Switches: {firmware_update_name}"
+                }
+            },
+            "title": "firmware\nGUI Location: Admin -> Firmware -> Switches"
+        },
+        "Admin:Firmware:Switches:FirmwareUpdates": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Firmware Updates",
+            "properties": {
+                "administrative_state": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Default is `false`.  The administrative state of the executable policies.It will trigger an immediate upgrade for nodes if admin_state is set to `true`. Once upgrade is done, value is reset back to `false`.",
+                    "title": "administrative_state"
+                },
+                "description": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "Description to add to the Object.  The description can be up to 128 characters.",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
+                    "title": "description"
+                },
+                "download_state": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Default is `false`.  Trigger to Download Target Version to the Switches.",
+                    "title": "download_state"
+                },
+                "effective_on_reboot": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Default is `false`.  Flag to Set Firmware to Effective on Reboot.",
+                    "title": "effective_on_reboot"
+                },
+                "graceful_maintenance": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Default is `true`.  Whether the system will bring down the nodes gracefully during an upgrade, which reduces traffic lost.",
+                    "title": "graceful_maintenance"
+                },
+                "ignore_compatibility": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Default is `true`.  Whether compatibility checks should be ignored when applying this firmware policy.",
+                    "title": "ignore_compatibility"
+                },
+                "name": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "Name of Firmware Update Policy or Legacy Maintenance Group Policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "name"
+                },
+                "nodes": {
+                    "type": "array",
+                    "additionalProperties": false,
+                    "description": "List of Fabric Leaf/Spine Node Identifiers to Add to the Firmware Update Group.",
+                    "items": {
+                        "type": "integer",
+                        "default": 101,
+                        "description": "Leaf or Spine Node Identifier.",
+                        "minimum": 1,
+                        "maximum": 4000,
+                        "title": "node_id"
+                    },
+                    "title": "nodes"
+                },
+                "notification_condition": {
+                    "type": "string",
+                    "default": "notifyOnlyOnFailures",
+                    "description": "Default is `notifyOnlyOnFailures`.  Specifies under what pause condition will admin be notified via email/text as configured. This notification mechanism is independent of events/faults.\nOptions are:\n  * notifyAlwaysBetweenSets - Always notify admin after a maintenance set.\n  * notifyNever - Never notify admin after a maintenance set.\n  * notifyOnlyOnFailures - Notify admin after a maintenance set, only if there were failures in the set.",
+                    "enum": [
+                        "notifyAlwaysBetweenSets",
+                        "notifyNever",
+                        "notifyOnlyOnFailures"
+                    ],
+                    "title": "notification_condition"
+                },
+                "scheduler_run_mode": {
+                    "type": "string",
+                    "default": "pauseOnlyOnFailures",
+                    "description": "Default is `pauseOnlyOnFailures`.  Specifies whether to proceed automatically to next set of nodes once a set of nodes have gone through maintenance successfully.\nOptions are:\n  * pauseAlwaysBetweenSets - Pause the scheduler after running a maintenance set irrespective of upgrade status of nodes in the set.\n  * pauseNever - Do not pause the scheduler after a maintenance set, irrespective of upgrade status of nodes in the set.\n  * pauseOnlyOnFailures - Pause the scheduler upon a failure of maintenance operation.",
+                    "enum": [
+                        "pauseAlwaysBetweenSets",
+                        "pauseNever",
+                        "pauseOnlyOnFailures"
+                    ],
+                    "title": "scheduler_run_mode"
+                },
+                "silent_role_package_upgrade": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Default is `false`.  Upgrading an internal package for hardware SDK, drivers, and so on, without upgrading the entire ACI switch firmware.",
+                    "title": "silent_role_package_upgrade"
+                },
+                "silent_role_package_version": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "Silent Role Package Version.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "silent_role_package_version"
+                },
+                "smu_operation_flags": {
+                    "type": "string",
+                    "default": "smuReloadImmediate",
+                    "description": "Default is `smuReloadImmediate`.  SMU Operational Flags.  Options are:\n  * patchHotSmu - SMU operation flags to indicate hot SMU. Node does not need a reload on hot SMU Install/Uninstall. Operator does not need to perform reload to make hot SMU to take affect.\n  * smuReloadImmediate - SMU operation flags to indicate if node should be reloaded immediately on SMU Install/Uninstall.\n  * smuReloadSkip - SMU operation flags to indicate if node should skip auto reload on SMU Install/Uninstall. Operator would perform the usual reload (or mode reload) later to make SMU to take affect.",
+                    "enum": [
+                        "patchHotSmu",
+                        "smuReloadImmediate",
+                        "smuReloadSkip"
+                    ],
+                    "title": "smu_operation_flags"
+                },
+                "smu_operation_type": {
+                    "type": "string",
+                    "default": "smuInstall",
+                    "description": "Default is `smuInstall`.  Software Maintenance Operation Type options are:Deactivating and uninstalling a patch image (SMU image) that was already installed.",
+                    "enum": [
+                        "smuInstall",
+                        "smuUninstall"
+                    ],
+                    "title": "smu_operation_type"
+                },
+                "target_simulator": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Default is `false`.  Flag to Set when the target is an APIC Simulator.",
+                    "title": "target_simulator"
+                },
+                "target_version": {
+                    "type": "string",
+                    "default": "6.0(2h)",
+                    "description": "The Version of software to apply to the policy.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^\\d\\.\\d\\(\\d+[a-z]\\)$",
+                    "title": "target_version"
+                },
+                "version_check_override": {
+                    "type": "string",
+                    "default": "untriggered",
+                    "description": "Default is `untriggered`.  The version check override. This is a directive to ignore the version check for the next install. The version check, which occurs during a maintenance window, checks to see if the desired version matches the running version. If the versions do not match, the install is performed. If the versions do match, the install is not performed. The version check override is a one-time override that performs the install whether or not the versions match. Allowed values:\n  * trigger\n  * triggered\n  * trigger-immediate\n  * untriggered",
+                    "enum": [
+                        "trigger",
+                        "triggered",
+                        "trigger-immediate",
+                        "untriggered"
+                    ],
+                    "title": "version_check_override"
+                }
+            },
+            "required": [
+                "name",
+                "nodes",
+                "target_version"
+            ],
+            "title": "Firmware Updates"
+        },
         "Admin:ImportExport": {
             "type": "object",
-            "description": "Import/Export Policies",
+            "description": "import_export — Attribute is:\n  * configuration_backups",
             "additionalProperties": false,
             "properties": {
                 "configuration_backups": {
-                    "description": "Required Attributes are:\n  * name\n  * remote_hosts\n\nAdditional Attributes are:\n  * annotation\n  * description\nImport/Export > Export Policies > Configuration\n  * format\n  * include_secure_fields\n  * max_snapshot_count\n  * snapshot\n  * start_now\nImport/Export > Remote Locations\n  * authentication_type\n  * management_epg\n  * protocol\n  * remote_hosts\n  * remote_path\n  * remote_port\n  * username\nSchedulers > Fabric\n  * delay_between_node_upgrades\n  * maximum_concurrent_nodes\n  * maximum_running_time\n  * processing_break\n  * processing_size_capacity\n  * schedule\n  * window_type",
+                    "description": "Required Attributes are:\n  * name\n  * remote_hosts\n\nAdditional Attributes are:\n  * description\nImport/Export > Export Policies > Configuration\n  * format\n  * include_secure_fields\n  * max_snapshot_count\n  * snapshot\n  * start_now\nImport/Export > Remote Locations\n  * authentication_type\n  * management_epg\n  * protocol\n  * remote_hosts\n  * remote_path\n  * remote_port\n  * username\nSchedulers > Fabric\n  * delay_between_node_upgrades\n  * maximum_concurrent_nodes\n  * maximum_running_time\n  * processing_break\n  * processing_size_capacity\n  * schedule\n  * window_type",
                     "items": {
                         "$ref": "#/definitions/Admin:ImportExport:ConfigurationBackups"
                     },
@@ -1197,14 +1323,6 @@
             "additionalProperties": false,
             "description": "Syslog.",
             "properties": {
-                "annotation": {
-                    "type": "string",
-                    "description": "An annotation will mark an Object in the GUI with a small blue circle, signifying that it has been modified by  an external source/tool.  Like Nexus Dashboard Orchestrator or in this instance Terraform.",
-                    "minLength": 1,
-                    "maxLength": 128,
-                    "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
-                    "title": "annotation"
-                },
                 "authentication_type": {
                     "type": "string",
                     "default": "usePassword",
@@ -1345,8 +1463,8 @@
                     "type": "integer",
                     "default": 22,
                     "description": "Remote Protocol Port 0-65535.  The default is 22.",
-                    "mini": 0,
-                    "maximum": 10,
+                    "minimum": 1,
+                    "maximum": 65535,
                     "title": "remote_port"
                 },
                 "snapshot": {

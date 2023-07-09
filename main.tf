@@ -77,7 +77,8 @@ module "built_in_tenants" {
   annotation      = var.annotation
   annotations     = var.annotations
   controller_type = var.controller_type
-  model           = local.model
+  model           = local.model.tenants
+  templates       = local.model.templates
   tenant          = each.key
   # Sensitive Variables for Tenant Policies
   # AWS Secret Key - NDO
