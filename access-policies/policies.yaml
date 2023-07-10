@@ -7,13 +7,16 @@ access:
     global:
       attachable_access_entity_profiles:
       - description: Default AEP
+        infra_vlan: false
         l3_domains:
         - l3out
         name: accessAep
         physical_domains:
         - access
-      - allowed_vlans: 100-299,1101-1110
+      - access_or_native_vlan: 1
+        allowed_vlans: 100-299,1101-1110
         description: AEP for EPG Assignment
+        infra_vlan: false
         name: trunkAep
         physical_domains:
         - access
