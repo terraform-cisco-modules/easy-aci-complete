@@ -858,7 +858,7 @@
             "properties": {
                 "attachable_access_entity_profiles": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * description\n  * l3_domains\n  * physical_domains\n  * vmm_domains",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * access_or_native_vlan\n  * allowed_vlans\n  * description\n  * l3_domains\n  * physical_domains\n  * vmm_domains",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Global:AttachableAccessEntityProfile"
                     },
@@ -907,6 +907,21 @@
         "Access:Policies:Global:AttachableAccessEntityProfile": {
             "type": "object",
             "properties": {
+                "access_or_native_vlan": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "This is used to assign the native vlan if this is a trunk or access vlan if a single vlan is being assigned.",
+                    "minimum": 0,
+                    "maximum": 4093,
+                    "title": "access_or_native_vlan"
+                },
+                "allowed_vlans": {
+                    "type": "string",
+                    "description": "A string containing the List of VLANs Allowed on the ports attached to the AAEP.  This will act much like `switch trunk allowed vlan list`, but will be used to assign/filter the EPG's to be assigned to the AAEP.\nIn example: '1-5', '1,3,5', '1-5,10-16', or just '1'.",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "pattern": "^(((\\d+)|(\\d+-\\d+))(,((\\d+)|(\\d+-\\d+)))*)$"
+                },
                 "description": {
                     "type": "string",
                     "default": "default",
@@ -921,6 +936,16 @@
                     "default": false,
                     "description": "Flag to Allow Infrastructure VLAN on Ports assigned to this Attachable Access Entity Profile.",
                     "title": "infra_vlan"
+                },
+                "instrumentation_immediacy": {
+                    "type": "string",
+                    "default": "on-demand",
+                    "description": "The EPG to AAEP deployment immediacy.  Options are:\n  * immediate — Specifies that EPG policies (including contracts and filters) are downloaded to the associated leaf switch software upon deployment.\n  * on-demand: (default) — Specifies that a policy (for example, VLAN, VXLAN bindings, contracts, or filters) is pushed to the leaf node only when an endpoint is discovered, attached to the (EPG).",
+                    "enum": [
+                        "immediate",
+                        "on-demand"
+                    ],
+                    "title": "instrumentation_immediacy"
                 },
                 "l3_domains": {
                     "type": "array",
@@ -2230,7 +2255,7 @@
                     "description": "Single VLAN; i.e. 1.  range of VLANs; i.e. 1-5. Or List of VLANs; i.e. 1-5,10-15",
                     "minLength": 1,
                     "maxLength": 128,
-                    "pattern": "^[0-9\\-,]+$"
+                    "pattern": "^(((\\d+)|(\\d+-\\d+))(,((\\d+)|(\\d+-\\d+)))*)$"
                 }
             },
             "required": [

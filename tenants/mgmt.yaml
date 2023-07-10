@@ -172,7 +172,7 @@ tenants:
         - name: 10.92.0.0
           template: inband_optimize
           subnets:
-            - address: 10.92.0.254/24
+            - gateway_ip: 10.92.0.254/24
               template: advertise_external
       l3outs:
         - name: inband
@@ -187,15 +187,14 @@ tenants:
                   contract_type: consumed
               description: 'Inband'
               subnets:
-                - subnets: [
-                    0.0.0.0/1,
-                    128.0.0.0/1
-                  ]
+                - subnets: 
+                    - 0.0.0.0/1,
+                    - 128.0.0.0/1
           l3_domain: l3out
           logical_node_profiles:
             - name: asgard-leaf201-202
               description: 'Asgard Inband LNP'
-              interface_profiles:
+              logical_interface_profiles:
                 - name: Vlan11
                   bgp_peers:
                     - peer_addresses: [10.92.1.3, 10.92.1.4]
@@ -210,10 +209,13 @@ tenants:
                   mode: trunk
                   mtu: inherit
                   svi_addresses:
-                    - primary_preferred_addresses: [10.92.1.1/29, 10.92.1.2/29]
+                    primary_preferred_addresses: [10.92.1.1/29, 10.92.1.2/29]
               nodes:
-                - node_ids: [201, 202]
-                  router_ids: [10.92.1.201, 10.92.1.202]
+                - node_id: 201
+                  router_id: 10.92.1.201
+                  use_router_id_as_loopback: true
+                - node_id: 202
+                  router_id: 10.92.1.202
                   use_router_id_as_loopback: true
               pod_id: 1
           vrf: inb

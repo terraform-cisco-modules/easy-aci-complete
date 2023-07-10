@@ -77,6 +77,7 @@ module "built_in_tenants" {
   for_each = {
     for v in lookup(local.model, "tenants", []) : v.name => v if length(regexall("^(common|infra|mgmt)$", v.name)) > 0
   }
+  aaep_to_epgs    = length(lookup(local.model, "access", {})) > 0 ? module.access["default"].aaep_to_epgs : {}
   annotations     = var.annotations
   controller_type = var.controller_type
   model           = each.value
@@ -188,6 +189,7 @@ module "tenants" {
   for_each = {
     for v in lookup(local.model, "tenants", []) : v.name => v if length(regexall("^(common|infra|mgmt)$", v.name)) == 0
   }
+  aaep_to_epgs    = length(lookup(local.model, "access", {})) > 0 ? module.access["default"].aaep_to_epgs : {}
   annotations     = var.annotations
   controller_type = var.controller_type
   model           = each.value

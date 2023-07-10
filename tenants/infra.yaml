@@ -13,7 +13,7 @@ tenants:
           logical_node_profiles:
             - name: asgard-spine101
               description: 'asgard-spine101 Multi-Site'
-              interface_profiles:
+              logical_interface_profiles:
                 - name: Eth1-29.4
                   description: '142b-core01-Eth1/23'
                   encap_scope: local
@@ -41,13 +41,13 @@ tenants:
                       ospf_interface_policy: point-to-point
                   primary_preferred_address: 10.92.4.2/31
               nodes:
-                - node_ids: [101]
-                  router_ids: [10.92.4.101]
+                - node_id: 101
+                  router_id: 10.92.4.101
                   use_router_id_as_loopback: true
               pod_id: 1
             - name: asgard-spine102
               description: 'asgard-spine102 Multi-Site'
-              interface_profiles:
+              logical_interface_profiles:
                 - name: Eth1-29.4
                   description: '142b-core01-Eth1/24'
                   encap_scope: local
@@ -75,8 +75,8 @@ tenants:
                       ospf_interface_policy: point-to-point
                   primary_preferred_address: 10.92.4.6/31
               nodes:
-                - node_ids: [102]
-                  router_ids: [10.92.4.102]
+                - node_id: 102
+                  router_id: 10.92.4.102
                   use_router_id_as_loopback: true
               pod_id: 1
           ospf_external_profile:

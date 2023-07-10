@@ -17,24 +17,26 @@ tenants:
             template: preferred_group
     networking:
       bridge_domains:
-        - name: 10.92.101.0
-          application_epg:
+        - application_epg:
+            application_profile: nets
             template: preferred_group
-            vlans: [1101]
+            vlans: [101]
+          name: 10.92.101.0
           subnets:
-            - address: 10.92.101.1/24
+            - gateway_ip: 10.92.101.1/24
               template: advertise_external
           template: prod_optimize
-        - name: 10.92.102.0
-          application_epg:
+        - application_epg:
+            application_profile: nets
             template: preferred_group
-            vlans: [1102]
+            vlans: [102]
+          name: 10.92.102.0
           subnets:
-            - address: 10.92.102.1/24
+            - gateway_ip: 10.92.102.1/24
               template: advertise_external
           template: prod_optimize
         - name: 10.92.103.0
           subnets:
-            - address: 10.92.103.1/24
+            - gateway_ip: 10.92.103.1/24
               template: advertise_external
           template: prod_optimize

@@ -20,9 +20,6 @@ templates:
               mac_changes: reject
           switch_provider: VMware
           vlan_mode: dynamic
-      epg_to_aaeps:
-        - aaep: trunkAep
-          mode: trunk
       epg_type: standard
       flood_in_encapsulation: disabled
       has_multicast_source: false
