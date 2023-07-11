@@ -670,6 +670,9 @@
         "Access:Interfaces:LeafIntefaces:PolicyGroups:NetflowMonitorPolicies": {
             "type": "object",
             "additionalProperties": false,
+            "class": "netflowMonitorPol",
+            "description": "",
+            "dn": "uni/fabric/monfab-{netflow_monitor_policy}",
             "properties": {
                 "ip_filter_type": {
                     "default": "ce",
@@ -687,10 +690,10 @@
                     "minLength": 1,
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "netflow_monitor_policy"
+                    "title": "netflow_monitor_policy - netflowMonitorPol"
                 }
             },
-            "title": "Netflow Monitor Policies."
+            "title": "Netflow Monitor Policies - netflowMonitorPol"
         },
         "Access:Interfaces:SpineInterfaces": {
             "type": "object",

@@ -43,8 +43,8 @@ module "admin" {
     module.built_in_tenants
   ]
   #source = "../terraform-aci-admin"
-  source  = "terraform-cisco-modules/admin/aci"
-  version = "2.1.5"
+  source          = "terraform-cisco-modules/admin/aci"
+  version         = "2.1.5"
   for_each        = { for v in ["default"] : v => v if length(lookup(local.model, "admin", {})) > 0 }
   admin           = lookup(local.model, "admin", {})
   annotations     = var.annotations
