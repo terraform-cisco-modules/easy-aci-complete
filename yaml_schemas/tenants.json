@@ -47,11 +47,11 @@
                 "application_profiles": {
                     "type": "array",
                     "additionalProperties": {},
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * alias\n  * annotation\n  * annotations\n  * application_epgs\n  * create\n  * description\n  * global_alias\n  * monitoring_policy\n  * qos_class\n\nIf this is for Nexus Dashboard Orchestrator it requires:\n  * ndo\nAPI Information:\n  * Class: fvAp\n  * DN: Distinguished Name: 'uni/tn-{tenant}/ap-{application_profile}'\nGUI Location:\n  * Tenants -> Application Profiles.",
+                    "description": "List of Application Profiles.  Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * alias\n  * annotation\n  * annotations\n  * application_epgs\n  * create\n  * description\n  * global_alias\n  * monitoring_policy\n  * qos_class\n\nIf this is for Nexus Dashboard Orchestrator it requires:\n  * ndo\nAPI Information:\n  * Class: fvAp\n  * DN: Distinguished Name: 'uni/tn-{tenant}/ap-{application_profile}'\nGUI Location:\n  * Tenants -> Application Profiles.",
                     "items": {
                         "$ref": "#/definitions/Tenants:ApplicationProfiles"
                     },
-                    "title": "application_profiles"
+                    "title": "application_profiles - fvAp"
                 },
                 "contracts": {
                     "$ref": "#/definitions/Tenants:Contracts"
@@ -73,22 +73,18 @@
                 },
                 "policy_tenant": {
                     "type": "string",
-                    "apicApi": "",
-                    "description": "",
+                    "apicApi": "fvTenant",
+                    "default": "",
+                    "description": "Name of the Tenant that Tenant policies are created.  Most often if this is set it would be the `common` tenant.",
                     "minLength": 1,
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "policy_tenant"
+                    "title": "policy_tenant - fvTenant"
                 },
                 "networking": {
                     "$ref": "#/definitions/Tenants:Networking"
                 },
                 "ndo": {
-                    "type": "object",
-                    "additionalProperties": {},
-                    "class": "",
-                    "description": "",
-                    "rn": "",
                     "$ref": "#/definitions/Tenants:Ndo"
                 },
                 "policies": {
@@ -265,11 +261,11 @@
                 "name": {
                     "$ref": "#/definitions/Tenants:Name"
                 },
-                "qos_class": {
-                    "$ref": "#/definitions/Tenants:QosClass"
-                },
                 "ndo": {
                     "$ref": "#/definitions/Tenants:NdoSettings"
+                },
+                "qos_class": {
+                    "$ref": "#/definitions/Tenants:QosClass"
                 }
             },
             "required": [
@@ -920,9 +916,9 @@
             "properties": {
                 "contract_type": {
                     "type": "string",
-                    "apicApi": "",
-                    "default": "provided",
-                    "description": "The Type of Contract.  Options are:\n  * consumed\n  * contract_interface\n  * intra_epg\n  * provided: (default)\n  * taboo",
+                    "apicApi": "not_applicable",
+                    "default": "consumed",
+                    "description": "The Type of Contract.  Options are:\n  * consumed\n  * contract_interface\n  * intra_epg\n  * provided\n  * taboo",
                     "enum": [
                         "consumed",
                         "contract_interface",
@@ -933,27 +929,48 @@
                     "title": "contract_type"
                 },
                 "name": {
-                    "$ref": "#/definitions/Tenants:Name"
-                },
-                "qos_class": {
-                    "$ref": "#/definitions/Tenants:QosClass"
+                    "type": "string",
+                    "apicApi": "tDnlist",
+                    "classes": [
+                        "fvRsCons",
+                        "fvRsConsIf",
+                        "fvRsIntraEpg",
+                        "fvRsProtBy",
+                        "fvRsProv"
+                    ],
+                    "default": "",
+                    "description": "Name of the Contract to assign to the EPG.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "tDn": [
+                        "uni/tn-{tenant}/brc-{name}",
+                        "uni/tn-{tenant}/cif-{name}",
+                        "uni/tn-{tenant}/brc-{name}",
+                        "uni/tn-{tenant}/taboo-{name}",
+                        "uni/tn-{tenant}/brc-{name}"
+                    ],
+                    "title": "name - [fvRsCons|fvRsConsIf|fvRsIntraEpg|fvRsProv|fvRsProtBy]"
                 },
                 "ndo": {
                     "$ref": "#/definitions/Tenants:NdoSettings"
                 },
+                "qos_class": {
+                    "$ref": "#/definitions/Tenants:QosClass"
+                },
                 "tenant": {
                     "type": "string",
-                    "apicApi": "",
-                    "description": "The Name of the Tenant the Contract exists in.  By default this will refer back to the Parent Object Tenant definition, if undefined.",
+                    "apicApi": "fvTenant",
+                    "default": "",
+                    "description": "The Name of the Tenant the Contract exists in if it is not the parent tenant.",
                     "minLength": 1,
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "tenant"
+                    "title": "tenant - fvTenant"
                 }
             },
             "required": [
-                "name",
-                "tenant"
+                "name"
             ],
             "title": "Apply EPG Contracts to Object."
         },
@@ -1742,12 +1759,7 @@
                     "title": "name_suffix"
                 },
                 "ndo": {
-                    "type": "object",
-                    "additionalProperties": {},
-                    "class": "",
-                    "description": "",
-                    "rn": "",
-                    "$ref": "#/definitions/Tenants:Networking:BridgeDomains:Ndo"
+                    "$ref": "#/definitions/Tenants:NdoSettings"
                 }
             },
             "required": [
@@ -1758,8 +1770,7 @@
                 "l3_configurations",
                 "name",
                 "name_prefix",
-                "name_suffix",
-                "ndo"
+                "name_suffix"
             ],
             "title": "BridgeDomains"
         },
@@ -2411,28 +2422,6 @@
             ],
             "title": "SubnetControl"
         },
-        "Tenants:Networking:BridgeDomains:Ndo": {
-            "type": "object",
-            "additionalProperties": {},
-            "description": "",
-            "properties": {
-                "template": {
-                    "type": "null",
-                    "description": "The Template name to assign to the Schema."
-                },
-                "sites": {
-                    "type": "array",
-                    "additionalProperties": {},
-                    "description": "(required when controller_type is ndo) - When using Nexus Dashboard Orchestrator the sites attribute is used to distinguish the site and cloud types.",
-                    "items": {}
-                }
-            },
-            "required": [
-                "sites",
-                "template"
-            ],
-            "title": "BridgeDomainsNdo"
-        },
         "Tenants:Networking:L3Outs": {
             "type": "object",
             "additionalProperties": {},
@@ -2518,7 +2507,7 @@
                     "$ref": "#/definitions/Tenants:Name"
                 },
                 "ndo": {
-                    "$ref": "#/definitions/Tenants:Ndo"
+                    "$ref": "#/definitions/Tenants:NdoSettings"
                 },
                 "pim": {
                     "type": "boolean",
@@ -2691,19 +2680,19 @@
                 },
                 "contract_exception_tag": {
                     "type": "integer",
-                    "apicApi": "",
-                    "default": 1,
+                    "apicApi": "exceptionTag",
+                    "default": 0,
                     "description": "Contracts between EPGs are enhanced to include exceptions to subjects or contracts. This enables a subset of EPGs to be excluded in contract filtering. For example, a provider EPG can communicate with all consumer EPGs except those that match criteria configured in a Subject Exception in the contract governing their communication.  Assign a Tag Attribute to the EPG.",
-                    "minimum": 1,
-                    "maximum": 64,
-                    "title": "contract_exception_tag"
+                    "minimum": 0,
+                    "maximum": 512,
+                    "title": "contract_exception_tag - exceptionTag"
                 },
                 "contracts": {
                     "type": "array",
                     "additionalProperties": {},
                     "description": "List of Contracts and their attributes to assign to the EPG.\nRequired Attributes:\n  * name\n\nOptional Attributes:\n  * contract_type\n  * ndo\n  * qos_class\n  * tenant",
                     "items": {
-                        "$ref": "#/definitions/Tenants:Networking:L3Outs:ExternalEpgs:Contracts"
+                        "$ref": "#/definitions/Tenants:Contracts:ContractApply"
                     },
                     "title": "contracts - [fvRsCons|fvRsConsIf|fvRsIntraEpg|fvRsProv|fvRsProtBy]"
                 },
@@ -2775,122 +2764,6 @@
             ],
             "title": "external_epgs - l3extInstP"
         },
-        "Tenants:Networking:L3Outs:ExternalEpgs:Contracts": {
-            "type": "object",
-            "additionalProperties": {},
-            "description": "",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "Name of the Contract to assign to the EPG.",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "name"
-                },
-                "contract_type": {
-                    "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "The Type of Contract.  Options are:\n  * consumed\n  * contract_interface\n  * intra_epg\n  * provided\n  * taboo",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "contract_type"
-                },
-                "qos_class": {
-                    "$ref": "#/definitions/Tenants:QosClass"
-                },
-                "schema": {
-                    "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "The Name of the Schema.",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "schema"
-                },
-                "template": {
-                    "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "The Template name to assign to the Schema.",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "template"
-                },
-                "tenant": {
-                    "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "The Name of the Tenant the Contract exists in.",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "tenant"
-                }
-            },
-            "required": [
-                "contract_type",
-                "name",
-                "qos_class",
-                "schema",
-                "template",
-                "tenant"
-            ],
-            "title": "ExternalEpgsContracts"
-        },
-        "Tenants:Networking:L3Outs:ExternalEpgs:RouteControlProfiles": {
-            "type": "object",
-            "additionalProperties": {},
-            "class": "rtctrlProfile",
-            "description": "",
-            "dn": "uni/tn-{tenant}/out-{l3out}/prof-{route_map}",
-            "rn": "prof-{route_map}",
-            "properties": {
-                "direction": {
-                    "type": "string",
-                    "apicApi": "direction",
-                    "default": "export",
-                    "description": "The direction of control.  Options are:\n  * export\n  * import",
-                    "enum": [
-                        "export",
-                        "import"
-                    ],
-                    "title": "direction"
-                },
-                "route_map": {
-                    "type": "string",
-                    "apicApi": "name",
-                    "default": "default",
-                    "description": "The Name of the Route Map for Import/Export route control.",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "route_map"
-                },
-                "tenant": {
-                    "type": "string",
-                    "apicApi": "class",
-                    "class": "fvTenant",
-                    "default": "",
-                    "description": "The Name of the Tenant the Route Map exists in, if not External EPG Tenant.",
-                    "dn": "uni/tn-{tenant}",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "tenant"
-                }
-            },
-            "required": [
-                "route_map"
-            ],
-            "title": "route_control_profiles - rtctrlProfile"
-        },
         "Tenants:Networking:L3Outs:ExternalEpgs:Subnets": {
             "type": "object",
             "additionalProperties": {},
@@ -2915,9 +2788,9 @@
                     "additionalProperties": {},
                     "description": "Route Maps for Import/Export Route Control.\nRequired Attributes:\n  * route_map\n\nOptional Attributes:\n  * direction\n  * tenant",
                     "items": {
-                        "$ref": "#/definitions/Tenants:Networking:L3Outs:ExternalEpgs:RouteControlProfiles"
+                        "$ref": "#/definitions/Tenants:Networking:L3Outs:RouteControlProfiles"
                     },
-                    "title": "route_control_profiles"
+                    "title": "route_control_profiles - rtctrlProfile"
                 },
                 "route_summarization_policy": {
                     "type": "string",
@@ -2929,7 +2802,7 @@
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
                     "tDn": "uni/tn-{tenant}/bgprtsum-{route_summarization_policy}",
-                    "title": "route_summarization_policy"
+                    "title": "route_summarization_policy - l3extRsSubnetToRtSumm"
                 },
                 "subnets": {
                     "type": "array",
@@ -2957,6 +2830,7 @@
         "Tenants:Networking:L3Outs:ExternalEpgs:Subnets:Aggregate": {
             "type": "object",
             "additionalProperties": {},
+            "apicApi": "aggregate",
             "class": "l3extSubnet",
             "description": "When aggregation is not set, the subnets are matched exactly. For example, if 11.1.0.0/16 is the subnet, then the policy will not apply to a 11.1.1.0/24 route but it will apply only if the route is 11.1.0.0/16. However, to avoid a tedious and error prone task of defining all the subnets one by one, aggregation can be used aggregate a set of subnets into one export, import or shared routes policy. At this time, only 0/0 subnets can be aggregated. When 0/0 is specified with aggregation, all the routes are imported, exported, or shared with (leaked to) a different VRF based on one of the following:",
             "rn": "uni/tn-{tenant}/out-{l3out}/instP-{external_epg}/extsubnet-[{subnet}]",
@@ -2966,21 +2840,21 @@
                     "apicApi": "export-rtctrl",
                     "default": false,
                     "description": "Defualt is `false`.  Exports all routes of a subnet (0/0 subnets).",
-                    "title": "aggregate_export"
+                    "title": "aggregate_export - export-rtctrl"
                 },
                 "aggregate_import": {
                     "type": "boolean",
                     "apicApi": "import-rtctrl",
                     "default": false,
                     "description": "Defualt is `false`.  Imports all routes of a subnet (0/0 subnets).",
-                    "title": "aggregate_import"
+                    "title": "aggregate_import - import-rtctrl"
                 },
                 "aggregate_shared_routes": {
                     "type": "boolean",
                     "apicApi": "shared-rtctrl",
                     "default": false,
                     "description": "Defualt is `false`.  When a route is learned in one VRF that needs to be leaked into another VRF, the routes can be leaked by matching the subnet exactly, or can be leaked aggregated according to a subnet mask.",
-                    "title": "aggregate_shared_routes"
+                    "title": "aggregate_shared_routes - shared-rtctrl"
                 }
             },
             "title": "aggregate - aggregate"
@@ -2988,6 +2862,7 @@
         "Tenants:Networking:L3Outs:ExternalEpgs:Subnets:ExternalEpgClassification": {
             "type": "object",
             "additionalProperties": {},
+            "apicApi": "scope",
             "class": "l3extSubnet",
             "description": "Scope of the External Subnet",
             "rn": "uni/tn-{tenant}/out-{l3out}/instP-{external_epg}/extsubnet-[{subnet}]",
@@ -2997,14 +2872,14 @@
                     "apicApi": "import-security",
                     "default": true,
                     "description": "Defualt is `true`.  A classifier for the external EPG, similar to an Access Control List (ACL). The rules and contracts in the external EPG apply at the VRF level to networks matching this subnet.",
-                    "title": "external_subnets_for_external_epg"
+                    "title": "external_subnets_for_external_epg - import-security"
                 },
                 "shared_security_import_subnet": {
                     "type": "boolean",
                     "apicApi": "shared-security",
                     "default": false,
                     "description": "Defualt is `false`.  Configures the classifier for the subnets in the VRF where the routes are leaked.",
-                    "title": "shared_security_import_subnet"
+                    "title": "shared_security_import_subnet - shared-security"
                 }
             },
             "title": "external_epg_classification - scope"
@@ -3012,23 +2887,24 @@
         "Tenants:Networking:L3Outs:ExternalEpgs:Subnets:RouteControl": {
             "type": "object",
             "additionalProperties": {},
+            "apicApi": "scope",
             "class": "l3extSubnet",
-            "description": "Scope of the External Subnet",
             "rn": "uni/tn-{tenant}/out-{l3out}/instP-{external_epg}/extsubnet-[{subnet}]",
+            "description": "Scope of the External Subnet",
             "properties": {
                 "export_route_control_subnet": {
                     "type": "boolean",
                     "apicApi": "export-rtctrl",
                     "default": false,
                     "description": "Defualt is `false`.  Controls which external networks are advertised out of the fabric using route-maps and IP prefix lists. An IP prefix list is created on the border leaf switch for each subnet that is defined. The export control policy is enabled by default and is supported for BGP, EIGRP, and OSPF.",
-                    "title": "export_route_control_subnet"
+                    "title": "export_route_control_subnet - export-rtctrl"
                 },
                 "import_route_control_subnet": {
                     "type": "boolean",
                     "apicApi": "import-rtctrl",
                     "default": false,
                     "description": "Defualt is `false`.  Controls the subnets allowed into the fabric, and can include set and match rules to filter routes. Supported for BGP and OSPF, but not for EIGRP; if the user enables the import control policy for an unsupported protocol, it will be automatically ignored. The import control policy is not enabled by default, but you can enable it by navigating to the configured L3Out. Click the Policy/Main tabs to display the Properties window for the configured L3Out, then check the box next to Route Control Enforcement.",
-                    "title": "import_route_control_subnet"
+                    "title": "import_route_control_subnet - import-rtctrl"
                 },
                 "shared_route_control_subnet": {
                     "type": "boolean",
@@ -3102,7 +2978,7 @@
                     "description": "Identifier of the pod where the node is located.  Unless you are configuring Multi-Pod, this should always be 1.",
                     "minimum": 1,
                     "maximum": 12,
-                    "title": "pod_id"
+                    "title": "pod_id - pod-{pod_id}"
                 },
                 "target_dscp": {
                     "$ref": "#/definitions/Tenants:TargetDscp"
@@ -3137,14 +3013,14 @@
                 },
                 "auto_state": {
                     "type": "string",
-                    "apicApi": "",
+                    "apicApi": "l3extRsPathL3OutAtt:autostate",
                     "default": "disabled",
                     "description": "[REQUIRED] - for ext-svi.  The default value is `disabled`.\nThe possible options are as follows:\n  * disabled: When this value is selected, SVI remains in the up state when the auto state value is disabled. The SVI remains active even if no interfaces are operational in the corresponding VLAN/s.\n  * enabled: When this value is selected, SVI depends on the port members in associated VLANs. When a VLAN interface has multiple ports in the VLAN, the SVI goes to the down state when all the ports in the VLAN go down.",
                     "enum": [
                         "disabled",
                         "enabled"
                     ],
-                    "title": "auto_state"
+                    "title": "auto_state - l3extRsPathL3OutAtt:autostate"
                 },
                 "bgp_peers": {
                     "type": "array",
@@ -3153,7 +3029,7 @@
                     "items": {
                         "$ref": "#/definitions/Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:BGPPeers"
                     },
-                    "title": "bgp_peers"
+                    "title": "bgp_peers - bgpPeerP"
                 },
                 "color_tag": {
                     "$ref": "#/definitions/Tenants:ColorTag"
@@ -3205,23 +3081,23 @@
                 },
                 "encap_scope": {
                     "type": "string",
-                    "apicApi": "encapScope",
+                    "apicApi": "l3extRsPathL3OutAtt:encapScope",
                     "default": "local",
                     "description": "[REQUIRED] - If Assigning a VLAN.\nThe scope of the encapsulation used for the Layer 3 Out profile. The scope can be as follows:\n  * ctx —  Same transit VLAN in all Layer 3 Outs in the same VRF for a given VLAN encapsulation. This is a global value.\n  * local: (default) — A unique transit VLAN per Layer 3 Out.",
                     "enum": [
                         "ctx",
                         "local"
                     ],
-                    "title": "encap_scope - encapScope"
+                    "title": "encap_scope - l3extRsPathL3OutAtt:encapScope"
                 },
                 "encap_vlan": {
                     "type": "integer",
-                    "apicApi": "encap",
+                    "apicApi": "l3extRsPathL3OutAtt:encap",
                     "default": 1,
                     "description": "[REQUIRED] - If svi or sub-interface.\nSpecify the VLAN ID to use for encapsulation with svi or sub-interface.",
                     "minimum": 1,
                     "maximum": 4094,
-                    "title": "encap_vlan - encap"
+                    "title": "encap_vlan - l3extRsPathL3OutAtt:encap"
                 },
                 "hsrp_interface_profiles": {
                     "type": "array",
@@ -3230,7 +3106,7 @@
                     "items": {
                         "$ref": "#/definitions/Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:HsrpInterfaceProfiles"
                     },
-                    "title": "hsrp_interface_profiles - "
+                    "title": "hsrp_interface_profiles - hsrpIfP"
                 },
                 "interface_or_policy_group": {
                     "type": "string",
@@ -3244,7 +3120,7 @@
                 },
                 "interface_type": {
                     "type": "string",
-                    "apicApi": "",
+                    "apicApi": "l3extRsPathL3OutAtt:ifInstT",
                     "default": "l3-port",
                     "description": "Interface type for the Logical Interface Profile Path Attachment. Allowed values are:\n  * ext-svi\n  * l3-port\n  * sub-interface\n  * unspecified: (default)",
                     "enum": [
@@ -3252,42 +3128,42 @@
                         "l3-port",
                         "sub-interface"
                     ],
-                    "title": "interface_type"
+                    "title": "interface_type - l3extRsPathL3OutAtt:ifInstT"
                 },
                 "ipv6_dad": {
                     "type": "string",
-                    "apicApi": "",
+                    "apicApi": "l3extRsPathL3OutAtt:encap",
                     "default": "enabled",
                     "description": "Duplicate Address Detection (DAD) is a process that is used by Neighbor Discovery to detect the duplicated addresses in the network. By default, DAD is enabled for the link-local and global-subnet IPv6 addresses used on the Cisco ACI fabric leaf Layer 3 interfaces. Change this setting when the same shared secondary address is required to be used across L3Outs on different border leaf switches to provide border leaf redundancy to the external connected devices. Disabling the DAD process in this case will avoid the situation where the DAD considers the same shared secondary address on multiple border leaf switches as duplicates. If you do not disable the DAD process in this case, the shared secondary address might enter into the DUPLICATE DAD state and become unusable.\nFor these situations, use the following settings:\n * For the primary address, set the value for the DAD entry to enabled.\n * For the shared secondary address, set the value for the DAD entry to disabled. If the secondary address is not shared across border leaf switches, then you do not need to disable the DAD for that address.\nAllowed values are:\n  * disabled\n  * enabled: (default)",
                     "enum": [
                         "disabled",
                         "enabled"
                     ],
-                    "title": "ipv6_dad"
+                    "title": "ipv6_dad - l3extRsPathL3OutAtt:encap"
                 },
                 "link_local_address": {
                     "type": "string",
-                    "apicApi": "",
+                    "apicApi": "l3extRsPathL3OutAtt:llAddr",
                     "default": "::",
                     "description": " Default value: `::`.  Link local address for L3out Logical Interface Profile.  Not used by Interface type ext-svi.",
                     "minLength": 2,
                     "maxLength": 39,
                     "pattern": "^::$|^(([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{0,4}|:[0-9A-Fa-f]{1,4})?|(:[0-9A-Fa-f]{1,4}){0,2})|(:[0-9A-Fa-f]{1,4}){0,3})|(:[0-9A-Fa-f]{1,4}){0,4})|:(:[0-9A-Fa-f]{1,4}){0,5})((:[0-9A-Fa-f]{1,4}){2}|:(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])(\\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])){3})|(([0-9A-Fa-f]{1,4}:){1,6}|:):[0-9A-Fa-f]{0,4}|([0-9A-Fa-f]{1,4}:){7}:)$",
-                    "title": "link_local_address"
+                    "title": "link_local_address - l3extRsPathL3OutAtt:llAddr"
                 },
                 "mac_address": {
                     "type": "string",
-                    "apicApi": "",
+                    "apicApi": "l3extRsPathL3OutAtt:mac",
                     "default": "",
                     "description": "A Custom MAC address for the Logical Node Interface profile attached to the layer 3 outside profile. ",
                     "minLength": 17,
                     "maxLength": 17,
                     "pattern": "^([\\da-fA-F]{2}:){5}[\\da-fA-F]{2}$",
-                    "title": "mac_address"
+                    "title": "mac_address - l3extRsPathL3OutAtt:mac"
                 },
                 "mode": {
                     "type": "string",
-                    "apicApi": "",
+                    "apicApi": "l3extRsPathL3OutAtt:mode",
                     "default": "native",
                     "description": "Default is `native`.  The mode of the static association with the path. EPG tagging refers to configuring a static path under an EPG. The mode can be:\n  * access - Select this mode if the traffic from the host is untagged (without VLAN ID). When a leaf switch is configured for an EPG to be untagged, for every port this EPG uses, the packets will exit the switch untagged.\n  * dot1p - Select this mode if the traffic from the host is tagged with a 802.1P tag. When an access port is configured with a single EPG in native 802.1p mode, its packets exit that port untagged. When an access port is configured with multiple EPGs, one in native 802.1p mode, and some with VLAN tags, all packets exiting that access port are tagged VLAN 0 for EPG configured in native 802.1p mode and for all other EPGs packets exit with their respective VLAN tags.\n  * trunk: (default) - Select this mode if the traffic from the host is tagged with a VLAN ID.",
                     "enum": [
@@ -3295,17 +3171,17 @@
                         "native",
                         "trunk"
                     ],
-                    "title": "mode"
+                    "title": "mode - l3extRsPathL3OutAtt:mode"
                 },
                 "mtu": {
                     "type": "string",
-                    "apicApi": "",
+                    "apicApi": "l3extRsPathL3OutAtt:mtu",
                     "default": "inherit",
                     "description": " Default value is `inherit`.  Administrative MTU port on the External Network. Range of allowed values is 576 to 9216 or inherit.",
                     "minLength": 3,
                     "maxLength": 7,
                     "pattern": "^inherit|57[6-9]|5[8-9]\\d|[6-9]\\d\\d|[1-8]\\d\\d\\d|9[0-1]\\d\\d|920\\d|921[0-6]$",
-                    "title": "mtu"
+                    "title": "mtu - l3extRsPathL3OutAtt:mtu"
                 },
                 "name": {
                     "$ref": "#/definitions/Tenants:Name"
@@ -3336,36 +3212,27 @@
                     "type": "array",
                     "description": "If the Path type is vpc this should be a list of 2 leaf's.  Otherwise a list of 1 leaf.\nRequired Attributes:\n  * name\n\nOptional Attributes:",
                     "items": {
-                        "type": "integer"
+                        "type": "integer",
+                        "apicApi": "node-{id}",
+                        "default": 101,
+                        "description": "Node Identifier.",
+                        "minimum": 101,
+                        "maximum": 4000,
+                        "title": "node_id"
                     }
                 },
                 "ospf_interface_profile": {
                     "$ref": "#/definitions/Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:OSPFInterfaceProfile"
                 },
-                "prefixes": {
-                    "type": "array",
-                    "description": "List of IPv4/IPv6 Subnet(s) to add a Static Route for.",
-                    "items": {
-                        "type": "string",
-                        "apicApi": "ip",
-                        "default": "0.0.0.0/0",
-                        "description": "IPv4/IPv6 Subnet to add a Static Route for.",
-                        "minLength": 8,
-                        "maxLength": 43,
-                        "pattern": "^((([1-9]|[1-9][0-9]{1}|1[0-9]{2}|2[0-1][0-9]|22[0-3])\\.)(([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))\\.){2}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/(\\d|[1-2]\\d|3[0-2])$|^(([a-fA-F]|[a-fA-F][a-fA-F0-9\\-]*[a-fA-F0-9])\\.)*([A-Fa-f]|[A-Fa-f][A-Fa-f0-9\\-]*[A-Fa-f0-9])$|^(?:(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-fA-F]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,1}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,2}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,3}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:[0-9a-fA-F]{1,4})):)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,4}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,5}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,6}(?:(?:[0-9a-fA-F]{1,4})))?::)))))/(\\d|\\d\\d|1[0-1]\\d|12[0-8])$",
-                        "title": "prefix - ip"
-                    },
-                    "title": "prefixes"
-                },
                 "primary_preferred_address": {
                     "type": "string",
-                    "apicApi": "addr",
+                    "apicApi": "l3extRsPathL3OutAtt:addr",
                     "default": "198.18.0.1/24",
                     "description": "IP/Prefix to assign to the Logical Interface Profile.",
                     "minLength": 8,
                     "maxLength": 43,
                     "pattern": "^((([1-9]|[1-9][0-9]{1}|1[0-9]{2}|2[0-1][0-9]|22[0-3])\\.)(([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))\\.){2}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/(\\d|[1-2]\\d|3[0-2])$|^(([a-fA-F]|[a-fA-F][a-fA-F0-9\\-]*[a-fA-F0-9])\\.)*([A-Fa-f]|[A-Fa-f][A-Fa-f0-9\\-]*[A-Fa-f0-9])$|^(?:(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-fA-F]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,1}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,2}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,3}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:[0-9a-fA-F]{1,4})):)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,4}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,5}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,6}(?:(?:[0-9a-fA-F]{1,4})))?::)))))/(\\d|\\d\\d|1[0-1]\\d|12[0-8])$",
-                    "title": "primary_preferred_address - addr"
+                    "title": "primary_preferred_address  - l3extRsPathL3OutAtt:addr"
                 },
                 "qos_class": {
                     "$ref": "#/definitions/Tenants:QosClass"
@@ -3376,14 +3243,15 @@
                     "description": "The secondary IP address(es) of the path attached to the layer 3 outside profile.  Not used by interface_type ext-svi.",
                     "items": {
                         "type": "string",
-                        "apicApi": "addr",
+                        "apicApi": "l3extIp:addr",
                         "default": "198.18.1.1/24",
-                        "description": "IP/Prefix to assign to the Logical Interface Profile.",
+                        "description": "IP/Prefix to assign to the Logical Interface Profile as a Secondary Address.",
                         "minLength": 8,
                         "maxLength": 43,
                         "pattern": "^((([1-9]|[1-9][0-9]{1}|1[0-9]{2}|2[0-1][0-9]|22[0-3])\\.)(([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))\\.){2}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/(\\d|[1-2]\\d|3[0-2])$|^(([a-fA-F]|[a-fA-F][a-fA-F0-9\\-]*[a-fA-F0-9])\\.)*([A-Fa-f]|[A-Fa-f][A-Fa-f0-9\\-]*[A-Fa-f0-9])$|^(?:(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-fA-F]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,1}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,2}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,3}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:[0-9a-fA-F]{1,4})):)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,4}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,5}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,6}(?:(?:[0-9a-fA-F]{1,4})))?::)))))/(\\d|\\d\\d|1[0-1]\\d|12[0-8])$",
-                        "title": "primary_preferred_address - addr"
-                    }
+                        "title": "secondary_address - l3extIp:addr"
+                    },
+                    "title": "secondary_addresses - l3extIp:addr"
                 },
                 "svi_addresses": {
                     "$ref": "#/definitions/Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:SviAddresses"
@@ -3400,316 +3268,308 @@
         "Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:BGPPeers": {
             "type": "object",
             "additionalProperties": {},
+            "class": "bgpPeerP",
             "description": "",
+            "dn": "uni/tn-{tenant}/out-{l3out}/lnodep-{logical_node_profile}/lifp-{name}/peerP-[{peer_address}]",
             "properties": {
-                "addresses": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "asn": {
-                    "type": "null"
-                },
                 "address_type_controls": {
-                    "type": "object",
-                    "additionalProperties": {},
-                    "description": "Ucast/Mcast Addr Type AF Control.",
                     "$ref": "#/definitions/Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:BGPPeers:AddressTypeControls"
                 },
                 "admin_state": {
                     "type": "string",
-                    "apicApi": "",
-                    "default": "",
+                    "apicApi": "adminSt",
+                    "default": "enabled",
                     "description": "The administrative state of the object or policy. Allowed values are:\n  * disabled\n  * enabled: (default)",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "admin_state"
+                    "enum": [
+                        "disabled",
+                        "enabled"
+                    ],
+                    "title": "admin_state - adminSt"
                 },
                 "allowed_self_as_count": {
                     "type": "integer",
-                    "apicApi": "",
-                    "default": 1,
-                    "description": "The number of occurrences of a local Autonomous System Number (ASN). Default value is 3.",
+                    "apicApi": "allowedSelfAsCnt",
+                    "default": 3,
+                    "description": " Default value is `3`.  The number of occurrences of a local Autonomous System Number (ASN).",
                     "minimum": 1,
-                    "maximum": 64,
-                    "title": "allowed_self_as_count"
+                    "maximum": 10,
+                    "title": "allowed_self_as_count - allowedSelfAsCnt"
                 },
                 "bgp_controls": {
-                    "type": "object",
-                    "additionalProperties": {},
-                    "description": "The peer controls specify which Border Gateway Protocol (BGP) attributes are sent to a peer.",
                     "$ref": "#/definitions/Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:BGPPeers:BGPControls"
                 },
                 "bgp_peer_prefix_policy": {
                     "type": "string",
-                    "apicApi": "",
+                    "apicApi": "tDn",
+                    "class": "bgpRsPeerPfxPol",
                     "default": "",
                     "description": "The Name of the BGP Peer Prefix Policy.",
                     "minLength": 1,
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "bgp_peer_prefix_policy"
+                    "tDn": "uni/tn-{tenant}/bgpPfxP-{bgp_peer_prefix_policy}",
+                    "title": "bgp_peer_prefix_policy - bgpRsPeerPfxPol"
                 },
                 "description": {
                     "$ref": "#/definitions/Tenants:Description"
                 },
                 "ebgp_multihop_ttl": {
                     "type": "integer",
-                    "apicApi": "",
+                    "apicApi": "ttl",
                     "default": 1,
-                    "description": "Specifies time to live (TTL). Default value: 1.",
+                    "description": " Default value `1`.  Specifies time to live (TTL).",
                     "minimum": 1,
-                    "maximum": 64,
-                    "title": "ebgp_multihop_ttl"
+                    "maximum": 255,
+                    "title": "ebgp_multihop_ttl - ttl"
                 },
                 "local_as_number": {
                     "type": "integer",
-                    "apicApi": "",
+                    "apicApi": "localAsnP:localAsn",
                     "default": 1,
                     "description": "The local autonomous system number (ASN).",
                     "minimum": 1,
                     "maximum": 64,
-                    "title": "local_as_number"
+                    "title": "local_as_number - localAsnP:localAsn"
                 },
                 "local_as_number_config": {
                     "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "local_as_number_config"
+                    "apicApi": "dn",
+                    "class": "LocalAsnP:AsnPropagate",
+                    "default": "none",
+                    "description": "The local autonomous system information pertaining to a peer.\nOptions are:\n  * dual-as - noprepend+replace-as+dual-as - Dual AS: Accept either real AS or local AS from the ebgp peer\n  * no-prepend - No Prepend: Do not prepend local-as to updates from ebgp peers\n  * none - Specify local-as number\n  * replace-as - no-prepend+replace-as - Replace AS: Replace real AS with local AS in the EBGP updates",
+                    "dn": "uni/tn-{tenant}/out-{l3out}/lnodep-{logical_node_profile}/lifp-{name}/peerP-[{peer_address}]/localasn",
+                    "enum": [
+                        "dual-as",
+                        "no-prepend",
+                        "none",
+                        "replace-as"
+                    ],
+                    "title": "local_as_number_config - LocalAsnP:AsnPropagate"
                 },
                 "password": {
                     "type": "integer",
-                    "apicApi": "",
-                    "default": 1,
-                    "description": "",
-                    "minimum": 1,
-                    "maximum": 64,
+                    "apicApi": "password",
+                    "default": 0,
+                    "description": "Default is `0`, unused.  A value between 1 to 5 that will point to the bgp_password_{value} variable, which should be loaded into the environment as TF_VAR_bgp_password_{1-5}.",
+                    "minimum": 0,
+                    "maximum": 5,
                     "title": "password"
                 },
-                "peer_controls": {
-                    "type": "object",
+                "peer_addresses": {
+                    "type": "array",
                     "additionalProperties": {},
-                    "class": "",
-                    "description": "",
-                    "rn": "",
+                    "apicApi": "addr",
+                    "description": "List of BGP IP Addresses that will be assigned to the Logical Interface Profile.",
+                    "items": {
+                        "type": "string",
+                        "apicApi": "",
+                        "default": "198.18.1.20",
+                        "description": "BGP Peer IP Address.",
+                        "minLength": 7,
+                        "maxLength": 15,
+                        "pattern": "^((([1-9]|[1-9][0-9]{1}|1[0-9]{2}|2[0-1][0-9]|22[0-3])\\.)(([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))\\.){2}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$|^(([a-fA-F]|[a-fA-F][a-fA-F0-9\\-]*[a-fA-F0-9])\\.)*([A-Fa-f]|[A-Fa-f][A-Fa-f0-9\\-]*[A-Fa-f0-9])$|^(?:(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-fA-F]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,1}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,2}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,3}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:[0-9a-fA-F]{1,4})):)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,4}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,5}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,6}(?:(?:[0-9a-fA-F]{1,4})))?::)))))$",
+                        "title": "peer_address"
+                    },
+                    "title": "peer_addresses - addr"
+                },
+                "peer_asn": {
+                    "type": "integer",
+                    "apicApi": "bgpAsP:asn",
+                    "default": 65001,
+                    "description": "A number that uniquely identifies the neighbor autonomous system. The Autonomous System Number can be in 4-byte asplain format from 1 to 4294967295.\n  * Note: ACI does not support asdot or asdot+ format AS numbers.",
+                    "minimum": 1,
+                    "maximum": 4294967295,
+                    "title": "peer_asn - bgpAsP:asn"
+                },
+                "peer_controls": {
                     "$ref": "#/definitions/Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:BGPPeers:PeerControls"
                 },
                 "peer_level": {
                     "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "apicApi": "not_applicable",
+                    "default": "interface",
+                    "description": "Flag to Tell the module to configure the peer via the Physical/Logical Interface or via Loopback.",
+                    "enum": [
+                        "interface",
+                        "loopback"
+                    ],
                     "title": "peer_level"
                 },
                 "private_as_control": {
-                    "type": "object",
-                    "additionalProperties": {},
-                    "class": "",
-                    "description": "",
-                    "rn": "",
                     "$ref": "#/definitions/Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:BGPPeers:PrivateAsControl"
                 },
                 "route_control_profiles": {
                     "type": "array",
-                    "items": {},
-                    "description": "Enter the name and direction of the route control profile.\nRequired Attributes:\n  * name\n\nOptional Attributes:"
+                    "additionalProperties": {},
+                    "description": "Route Maps for Import/Export Route Control.\nRequired Attributes:\n  * route_map\n\nOptional Attributes:\n  * direction\n  * tenant",
+                    "items": {
+                        "$ref": "#/definitions/Tenants:Networking:L3Outs:RouteControlProfiles"
+                    },
+                    "title": "route_control_profiles - rtctrlProfile"
                 },
                 "weight_for_routes_from_neighbor": {
                     "type": "integer",
-                    "apicApi": "",
-                    "default": 1,
-                    "description": "The weight of the fault in calculating the health score of an object. A higher weight causes a higher degradation of the health score of the affected object. Default value is 0.",
-                    "minimum": 1,
-                    "maximum": 64,
-                    "title": "weight_for_routes_from_neighbor"
+                    "apicApi": "weight",
+                    "default": 0,
+                    "description": "Default value is `0`.  The weight of the fault in calculating the health score of an object. A higher weight causes a higher degradation of the health score of the affected object.  Range is `0-65535`.",
+                    "minimum": 0,
+                    "maximum": 65535,
+                    "title": "weight_for_routes_from_neighbor - weight"
                 }
             },
             "required": [
-                "address_type_controls",
-                "addresses",
-                "admin_state",
-                "allowed_self_as_count",
-                "asn",
-                "bgp_controls",
-                "bgp_peer_prefix_policy",
-                "description",
-                "ebgp_multihop_ttl",
-                "local_as_number",
-                "local_as_number_config",
-                "password",
-                "peer_controls",
-                "peer_level",
-                "private_as_control",
-                "route_control_profiles",
-                "weight_for_routes_from_neighbor"
+                "peer_addresses",
+                "peer_asn"
             ],
             "title": "BGPPeers"
         },
         "Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:BGPPeers:AddressTypeControls": {
             "type": "object",
             "additionalProperties": {},
-            "description": "",
+            "apicApi": "Peerctrl",
+            "description": "Ucast/Mcast Addr Type AF Control.",
             "properties": {
                 "af_mcast": {
                     "type": "boolean",
-                    "apicApi": "",
-                    "default": true,
-                    "description": "Default is false.",
-                    "title": "af_mcast"
+                    "apicApi": "af-mcast",
+                    "default": false,
+                    "description": "Default is `false`.  Select `true` to enable the Multicast Address Family.",
+                    "title": "af_mcast - af-mcast"
                 },
                 "af_ucast": {
                     "type": "boolean",
-                    "apicApi": "",
+                    "apicApi": "af-ucast",
                     "default": true,
-                    "description": "Default is true.",
-                    "title": "af_ucast"
+                    "description": "Default is `true`.  Select `true` to enable the Unicast Address Family.",
+                    "title": "af_ucast - af-ucast"
                 }
             },
-            "required": [
-                "af_mcast",
-                "af_ucast"
-            ],
-            "title": "AddressTypeControls"
+            "title": "address_type_controls - "
         },
         "Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:BGPPeers:BGPControls": {
             "type": "object",
             "additionalProperties": {},
-            "description": "",
+            "apicApi": "ctrl",
+            "description": "The peer controls specify which Border Gateway Protocol (BGP) attributes are sent to a peer.",
             "properties": {
                 "allow_self_as": {
                     "type": "boolean",
-                    "apicApi": "",
-                    "default": true,
-                    "description": "Default is false.",
-                    "title": "allow_self_as"
+                    "apicApi": "allow-self-as",
+                    "default": false,
+                    "description": "Default is `false`.  Allows local AS number in the AS path.",
+                    "title": "allow_self_as - allow-self-as"
                 },
                 "as_override": {
                     "type": "boolean",
-                    "apicApi": "",
-                    "default": true,
-                    "description": "Default is false.",
-                    "title": "as_override"
+                    "apicApi": "as-override",
+                    "default": false,
+                    "description": "Default is `false`.  Overrides AS number of the original routeOverrides AS number of the original route.  Enables the BGP AS override feature to override the default setting. The AS override function will replace the AS number from the originating router with the AS number of the sending BGP router in the AS Path of outbound routes. This feature can be enabled per feature per address family (IPv4 or IPv6).\nNote: The Disable Peer AS Check check box must also be checked in order to enable the AS override feature.",
+                    "title": "as_override - as-override"
                 },
                 "disable_peer_as_check": {
                     "type": "boolean",
-                    "apicApi": "",
-                    "default": true,
-                    "description": "Default is false.",
-                    "title": "disable_peer_as_check"
+                    "apicApi": "dis-peer-as-check",
+                    "default": false,
+                    "description": "Default is `false`.  Disables the peer autonomous number check. When the check box is checked, if the advertising router finds the AS number of the receiver in the AS path, it will not send the route to the receiver.\n  * Note:  The Disable Peer AS Check check box must be checked in order to enable the AS override feature.",
+                    "title": "disable_peer_as_check - dis-peer-as-check"
+                },
+                "disable_segment_routing": {
+                    "type": "boolean",
+                    "apicApi": "segment-routing-disable",
+                    "default": false,
+                    "description": "Default is `false`.  Disable Segment Routing (not advertise prefix SID).",
+                    "title": "disable_segment_routing - segment-routing-disable"
                 },
                 "next_hop_self": {
                     "type": "boolean",
-                    "apicApi": "",
-                    "default": true,
-                    "description": "Default is false.",
-                    "title": "next_hop_self"
+                    "apicApi": "nh-self",
+                    "default": false,
+                    "description": "Default is `false`.  Nexthop self",
+                    "title": "next_hop_self - nh-self"
                 },
                 "send_community": {
                     "type": "boolean",
-                    "apicApi": "",
+                    "apicApi": "send-com",
                     "default": true,
-                    "description": "Default is true.",
-                    "title": "send_community"
+                    "description": "Default is `true`.  Send the BGP Community attribute to the peer.",
+                    "title": "send_community - send-com"
                 },
                 "send_domain_path": {
                     "type": "boolean",
                     "apicApi": "",
-                    "default": true,
-                    "description": "Default is true.",
-                    "title": "send_domain_path"
+                    "default": false,
+                    "description": "Default is `false`.  ",
+                    "title": "send_domain_path - "
                 },
                 "send_extended_community": {
                     "type": "boolean",
-                    "apicApi": "",
+                    "apicApi": "send-ext-com",
                     "default": true,
-                    "description": "",
-                    "title": "send_extended_community"
+                    "description": "Default is `true`.  Send the BGP Extended Community attribute to the peer.",
+                    "title": "send_extended_community - send-ext-com"
                 }
             },
-            "required": [
-                "allow_self_as",
-                "as_override",
-                "disable_peer_as_check",
-                "next_hop_self",
-                "send_community",
-                "send_domain_path",
-                "send_extended_community"
-            ],
-            "title": "BGPControls"
+            "title": "bgp_controls - ctrl"
         },
         "Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:BGPPeers:PeerControls": {
             "type": "object",
             "additionalProperties": {},
-            "description": "",
+            "apicApi": "peerCtrl",
+            "description": "The peer controls.",
             "properties": {
                 "bidirectional_forwarding_detection": {
                     "type": "boolean",
-                    "apicApi": "",
+                    "apicApi": "bfd",
                     "default": true,
-                    "description": "",
-                    "title": "bidirectional_forwarding_detection"
+                    "description": "Default is `true`.  Bidirectional Forwarding Detection.",
+                    "title": "bidirectional_forwarding_detection - bfd"
                 },
                 "disable_connected_check": {
                     "type": "boolean",
-                    "apicApi": "",
-                    "default": true,
-                    "description": "",
-                    "title": "disable_connected_check"
+                    "apicApi": "dis-conn-check",
+                    "default": false,
+                    "description": "Default is `false`.  Disable checking whether single-hop eBGP peer is directly connected.",
+                    "title": "disable_connected_check - dis-conn-check"
                 }
             },
-            "required": [
-                "bidirectional_forwarding_detection",
-                "disable_connected_check"
-            ],
-            "title": "PeerControls"
+            "title": "peer_controls - peerCtrl"
         },
         "Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:BGPPeers:PrivateAsControl": {
             "type": "object",
             "additionalProperties": {},
-            "description": "",
+            "apicApi": "privateASctrl",
+            "description": "The peer controls.",
             "properties": {
                 "remove_all_private_as": {
                     "type": "boolean",
-                    "apicApi": "",
-                    "default": true,
-                    "description": "",
-                    "title": "remove_all_private_as"
+                    "apicApi": "remove-all",
+                    "default": false,
+                    "description": "Default is `false`.  Remove private AS even if public AS's exist.",
+                    "title": "remove_all_private_as - remove-all"
                 },
                 "remove_private_as": {
                     "type": "boolean",
-                    "apicApi": "",
-                    "default": true,
-                    "description": "",
-                    "title": "remove_private_as"
+                    "apicApi": "remove-exclusive",
+                    "default": false,
+                    "description": "Default is `false`.  Enable removal of private AS exclusively if no public AS exist.",
+                    "title": "remove_private_as - remove-exclusive"
                 },
                 "replace_private_as_with_local_as": {
                     "type": "boolean",
-                    "apicApi": "",
-                    "default": true,
-                    "description": "",
-                    "title": "replace_private_as_with_local_as"
+                    "apicApi": "replace-as",
+                    "default": false,
+                    "description": "Default is `false`.  Replace private AS with local AS.",
+                    "title": "replace_private_as_with_local_as - replace-as"
                 }
             },
-            "required": [
-                "remove_all_private_as",
-                "remove_private_as",
-                "replace_private_as_with_local_as"
-            ],
-            "title": "PrivateAsControl"
+            "title": "private_as_control - privateASctrl"
         },
         "Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:HsrpInterfaceProfiles": {
             "type": "object",
             "additionalProperties": {},
+            "class": "hsrpIfP",
             "description": "",
+            "dn": "uni/tn-{tenant}/out-{l3out}/lnodep-{logical_node_profile}/lifp-{name}/hsrpIfP",
             "properties": {
                 "alias": {
                     "$ref": "#/definitions/Tenants:Alias"
@@ -3720,45 +3580,46 @@
                 "groups": {
                     "type": "array",
                     "additionalProperties": {},
-                    "description": "List of HSRP group objects.\nRequired Attributes:\n  * name\n\nOptional Attributes:",
+                    "description": "List of HSRP group objects.\nRequired Attributes:\n  * name\n  * ip_address\n\nOptional Attributes:\n  * alias\n  * description\n  * group_id\n  * group_name\n  * group_type\n  * hsrp_group_policy\n  * ip_obtain_mode\n  * mac_address\n  * secondary_virtual_ips",
                     "items": {
                         "$ref": "#/definitions/Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:HsrpInterfaceProfiles:Groups"
                     },
-                    "title": ""
+                    "title": "groups - hsrpGroupP"
                 },
                 "hsrp_interface_policy": {
                     "type": "string",
-                    "apicApi": "",
-                    "default": "",
+                    "apicApi": "tDn",
+                    "class": "hsrpRsIfPol",
+                    "default": "default",
                     "description": "Name of the HSRP Interface Policy.",
                     "minLength": 1,
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "hsrp_interface_policy"
+                    "tDn": "uni/tn-{tenant}/hsrpIfPol-{hsrp_interface_policy}",
+                    "title": "hsrp_interface_policy - hsrpRsIfPol"
                 },
                 "version": {
                     "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "Compatibility catalog version.  Options are:\n  - v1\n  - v2",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "apicApi": "version",
+                    "default": "v2",
+                    "description": "Compatibility catalog version.  Options are:\n  - v1\n  - v2: (default)",
+                    "enum": [
+                        "v1",
+                        "v2"
+                    ],
                     "title": "version"
                 }
             },
             "required": [
-                "alias",
-                "description",
                 "groups",
-                "hsrp_interface_policy",
-                "version"
+                "hsrp_interface_policy"
             ],
             "title": "HsrpInterfaceProfiles"
         },
         "Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:HsrpInterfaceProfiles:Groups": {
             "type": "object",
             "additionalProperties": {},
+            "class": "hsrpGroupP",
             "description": "",
             "properties": {
                 "alias": {
@@ -3774,27 +3635,28 @@
                     "description": "Group id for L3out HSRP interface group object.",
                     "minimum": 1,
                     "maximum": 64,
-                    "title": "group_id"
+                    "title": "group_id - "
                 },
                 "group_name": {
                     "type": "string",
-                    "apicApi": "",
+                    "apicApi": "groupName",
                     "default": "",
-                    "description": "Group name for L3out HSRP interface group object.",
+                    "description": "Redundancy name string.  Group name for L3out HSRP interface group object.",
                     "minLength": 1,
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "group_name"
+                    "title": "group_name - groupName"
                 },
                 "group_type": {
                     "type": "string",
-                    "apicApi": "",
-                    "default": "",
+                    "apicApi": "groupAf",
+                    "default": "ipv4",
                     "description": "Group address-family type for L3out HSRP interface group object.  Options are:\n  * ipv4: (default)\n  * ipv6",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "group_type"
+                    "enum": [
+                        "ipv4",
+                        ""
+                    ],
+                    "title": "group_type - groupAf"
                 },
                 "hsrp_group_policy": {
                     "type": "string",
@@ -3804,66 +3666,52 @@
                     "minLength": 1,
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "hsrp_group_policy"
+                    "title": "hsrp_group_policy - "
                 },
                 "ip_address": {
                     "type": "string",
-                    "apicApi": "",
+                    "apicApi": "ip",
                     "default": "",
                     "description": "",
                     "minLength": 1,
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "ip_address"
+                    "title": "ip_address - ip"
                 },
                 "ip_obtain_mode": {
                     "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "IP obtain mode for L3out HSRP interface group object. Allowed values are:\n  * admin - Address is configured.\n  * auto - Auto configure IPv6 address.\n  * learn - Learn IP from HSRP Peer.\n  Default value is admin",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "ip_obtain_mode"
+                    "apicApi": "IpObtainMode",
+                    "default": "admin",
+                    "description": "IP obtain mode for L3out HSRP interface group object. Allowed values are:\n  * admin: (default) - Address is configured.\n  * auto - Auto configure IPv6 address.\n  * learn - Learn IP from HSRP Peer.",
+                    "enum": [
+                        "admin",
+                        "auto",
+                        "learn"
+                    ],
+                    "title": "ip_obtain_mode - IpObtainMode"
                 },
                 "mac_address": {
                     "type": "string",
-                    "apicApi": "",
+                    "apicApi": "mac",
                     "default": "",
-                    "description": "MAC address for L3out HSRP interface group object.",
+                    "description": "HSRP VMAC for the group.  MAC address for L3out HSRP interface group object.",
                     "minLength": 1,
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "mac_address"
+                    "title": "mac_address - mac"
                 },
                 "name": {
-                    "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "Name of the Contract to assign to the EPG.",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "name"
+                    "$ref": "#/definitions/Tenants:Name"
                 },
                 "secondary_virtual_ips": {
                     "type": "array",
                     "items": {},
-                    "description": "List of secondary virtual IP's to assign to the group."
+                    "description": "List of secondary virtual IP's to assign to the HSRP group."
                 }
             },
             "required": [
-                "alias",
-                "description",
-                "group_id",
-                "group_name",
-                "group_type",
-                "hsrp_group_policy",
                 "ip_address",
-                "ip_obtain_mode",
-                "mac_address",
-                "name",
-                "secondary_virtual_ips"
+                "name"
             ],
             "title": "Groups"
         },
@@ -3880,88 +3728,115 @@
         "Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:OSPFInterfaceProfile": {
             "type": "object",
             "additionalProperties": {},
-            "description": "",
+            "class": "ospfIfP",
+            "description": "The OSPF interface profile enables OSPF on the interface. Optionally, the OSPF interface profile can have a relation to an OSPF interface policy for more granular control over interface proprieties.\nRequired Attributes are:\n  * ospf_interface_policy\n\nOptional Attributes:\n  * authentication_type\n  * description\n  * ospf_key",
+            "dn": "uni/tn-{tenant}/out-{l3out}/lnodep-{logical_node_profile}/lifp-{name}/ospfIfP",
             "properties": {
+                "authentication_type": {
+                    "type": "string",
+                    "apicApi": "authType",
+                    "default": "none",
+                    "description": "The OSPF authentication type. The type options are:\n  * md5\n  * none: (default)\n  * simple.",
+                    "enum": [
+                        "md5",
+                        "none",
+                        "simple"
+                    ],
+                    "title": "authentication_type - authType"
+                },
                 "description": {
                     "$ref": "#/definitions/Tenants:Description"
                 },
-                "authentication_type": {
-                    "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "authentication_type"
-                },
-                "name": {
-                    "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "Name of the Contract to assign to the EPG.",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "name"
-                },
                 "ospf_key": {
                     "type": "integer",
-                    "apicApi": "",
-                    "default": 1,
-                    "description": "",
-                    "minimum": 1,
-                    "maximum": 64,
-                    "title": "ospf_key"
+                    "apicApi": "authKeyId",
+                    "default": 0,
+                    "description": "Default is `0`, unused.  A value between 1 to 5 that will point to the ospf_key_{value} variable, which should be loaded into the environment as TF_VAR_ospf_key_{1-5}.",
+                    "minimum": 0,
+                    "maximum": 5,
+                    "title": "ospf_key - authKeyId"
                 },
                 "ospf_interface_policy": {
                     "type": "string",
-                    "apicApi": "",
-                    "default": "",
+                    "apicApi": "tDn",
+                    "class": "ospfRsIfPol",
+                    "default": "default",
                     "description": "",
                     "minLength": 1,
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "ospf_interface_policy"
+                    "tDn": "uni/tn-{tenant}/ospfIfPol-{ospf_interface_policy}",
+                    "title": "ospf_interface_policy - ospfRsIfPol"
                 }
             },
             "required": [
-                "authentication_type",
-                "description",
-                "name",
-                "ospf_interface_policy",
-                "ospf_key"
+                "ospf_interface_policy"
             ],
-            "title": "OSPFInterfaceProfile"
+            "title": "ospf_interface_profile - ospfIfP"
         },
         "Tenants:Networking:L3Outs:LogicalNodeProfiles:LogicalInterfaceProfiles:SviAddresses": {
             "type": "object",
             "additionalProperties": {},
-            "description": "",
+            "class": "l3extMember",
+            "description": "IP Configuration Settings for L3Out ext-svi Interface Type.\nRequired Attributes:\n  * primary_preferred_addresses\n\nOptional Attributes:\n  * link_local_addresses\n  * secondary_addresses",
+            "rn": "uni/tn-{tenant}/out-{l3out}/lnodep-{logical_node_profile}/lifp-{logical_interface_profile}/rspathL3OutAtt-[topology/pod-{pod_id}/protpaths-{node1}-{node2}/pathep-[{interface_profile}]]/mem-{A|B}",
             "properties": {
                 "link_local_addresses": {
                     "type": "array",
+                    "additionalProperties": {},
+                    "apicApi": "addr",
+                    "description": "A List of two Link Local Addresses to assign to the L3Out SVI Interface Pair.",
                     "items": {
-                        "type": "string"
-                    }
+                        "type": "string",
+                        "apicApi": "l3extRsPathL3OutAtt:llAddr",
+                        "default": "::",
+                        "description": " Default value: `::`.  Link local address for L3out Logical Interface Profile.",
+                        "minLength": 2,
+                        "maxLength": 39,
+                        "pattern": "^::$|^(([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{0,4}|:[0-9A-Fa-f]{1,4})?|(:[0-9A-Fa-f]{1,4}){0,2})|(:[0-9A-Fa-f]{1,4}){0,3})|(:[0-9A-Fa-f]{1,4}){0,4})|:(:[0-9A-Fa-f]{1,4}){0,5})((:[0-9A-Fa-f]{1,4}){2}|:(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])(\\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])){3})|(([0-9A-Fa-f]{1,4}:){1,6}|:):[0-9A-Fa-f]{0,4}|([0-9A-Fa-f]{1,4}:){7}:)$",
+                        "title": "link_local_address - l3extRsPathL3OutAtt:llAddr"
+                    },
+                    "title": "link_local_addresses - llAddr"
                 },
                 "primary_preferred_addresses": {
                     "type": "array",
+                    "additionalProperties": {},
+                    "apicApi": "l3extIp:addr",
+                    "description": "The Primary IP addresses of the path attached to the layer 3 outside SVI profile.  Should be a List of two Addresses.",
                     "items": {
-                        "type": "string"
-                    }
+                        "type": "string",
+                        "apicApi": "addr",
+                        "default": "198.18.1.1/24",
+                        "description": "IP/Prefix to assign to the Logical Interface Profile as a Secondary Address.",
+                        "minLength": 8,
+                        "maxLength": 43,
+                        "pattern": "^((([1-9]|[1-9][0-9]{1}|1[0-9]{2}|2[0-1][0-9]|22[0-3])\\.)(([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))\\.){2}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/(\\d|[1-2]\\d|3[0-2])$|^(([a-fA-F]|[a-fA-F][a-fA-F0-9\\-]*[a-fA-F0-9])\\.)*([A-Fa-f]|[A-Fa-f][A-Fa-f0-9\\-]*[A-Fa-f0-9])$|^(?:(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-fA-F]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,1}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,2}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,3}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:[0-9a-fA-F]{1,4})):)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,4}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,5}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,6}(?:(?:[0-9a-fA-F]{1,4})))?::)))))/(\\d|\\d\\d|1[0-1]\\d|12[0-8])$",
+                        "title": "primary_preferred_address - addr"
+                    },
+                    "title": "primary_preferred_addresses - addr"
                 },
                 "secondary_addresses": {
                     "type": "array",
-                    "items": {}
+                    "additionalProperties": {},
+                    "apicApi": "l3extIp:addr",
+                    "description": "The secondary IP address(es) of the path attached to the layer 3 outside profile.  The list will be split in 1/2 and assigned to each side.  So if you want to configure 4 addresses you would do something like:\n `[\"198.18.3.1/24\", \"198.18.4.1/24\", \"198.18.3.2/24\", \"198.18.4.2/24\"",
+                    "items": {
+                        "type": "string",
+                        "apicApi": "l3extIp:addr",
+                        "default": "198.18.1.1/24",
+                        "description": "IP/Prefix to assign to the Logical Interface Profile as a Secondary Address.",
+                        "minLength": 8,
+                        "maxLength": 43,
+                        "pattern": "^((([1-9]|[1-9][0-9]{1}|1[0-9]{2}|2[0-1][0-9]|22[0-3])\\.)(([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))\\.){2}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/(\\d|[1-2]\\d|3[0-2])$|^(([a-fA-F]|[a-fA-F][a-fA-F0-9\\-]*[a-fA-F0-9])\\.)*([A-Fa-f]|[A-Fa-f][A-Fa-f0-9\\-]*[A-Fa-f0-9])$|^(?:(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-fA-F]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,1}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,2}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,3}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:[0-9a-fA-F]{1,4})):)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,4}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,5}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,6}(?:(?:[0-9a-fA-F]{1,4})))?::)))))/(\\d|\\d\\d|1[0-1]\\d|12[0-8])$",
+                        "title": "secondary_address - l3extIp:addr"
+                    },
+                    "title": "secondary_addresses - l3extIp:addr"
                 }
             },
             "required": [
-                "link_local_addresses",
-                "primary_preferred_addresses",
-                "secondary_addresses"
+                "primary_preferred_addresses"
             ],
-            "title": "SviAddresses"
+            "title": "svi_addresses - "
         },
         "Tenants:Networking:L3Outs:LogicalNodeProfiles:Nodes": {
             "type": "object",
@@ -4199,38 +4074,6 @@
             },
             "title": "Netflow Monitor Policies - netflowMonitorPol"
         },
-        "Tenants:Networking:L3Outs:Ndo": {
-            "type": "object",
-            "additionalProperties": {},
-            "description": "",
-            "properties": {
-                "sites": {
-                    "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "(required when controller_type is ndo) - When using Nexus Dashboard Orchestrator the sites attribute is used to distinguish the site and cloud types.",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "sites"
-                },
-                "template": {
-                    "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "The Template name to assign to the Schema.",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "template"
-                }
-            },
-            "required": [
-                "sites",
-                "template"
-            ],
-            "title": "L3OutsNdo"
-        },
         "Tenants:Networking:L3Outs:OSPFExternalProfile": {
             "type": "object",
             "additionalProperties": {},
@@ -4317,20 +4160,21 @@
         "Tenants:Networking:L3Outs:RouteControlEnforcement": {
             "type": "object",
             "additionalProperties": {},
-            "description": "The enforce route control type.\nNote1: The default is export set to true. Export control is supported with BGP, OSPF, and EIGRP. import control is supported only with BGP and OSPF.\nNote2: Enabling import enables the import_route_control_subnet option on the Create Subnet dialog box under the Create External EPG panel.",
+            "apicApi": "enforceRtctrl",
+            "description": "The enforce route control type.\nNote: The default is export set to true. Export control is supported with BGP, OSPF, and EIGRP. import control is supported only with BGP and OSPF.\nNote2: Enabling import enables the import_route_control_subnet option on the Create Subnet dialog box under the Create External EPG panel.",
             "properties": {
                 "import": {
                     "type": "boolean",
-                    "apicApi": "",
+                    "apicApi": "import",
                     "default": true,
                     "description": "Default is false.",
-                    "title": "import"
+                    "title": "import - import"
                 }
             },
             "required": [
                 "import"
             ],
-            "title": "RouteControlEnforcement"
+            "title": "RouteControlEnforcement - enforceRtctrl"
         },
         "Tenants:Networking:L3Outs:RouteControlForDampening": {
             "type": "object",
@@ -4348,12 +4192,12 @@
                         "ipv4",
                         "ipv6"
                     ],
-                    "title": "address_family"
+                    "title": "address_family - af"
                 },
                 "route_map": {
                     "type": "string",
                     "apicApi": "tDn",
-                    "class": "rtctrlProfile",
+                    "class": "rtctrlProfile/rsdampeningPol",
                     "default": "default",
                     "description": "The Name of a Route Map for import and export route control.",
                     "minLength": 1,
@@ -4361,13 +4205,60 @@
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
                     "rn": "prof-{route_map}",
                     "tDn": "uni/tn-{tenant}/prof-{route_map}",
-                    "title": "route_map"
+                    "title": "route_map - name"
                 }
             },
             "required": [
                 "route_map"
             ],
             "title": "route_control_for_dampening - l3extRsDampeningPol"
+        },
+        "Tenants:Networking:L3Outs:RouteControlProfiles": {
+            "type": "object",
+            "additionalProperties": {},
+            "class": "rtctrlProfile",
+            "description": "",
+            "dn": "uni/tn-{tenant}/out-{l3out}/prof-{route_map}",
+            "rn": "prof-{route_map}",
+            "properties": {
+                "direction": {
+                    "type": "string",
+                    "apicApi": "direction",
+                    "default": "export",
+                    "description": "The direction of control.  Options are:\n  * export\n  * import",
+                    "enum": [
+                        "export",
+                        "import"
+                    ],
+                    "title": "direction - direction"
+                },
+                "route_map": {
+                    "type": "string",
+                    "apicApi": "name",
+                    "default": "default",
+                    "description": "The Name of the Route Map for Import/Export route control.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "route_map - name"
+                },
+                "tenant": {
+                    "type": "string",
+                    "apicApi": "class",
+                    "class": "fvTenant",
+                    "default": "common",
+                    "description": "The Name of the Tenant the Route Map exists in, if not External EPG Tenant.",
+                    "dn": "uni/tn-{tenant}",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "tenant - fvTenant"
+                }
+            },
+            "required": [
+                "route_map"
+            ],
+            "title": "route_control_profiles - rtctrlProfile"
         },
         "Tenants:Networking:L3Outs:RouteProfilesForRedistribution": {
             "type": "object",
@@ -4385,7 +4276,7 @@
                     "maxLength": 64,
                     "pattern": "^[a-zA-Z0-9_\\.:-]+$",
                     "tDn": "uni/tn-{tenant}/prof-{route_map}",
-                    "title": "route_map"
+                    "title": "route_map - name"
                 },
                 "source": {
                     "type": "string",
@@ -4397,7 +4288,7 @@
                         "direct",
                         "static"
                     ],
-                    "title": "source"
+                    "title": "source - src"
                 }
             },
             "required": [
@@ -4508,6 +4399,9 @@
                 "monitoring_policy": {
                     "$ref": "#/definitions/Tenants:MonitoringPolicy"
                 },
+                "ndo": {
+                    "$ref": "#/definitions/Tenants:NdoSettings"
+                },
                 "ospf_timers": {
                     "type": "string",
                     "apicApi": "",
@@ -4549,14 +4443,6 @@
                     "description": "",
                     "title": "preferred_group"
                 },
-                "ndo": {
-                    "type": "object",
-                    "additionalProperties": {},
-                    "class": "",
-                    "description": "",
-                    "rn": "",
-                    "$ref": "#/definitions/Tenants:Networking:Vrfs:Ndo"
-                },
                 "transit_route_tag_policy": {
                     "type": "string",
                     "apicApi": "",
@@ -4584,7 +4470,6 @@
                 "ip_data_plane_learning",
                 "layer3_multicast",
                 "monitoring_policy",
-                "ndo",
                 "ospf_timers",
                 "ospf_timers_per_address_family",
                 "policy_control_enforcement_direction",
@@ -4625,27 +4510,6 @@
             ],
             "title": "EpgEsgCollectionForVrfs"
         },
-        "Tenants:Networking:Vrfs:Ndo": {
-            "type": "object",
-            "additionalProperties": {},
-            "description": "",
-            "properties": {
-                "template": {
-                    "type": "string",
-                    "apicApi": "",
-                    "default": "",
-                    "description": "The Template name to assign to the Schema.",
-                    "minLength": 1,
-                    "maxLength": 64,
-                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
-                    "title": "template"
-                }
-            },
-            "required": [
-                "template"
-            ],
-            "title": "VrfsNdo"
-        },
         "Tenants:Ndo": {
             "type": "object",
             "additionalProperties": {},
@@ -4667,7 +4531,7 @@
                     "items": {
                         "$ref": "#/definitions/Tenants:Ndo:Sites"
                     },
-                    "title": ""
+                    "title": "sites"
                 },
                 "users": {
                     "type": "array",
@@ -4869,8 +4733,8 @@
             "properties": {
                 "schema": {
                     "type": "string",
-                    "apicApi": "",
-                    "default": "",
+                    "apicApi": "not_applicable",
+                    "default": "common",
                     "description": "The Name of the Schema to Create the Object within.",
                     "minLength": 1,
                     "maxLength": 64,
@@ -4882,8 +4746,8 @@
                     "description": "A list of Site Names to Assign Site Specific Settings to.",
                     "items": {
                         "type": "string",
-                    "apicApi": "",
-                        "default": "default",
+                        "apicApi": "not_applicable",
+                        "default": "site1",
                         "description": "The Name of a Site assigned to the template for Site specific settings.",
                         "minLength": 1,
                         "maxLength": 64,
@@ -4894,8 +4758,8 @@
                 },
                 "template": {
                     "type": "string",
-                    "apicApi": "",
-                    "default": "",
+                    "apicApi": "not_applicable",
+                    "default": "common",
                     "description": "The Name of the Template to assign within the Schema.",
                     "minLength": 1,
                     "maxLength": 64,
