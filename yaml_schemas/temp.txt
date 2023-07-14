@@ -1,23 +1,10 @@
 
 
 
-\n alias
-\n annotations
-\n consumer_label
-\n description
-\n enable_bgp
-\n external_epgs
-\n global_alias
-\n l3_domain
-\n logical_node_profiles
-\n ndo
-\n pim
-\n pimv6
-\n provider_label
-\n ospf_external_profile
-\n route_control_enforcement
-\n route_control_for_dampening
-\n route_profile_for_interleak
-\n route_profiles_for_redistribution
-\n target_dscp
-\n vrf
+"CloudFoundry",
+"Kubernetes",
+"Microsoft",
+"OpenShift",
+"OpenStack",
+"Redhat",
+"VMware",

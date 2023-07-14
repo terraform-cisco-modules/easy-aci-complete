@@ -26,12 +26,17 @@ templates:
       intra_epg_isolation: unenforced
       label_match_criteria: AtleastOne
       monitoring_policy: default
-      policy_source_tenant: common
       preferred_group_member: true
       qos_class: unspecified
       useg_epg: false
   bridge_domains:
-    - template_name: dmz_optimize
+    - advanced_troubleshooting:
+        disable_ip_data_plane_learning_for_pbr: false
+        endpoint_clear: false
+        intersite_bum_traffic_allow: false
+        intersite_l2_stretch: false
+        monitoring_policy: default
+        optimize_wan_bandwidth: false
       dhcp_relay_labels:
         - names: [ad1, ad2]
           scope: infra
@@ -60,14 +65,14 @@ templates:
         ep_move_detection_mode: false
         nd_policy: default
         unicast_routing: true
-      advanced/troubleshooting:
+    - template_name: dmz_optimize
+    - advanced_troubleshooting:
         disable_ip_data_plane_learning_for_pbr: false
         endpoint_clear: false
         intersite_bum_traffic_allow: false
         intersite_l2_stretch: false
         monitoring_policy: default
         optimize_wan_bandwidth: false
-    - template_name: inband_optimize
       general:
         advertise_host_routes: false
         arp_flooding: false
@@ -93,14 +98,14 @@ templates:
         ep_move_detection_mode: false
         nd_policy: default
         unicast_routing: true
-      advanced/troubleshooting:
+    - template_name: inband_optimize
+    - advanced_troubleshooting:
         disable_ip_data_plane_learning_for_pbr: false
         endpoint_clear: false
         intersite_bum_traffic_allow: false
         intersite_l2_stretch: false
         monitoring_policy: default
         optimize_wan_bandwidth: false
-    - template_name: prod_optimize
       dhcp_relay_labels:
         - names: [ad1, ad2]
           scope: infra
@@ -129,13 +134,7 @@ templates:
         ep_move_detection_mode: false
         nd_policy: default
         unicast_routing: true
-      advanced/troubleshooting:
-        disable_ip_data_plane_learning_for_pbr: false
-        endpoint_clear: false
-        intersite_bum_traffic_allow: false
-        intersite_l2_stretch: false
-        monitoring_policy: default
-        optimize_wan_bandwidth: false
+      template_name: prod_optimize
   subnets:
     - template_name: advertise_external
       ip_data_plane_learning: enabled
