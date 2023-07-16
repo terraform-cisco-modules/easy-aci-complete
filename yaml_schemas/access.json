@@ -2116,7 +2116,7 @@
             "properties": {
                 "vpc_domain": {
                     "type": "array",
-                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * dead_interval\n  * description",
+                    "description": "Required Attributes are:\n  * name\n\nOptional Attributes are:\n  * dead_interval\n  * delay_restore_timer\n  * description",
                     "items": {
                         "$ref": "#/definitions/Access:Policies:Switch:VPCDomain"
                     },
@@ -2132,10 +2132,18 @@
                 "dead_interval": {
                     "type": "integer",
                     "default": 200,
-                    "description": "The VPC peer dead interval time of object VPC Domain Policy. Range: 5-600. Default value is 200.",
-                    "minimum": 5,
+                    "description": "Default value is `200`.  The VPC peer dead interval time of object VPC Domain Policy. Range: `200-600`.",
+                    "minimum": 200,
                     "maximum": 600,
                     "title": "dead_interval"
+                },
+                "delay_restore_timer": {
+                    "type": "integer",
+                    "default": 200,
+                    "description": "Default value is `120`.  Delay before restoring (bringing up) the VPCs. Range: `120-600`.",
+                    "minimum": 200,
+                    "maximum": 600,
+                    "title": "delay_restore_timer"
                 },
                 "description": {
                     "type": "string",

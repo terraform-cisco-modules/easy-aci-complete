@@ -153,9 +153,11 @@
                 "node_type": {
                     "type": "string",
                     "default": "unspecified",
-                    "description": "Default value: `unspecified`.  Node type for object Fabric Node member. Allowed values:\n  * remote-leaf-wan\n  * tier-2-leaf\n  * unspecified\n  * virtual - virtual controller",
+                    "description": "Default value: `unspecified`.  Node type for object Fabric Node member. Allowed values:\n  * leaf\n  * remote-leaf-wan\n  * tier-2-leaf\n  * spine\n  * virtual - virtual controller",
                     "enum": [
+                        "leaf",
                         "remote-leaf-wan",
+                        "spine",
                         "tier-2-leaf",
                         "unspecified",
                         "virtual"

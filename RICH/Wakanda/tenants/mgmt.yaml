@@ -3,8 +3,8 @@ tenants:
   - name: mgmt
     node_management_addresses:
       static_node_management_addresses:
-        - ipv4_address: 10.92.0.1/24
-          ipv4_gateway: 10.92.0.254
+        - ipv4_address: 10.92.65.1/24
+          ipv4_gateway: 10.92.65.254
           management_epg: inband
           node_id: 1
           pod_id: 1
@@ -12,7 +12,7 @@ tenants:
       - name: inb
         application_epgs:
           - name: inband
-            bridge_domain: 10.92.0.0
+            bridge_domain: 10.92.65.0
             contracts:
               - name: inband_out
                 contract_type: consumed
@@ -22,7 +22,7 @@ tenants:
             domains:
               - name: access
             epg_type: inb
-            vlans: [100]
+            vlans: [65]
           - name: ooband
             contracts:
               - name: ooband_in
@@ -168,10 +168,10 @@ tenants:
               ip_protocol: icmp
     networking:
       bridge_domains:
-        - name: 10.92.0.0
+        - name: 10.92.65.0
           template: inband_optimize
           subnets:
-            - gateway_ip: 10.92.0.254/24
+            - gateway_ip: 10.92.65.254/24
               template: advertise_external
       l3outs:
         - name: inband
@@ -191,33 +191,74 @@ tenants:
                     - 128.0.0.0/1
           l3_domain: l3out
           logical_node_profiles:
-            - name: asgard-leaf201-202
-              description: 'Asgard Inband LNP'
+            - name: wakanda-leaf201
+              description: 'wakanda-leaf201 Inband LNP'
               logical_interface_profiles:
-                - name: Vlan11
-                  bgp_peers:
-                    - peer_addresses: [10.92.1.3, 10.92.1.4]
+                - bgp_peers:
+                    - peer_addresses: [10.92.11.2, 10.92.11.3]
                       peer_asn: 64701
                       peer_controls:
                           bidirectional_forwarding_detection: true
-                  description: '142b-core01-02-l3out-vl11'
-                  encap_scope: local
+                  description: 'to-r142b-core01-Eth1/29'
+                  encap_scope: ctx
                   encap_vlan: 11
-                  interface_or_policy_group: l3out
-                  interface_type: ext-svi
+                  interface_or_policy_group: eth1/49
+                  interface_type: sub-interface
                   mode: trunk
                   mtu: inherit
+                  name: Eth1-29.11
                   nodes:
                     - 201
-                    - 202
-                  svi_addresses:
-                    primary_preferred_addresses: [10.92.1.1/29, 10.92.1.2/29]
+                  primary_preferred_address: 10.92.11.13/26
+                - description: 'to-r142b-core02-Eth1/29'
+                  encap_scope: ctx
+                  encap_vlan: 11
+                  interface_or_policy_group: eth1/50
+                  interface_type: sub-interface
+                  mode: trunk
+                  mtu: inherit
+                  name: Eth1-30.11
+                  nodes:
+                    - 201
+                  primary_preferred_address: 10.92.11.14/26
               nodes:
                 - node_id: 201
-                  router_id: 10.92.1.201
+                  router_id: 10.92.11.201
                   use_router_id_as_loopback: true
+              pod_id: 1
+            - name: wakanda-leaf202
+              description: 'wakanda-leaf202 Inband LNP'
+              logical_interface_profiles:
+                - bgp_peers:
+                    - peer_addresses: [10.92.11.2, 10.92.11.3]
+                      peer_asn: 64701
+                      peer_controls:
+                          bidirectional_forwarding_detection: true
+                  description: 'to-r142b-core01-Eth1/30'
+                  encap_scope: ctx
+                  encap_vlan: 11
+                  interface_or_policy_group: eth1/49
+                  interface_type: sub-interface
+                  mode: trunk
+                  mtu: inherit
+                  name: Eth1-29.11
+                  nodes:
+                    - 202
+                  primary_preferred_address: 10.92.11.23/26
+                - description: 'to-r142b-core02-Eth1/30'
+                  encap_scope: ctx
+                  encap_vlan: 11
+                  interface_or_policy_group: eth1/50
+                  interface_type: sub-interface
+                  mode: trunk
+                  mtu: inherit
+                  name: Eth1-30.11
+                  nodes:
+                    - 202
+                  primary_preferred_address: 10.92.11.24/26
+              nodes:
                 - node_id: 202
-                  router_id: 10.92.1.202
+                  router_id: 10.92.11.202
                   use_router_id_as_loopback: true
               pod_id: 1
           vrf: inb

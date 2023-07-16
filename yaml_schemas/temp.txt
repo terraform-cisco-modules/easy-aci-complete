@@ -1,10 +1,6 @@
 
 
-
-"CloudFoundry",
-"Kubernetes",
-"Microsoft",
-"OpenShift",
-"OpenStack",
-"Redhat",
-"VMware",
+mv asgard-leaf201.yaml  wakanda-leaf201.yaml 
+mv asgard-leaf202.yaml  wakanda-leaf202.yaml 
+mv asgard-spine101.yaml wakanda-spine101.yaml 
+mv asgard-spine102.yaml wakanda-spine102.yaml 

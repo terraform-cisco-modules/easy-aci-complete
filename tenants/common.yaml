@@ -134,6 +134,9 @@ tenants:
             mode: trunk
             mtu: inherit
             name: Vlan12
+            nodes:
+              - 201
+              - 202
             qos_class: unspecified
             svi_addresses:
               primary_preferred_addresses:
@@ -154,7 +157,6 @@ tenants:
         pim: false
         pimv6: false
         route_control_enforcement:
-          export: true
           import: false
         target_dscp: unspecified
         vrf: dmz
@@ -223,6 +225,9 @@ tenants:
             mode: trunk
             mtu: inherit
             name: Vlan13
+            nodes:
+             - 201
+             - 202
             qos_class: unspecified
             svi_addresses:
               primary_preferred_addresses:
@@ -243,7 +248,6 @@ tenants:
         pim: false
         pimv6: false
         route_control_enforcement:
-          export: true
           import: false
         target_dscp: unspecified
         vrf: prod
@@ -258,9 +262,6 @@ tenants:
         layer3_multicast: true
         name: dmz
       - description: Production VRF
-        epg_esg_collection_for_vrfs:
-          contracts: []
-          label_match_criteria: AtleastOne
         layer3_multicast: true
         name: prod
         preferred_group: true

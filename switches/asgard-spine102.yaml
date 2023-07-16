@@ -46,11 +46,11 @@ switch:
         - interface: 1/33
         - interface: 1/34
       name: asgard-spine102
-      node_type: unspecified
+      node_type: spine
       ooband_addressing:
         ipv4_address: 192.168.64.12/23
         ipv4_gateway: 192.168.64.1
         management_epg: ooband
       pod_id: 1
-      role: unspecified
+      role: spine
       serial_number: FDO22220V7Y
