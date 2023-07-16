@@ -195,12 +195,12 @@ tenants:
               description: 'asgard-leaf201 Inband LNP'
               logical_interface_profiles:
                 - bgp_peers:
-                    - peer_addresses: [10.92.11.2, 10.92.11.3]
+                    - peer_addresses: [10.92.11.0]
                       peer_asn: 64701
                       peer_controls:
                           bidirectional_forwarding_detection: true
                   description: 'to-r142b-core01-Eth1/27'
-                  encap_scope: ctx
+                  encap_scope: local
                   encap_vlan: 11
                   interface_or_policy_group: eth1/29
                   interface_type: sub-interface
@@ -209,9 +209,14 @@ tenants:
                   name: Eth1-29.11
                   nodes:
                     - 201
-                  primary_preferred_address: 10.92.11.11/26
-                - description: 'to-r142b-core02-Eth1/27'
-                  encap_scope: ctx
+                  primary_preferred_address: 10.92.11.1/31
+                - bgp_peers:
+                    - peer_addresses: [10.92.11.8]
+                      peer_asn: 64701
+                      peer_controls:
+                          bidirectional_forwarding_detection: true
+                  description: 'to-r142b-core02-Eth1/27'
+                  encap_scope: local
                   encap_vlan: 11
                   interface_or_policy_group: eth1/30
                   interface_type: sub-interface
@@ -220,7 +225,7 @@ tenants:
                   name: Eth1-30.11
                   nodes:
                     - 201
-                  primary_preferred_address: 10.92.11.12/26
+                  primary_preferred_address: 10.92.11.9/31
               nodes:
                 - node_id: 201
                   router_id: 10.92.11.201
@@ -230,12 +235,12 @@ tenants:
               description: 'asgard-leaf202 Inband LNP'
               logical_interface_profiles:
                 - bgp_peers:
-                    - peer_addresses: [10.92.11.2, 10.92.11.3]
+                    - peer_addresses: [10.92.11.2]
                       peer_asn: 64701
                       peer_controls:
                           bidirectional_forwarding_detection: true
                   description: 'to-r142b-core01-Eth1/28'
-                  encap_scope: ctx
+                  encap_scope: local
                   encap_vlan: 11
                   interface_or_policy_group: eth1/29
                   interface_type: sub-interface
@@ -244,9 +249,14 @@ tenants:
                   name: Eth1-29.11
                   nodes:
                     - 202
-                  primary_preferred_address: 10.92.11.21/26
-                - description: 'to-r142b-core02-Eth1/28'
-                  encap_scope: ctx
+                  primary_preferred_address: 10.92.11.3/31
+                - bgp_peers:
+                    - peer_addresses: [10.92.11.10]
+                      peer_asn: 64701
+                      peer_controls:
+                          bidirectional_forwarding_detection: true
+                  description: 'to-r142b-core02-Eth1/28'
+                  encap_scope: local
                   encap_vlan: 11
                   interface_or_policy_group: eth1/30
                   interface_type: sub-interface
@@ -255,7 +265,7 @@ tenants:
                   name: Eth1-30.11
                   nodes:
                     - 202
-                  primary_preferred_address: 10.92.11.22/26
+                  primary_preferred_address: 10.92.11.11/31
               nodes:
                 - node_id: 202
                   router_id: 10.92.11.202

@@ -39,6 +39,8 @@ access:
           lldp_interface_policy: lldpEnabled
           mcp_interface_policy: mcpEnabled
           names:
+          - vpc03
+          - vpc04
           - vpc51
           - vpc52
           port_channel_policy: lacpActive

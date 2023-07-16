@@ -4,13 +4,16 @@ locals {
 
 data "utils_yaml_merge" "model" {
   input = concat([
-    for file in fileset(path.module, "access-policies/*.yaml") : file(file)], [
-    for file in fileset(path.module, "admin/*.yaml") : file(file)], [
-    for file in fileset(path.module, "fabric-policies/*.yaml") : file(file)], [
-    for file in fileset(path.module, "switches/*.yaml") : file(file)], [
-    for file in fileset(path.module, "system-settings/*.yaml") : file(file)], [
-    for file in fileset(path.module, "tenants/*.yaml") : file(file)], [
-    for file in fileset(path.module, "virtual-networking/*.yaml") : file(file)]
+    for file in fileset(path.module, "../shared_settings/access-policies/*.yaml") : file(file)], [
+    for file in fileset(path.module, "../shared_settings/admin/*.yaml") : file(file)], [
+    for file in fileset(path.module, "../shared_settings/fabric-policies/*.yaml") : file(file)], [
+    for file in fileset(path.module, "../shared_settings/system-settings/*.yaml") : file(file)], [
+    for file in fileset(path.module, "../shared_settings/tenants/*.yaml") : file(file)], [
+    for file in fileset(path.module, "/access-policies/*.yaml") : file(file)], [
+    for file in fileset(path.module, "/switches/*.yaml") : file(file)], [
+    for file in fileset(path.module, "/system-settings/*.yaml") : file(file)], [
+    for file in fileset(path.module, "/tenants/*.yaml") : file(file)], [
+    for file in fileset(path.module, "/virtual-networking/*.yaml") : file(file)]
   )
 }
 
