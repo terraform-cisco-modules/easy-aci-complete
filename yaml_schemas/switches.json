@@ -30,7 +30,7 @@
                 "switch_profiles": {
                     "type": "array",
                     "additionalProperties": false,
-                    "description": "List of Switch Profiles.\nRequired Attributes:\n  * interfaces\n  * name\n  * node_id\n  * serial_number\n\nOptional Attributes:\n  * inband_addressing\n  * node_type\n  * ooband_addressing\n  * pod_id\n  * role",
+                    "description": "List of Switch Profiles.\nRequired Attributes:\n  * interfaces\n  * name\n  * node_id\n  * node_type\n  * serial_number\n\nOptional Attributes:\n  * inband_addressing\n  * instrumentation_immediacy\n  * ooband_addressing\n  * pod_id\n  * role",
                     "items": {
                         "$ref": "#/definitions/Switch:SwitchProfiles"
                     },
@@ -115,10 +115,20 @@
                 "inband_addressing": {
                     "$ref": "#/definitions/Switch:SwitchProfiles:BandAddressing"
                 },
+                "instrumentation_immediacy": {
+                    "type": "string",
+                    "default": "on-demand",
+                    "description": "The Static Path Binding deployment immediacy.  Options are:\n  * immediate — Specifies that EPG policies (including contracts and filters) are downloaded to the associated leaf switch software upon deployment.\n  * on-demand: (default) — Specifies that a policy (for example, VLAN, VXLAN bindings, contracts, or filters) is pushed to the leaf node only when an endpoint is discovered, attached to the (EPG).",
+                    "enum": [
+                        "immediate",
+                        "on-demand"
+                    ],
+                    "title": "instrumentation_immediacy"
+                },
                 "interfaces": {
                     "type": "array",
                     "additionalProperties": false,
-                    "description": "List of Interface Selectors to Assign to the Interface Profile",
+                    "description": "List of Interface Selectors to Assign to the Interface Profile.\nRequired Attributes:\n  * interface\n\nOptional Attributes:\n  * access_or_native_vlan\n  * allowed_vlans\n  * description\n  * interface_description\n  * policy_group\n  * policy_group_type",
                     "items": {
                         "$ref": "#/definitions/Switch:SwitchProfiles:Interfaces"
                     },
@@ -152,14 +162,13 @@
                 },
                 "node_type": {
                     "type": "string",
-                    "default": "unspecified",
-                    "description": "Default value: `unspecified`.  Node type for object Fabric Node member. Allowed values:\n  * leaf\n  * remote-leaf-wan\n  * tier-2-leaf\n  * spine\n  * virtual - virtual controller",
+                    "default": "leaf",
+                    "description": "Node type for object Fabric Node member. Allowed values:\n  * leaf: (default)\n  * remote-leaf-wan\n  * tier-2-leaf\n  * spine\n  * virtual - virtual controller",
                     "enum": [
                         "leaf",
                         "remote-leaf-wan",
                         "spine",
                         "tier-2-leaf",
-                        "unspecified",
                         "virtual"
                     ],
                     "title": "node_type"
@@ -204,6 +213,15 @@
                     "pattern": "^([A-Z]{3}[2-3]\\d([0][1-9]|[1-4][0-9]|[5][1-3])[\\dA-Z]{4}|TEP-1-[\\d]{3})$",
                     "title": "serial_number"
                 },
+                "site": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Name of the ACI Site for Nexus Dashboard Orchestrator.",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9_\\.:-]+$",
+                    "title": "site"
+                },
                 "two_slot_leaf": {
                     "type": "boolean",
                     "default": true,
@@ -215,6 +233,7 @@
                 "interfaces",
                 "name",
                 "node_id",
+                "node_type",
                 "serial_number"
             ],
             "title": "SwitchProfiles"
@@ -280,6 +299,21 @@
             "additionalProperties": false,
             "description": "",
             "properties": {
+                "access_or_native_vlan": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "This is used to assign the native vlan if this is a trunk or access vlan if a single vlan is being assigned.",
+                    "minimum": 0,
+                    "maximum": 4093,
+                    "title": "access_or_native_vlan"
+                },
+                "allowed_vlans": {
+                    "type": "string",
+                    "description": "A string containing the List of VLANs Allowed on the ports attached to the AAEP.  This will act much like `switch trunk allowed vlan list`, but will be used to assign/filter the EPG's to be assigned to the AAEP.\nIn example: '1-5', '1,3,5', '1-5,10-16', or just '1'.",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "pattern": "^(((\\d+)|(\\d+-\\d+))(,((\\d+)|(\\d+-\\d+)))*)$"
+                },
                 "description": {
                     "type": "string",
                     "default": "default",
@@ -288,6 +322,28 @@
                     "maxLength": 128,
                     "pattern": "^[a-zA-Z0-9\\\\!#$%()*,-\\./:;@ _{|}~?&+]+$",
                     "title": "description"
+                },
+                "encapsulation_type": {
+                    "type": "string",
+                    "default": "vlan",
+                    "description": "The Static Path Binding Encapsulation Type.  Options are:\n  * micro_seg — perform micro-segmentation with private vlans on the port\n  * qinq - Requires two VLANs on the EPG and is only supported by the APIC\n  * vlan: (default)\n  * vxlan",
+                    "enum": [
+                        "micro_seg",
+                        "qinq",
+                        "vlan",
+                        "vxlan"
+                    ],
+                    "title": "encapsulation_type"
+                },
+                "instrumentation_immediacy": {
+                    "type": "string",
+                    "default": "on-demand",
+                    "description": "The Static Path Binding deployment immediacy.  Options are:\n  * immediate — Specifies that EPG policies (including contracts and filters) are downloaded to the associated leaf switch software upon deployment.\n  * on-demand: (default) — Specifies that a policy (for example, VLAN, VXLAN bindings, contracts, or filters) is pushed to the leaf node only when an endpoint is discovered, attached to the (EPG).",
+                    "enum": [
+                        "immediate",
+                        "on-demand"
+                    ],
+                    "title": "instrumentation_immediacy"
                 },
                 "interface": {
                     "type": "string",
