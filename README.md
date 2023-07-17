@@ -44,7 +44,7 @@ Additionally because the `./RICH/Odin/` Nexus Dashboard Fabric Only supports pus
 
 ## YAML Schema Notes for Autocompletion, Help, and Error Validation:
 
-If you would like to enable Autocompletion, Help Context, and Error Validation, (HIGHLY RECOMMENDED) perform the following configuration in Visual Studio Code.
+If you would like to enable Autocompletion, Help Context, and Error Validation, (`HIGHLY RECOMMENDED`) perform the following configuration in Visual Studio Code.
 
 ### Install the YAML extension by Red Hat
 `Extensions`: Search for YAML and Select the 'YAML Language Support by Red Hat'
