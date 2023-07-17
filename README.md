@@ -99,7 +99,7 @@ alias tfv='terraform validate'
 
 ## Minimum Sensitive Variables for ACI
 
-### Linux
+#### Linux
 
 Password Authentication
 
@@ -122,13 +122,13 @@ $env:TF_VAR_apic_password='<your-apic-password>'
 
 ## Minimum Sensitive Variables for NDO
 
-### Linux
+#### Linux
 
 ```bash
 export ndo_password='<your-ndo-password>'
 ```
 
-### Windows
+#### Windows
 
 ```powershell
 $env:TF_VAR_ndo_password='<your-ndo-password>'
@@ -139,7 +139,7 @@ $env:TF_VAR_ndo_password='<your-ndo-password>'
 * MCP Instance Key: If Desire is to Password Protect MCP traffic.
 * VMM Password: vCenter Password for VMM Integration.
 
-### Linux
+#### Linux
 
 ```bash
 export mcp_instance_key='<mcp_instance_key>'
@@ -148,7 +148,7 @@ export mcp_instance_key='<mcp_instance_key>'
 export vmm_password='<vmm_password>'
 ```
 
-### Windows
+#### Windows
 
 ```bash
 $env:TF_VAR_mcp_instance_key='<mcp_instance_key>'
@@ -164,7 +164,7 @@ $env:TF_VAR_vmm_password='<vmm_password>'
 * remote_password: For Password based Authentication.
 * ssh_key_contents and ssh_key_passphrase: for SSH Key Based Authentication.
 
-### Linux
+#### Linux
 
 ```bash
 export remote_password='<remote_password>'
@@ -174,7 +174,7 @@ export ssh_key_contents='<ssh_key_contents>'
 export ssh_key_passphrase='<ssh_key_passphrase>'
 ```
 
-### Windows
+#### Windows
 
 ```powershell
 $env:TF_VAR_remote_password='<remote_password>'
@@ -189,7 +189,7 @@ $env:TF_VAR_ssh_key_passphrase='<ssh_key_passphrase>'
 * radius_key: Key for Protecting RADIUS Server Communication.
 * radius_monitoring_password: If Server Monitoring is Enabled, the Password to use with the test user account.
 
-### Linux
+#### Linux
 
 ```bash
 export radius_key='<radius_key>'
@@ -198,7 +198,7 @@ export radius_key='<radius_key>'
 export radius_monitoring_password='<radius_monitoring_password>'
 ```
 
-### Windows
+#### Windows
 
 ```bash
 $env:TF_VAR_radius_key='<radius_key>'
@@ -211,13 +211,13 @@ $env:TF_VAR_radius_monitoring_password='<radius_monitoring_password>'
 
 * smtp_password: Only Required if the SMTP Server Requires Authentication.
 
-### Linux
+#### Linux
 
 ```bash
 export smtp_password='<smtp_password>'
 ```
 
-### Windows
+#### Windows
 
 ```bash
 $env:TF_VAR_smtp_password='<smtp_password>'
@@ -228,14 +228,14 @@ $env:TF_VAR_smtp_password='<smtp_password>'
 * tacacs_key: Key for Protecting TACACS Server Communication.
 * tacacs_monitoring_password: If Server Monitoring is Enabled, the Password to use with the test user account.
 
-### Linux
+#### Linux
 
 ```bash
 export tacacs_key='<tacacs_key>'
 export tacacs_monitoring_password='<tacacs_monitoring_password>'
 ```
 
-### Windows
+#### Windows
 
 ```bash
 $env:TF_VAR_tacacs_key='<tacacs_key>'
