@@ -80,6 +80,8 @@ Recently I adopted the tfenv runner to standardize environment variables with mu
 
 In the export examples below, for the Linux Example, the 'TF_VAR_' is excluded because Cloud Posse tfenv is used to insert it during the run.
 
+## IMPORTANT: ALL EXAMPLES BELOW ASSUME USING `tfenv` in LINUX
+
 ## Minimum Sensitive Variables for ACI
 
 ### Linux
