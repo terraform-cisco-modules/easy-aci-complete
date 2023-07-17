@@ -72,7 +72,7 @@ Configure the following in `yaml.schemas`
 
 - Add variable `ndo_password` with the value of [your-ndo-password] and sensitive set to true
 
-## [Cloud Posse tfenv](https://github.com/cloudposse/tfenv)
+## [Cloud Posse `tfenv`](https://github.com/cloudposse/tfenv)
 
 Command line utility to transform environment variables for use with Terraform. (e.g. HOSTNAME → TF_VAR_hostname)
 
