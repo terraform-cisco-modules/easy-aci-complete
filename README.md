@@ -211,8 +211,16 @@ $env:TF_VAR_radius_monitoring_password='<radius_monitoring_password>'
 
 * smtp_password: Only Required if the SMTP Server Requires Authentication.
 
+### Linux
+
 ```bash
 export smtp_password='<smtp_password>'
+```
+
+### Windows
+
+```bash
+$env:TF_VAR_smtp_password='<smtp_password>'
 ```
 
 #### TACACS+ Sensitive Variables
@@ -220,10 +228,21 @@ export smtp_password='<smtp_password>'
 * tacacs_key: Key for Protecting TACACS Server Communication.
 * tacacs_monitoring_password: If Server Monitoring is Enabled, the Password to use with the test user account.
 
+### Linux
+
 ```bash
 export tacacs_key='<tacacs_key>'
 export tacacs_monitoring_password='<tacacs_monitoring_password>'
 ```
+
+### Windows
+
+```bash
+$env:TF_VAR_tacacs_key='<tacacs_key>'
+$env:TF_VAR_tacacs_monitoring_password='<tacacs_monitoring_password>'
+```
+
+## Only Showing Linux Examples for the Rest for brevity
 
 ### Sensitive Variables for the Fabric Module:
 
