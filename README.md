@@ -480,5 +480,12 @@ export vrf_snmp_community_5='<vrf_snmp_community_5>'
 
 If you want to see documentation on Variables for Submodules use the links below:
 
+[access-policies](https://github.com/terraform-cisco-modules/terraform-aci-access)
+[admin](https://github.com/terraform-cisco-modules/terraform-aci-admin)
+[fabric-policies](https://github.com/terraform-cisco-modules/terraform-aci-fabric)
+[switch](https://github.com/terraform-cisco-modules/terraform-aci-switch)
+[system-settings](https://github.com/terraform-cisco-modules/terraform-aci-system-settings)
+[tenants](https://github.com/terraform-cisco-modules/terraform-aci-tenants)
+
 ## Terraform Registry
 <!-- END_TF_DOCS -->
