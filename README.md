@@ -23,7 +23,7 @@ The more complex example is shown in the `./RICH/` Folder Structure.  This is wh
 * `RICH/Odin` - Nexus Dashboard Orchestrator managing the stretched Tenants Between the two Fabrics
 * `RICH/shared_settings` - YAML Data that is the same between Asgard and Wakanda
 
-The Structure of the YAML Files is very flexible.  You can have all the YAML Data in a single file or you can have it in multiple individual folders like is shown in this module.  The important part is that the `data.utils_yaml_merge.model` is configured to read the folders that you put the Data into.  In the single Data Center example the data is read from all the folders in the root path described above (`access-policies`, `admin`, `fabric-policies`, `switch`, `system-settings`, `tenants`, `virtual-networking`).  In comparison, the Asgard and Wakanda Fabrics, read files in their respective home directory plus they sahred data found in the `./RICH/shared_settings` folder.
+The Structure of the YAML Files is very flexible.  You can have all the YAML Data in a single file or you can have it in multiple individual folders like is shown in this module.  The important part is that the `data.utils_yaml_merge.model` is configured to read the folders that you put the Data into.  In the single Data Center example the data is read from all the folders in the root path described above (`access-policies`, `admin`, `fabric-policies`, `switch`, `system-settings`, `tenants`, `virtual-networking`).  In comparison, the Asgard and Wakanda Fabrics, read files in their respective home directory plus they shared data found in the `./RICH/shared_settings` folder.
 
 Additionally because the `./RICH/Odin/` Nexus Dashboard Fabric Only supports pushing configuration with the tenants module, currently, only the `built_in_tenants` and `tenants` modules are defined.  The additional function for `Odin` is that it is pulling in the switch_profiles, from both `Asgard` and `Wakanda`, to build `EPG -> Static Path Bindings` in NDO.
 
@@ -71,6 +71,8 @@ Configure the following in `yaml.schemas`
 #### At a Minimum for NDO
 
 - Add variable `ndo_password` with the value of [your-ndo-password] and sensitive set to true
+
+#### Add Other Variables as discussed below based on use cases
 
 ## [Cloud Posse `tfenv`](https://github.com/cloudposse/tfenv)
 
