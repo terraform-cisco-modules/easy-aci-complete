@@ -10,22 +10,22 @@ content: |-
 
   There are two examples in this Repository.  The first example is shown in the primary folders:
 
-    * ./access-policies/
-    * ./admin/
-    * ./fabric-policies/
-    * ./switch/
-    * ./system_settings/
-    * ./tenants/
-    * ./virtual-networking/
+    * `access-policies/`
+    * `admin/`
+    * `fabric-policies/`
+    * `switch/`
+    * `system_settings/`
+    * `tenants/`
+    * `virtual-networking/`
 
   This is to show an example of how the module can be used with a single ACI Fabric.
 
-  The more complex example is shown in the "./RICH/" Folder Structure.  This is what is being used for our lab in Richfield Ohio.  In these examples there are four sub-folders.
+  The more complex example is shown in the `./RICH/` Folder Structure.  This is what is being used for our lab in Richfield Ohio.  In these examples there are four sub-folders.
 
-    * ./RICH/Asgard - The First ACI Fabric
-    * ./RICH/Wakanda - The Second ACI Fabric
-    * ./RICH/Odin - Nexus Dashboard Orchestrator managing the stretched Tenants Between the two Fabrics
-    * ./RICH/shared_settings - YAML Data that is the same between Asgard and Wakanda
+    * `RICH/Asgard` - The First ACI Fabric
+    * `RICH/Wakanda` - The Second ACI Fabric
+    * `RICH/Odin` - Nexus Dashboard Orchestrator managing the stretched Tenants Between the two Fabrics
+    * `RICH/shared_settings` - YAML Data that is the same between Asgard and Wakanda
 
   The Structure of the YAML Files is very flexible.  You can have all the YAML Data in a single file or you can have it in multiple individual folders like is shown in this module.  The important part is that the `data.utils_yaml_merge.model` is configured to read the folders that you put the Data into.  So in the single Data Center example in the root of the data is reads everything from the root path.  In comparison, the Asgard, and Wakanda Fabrics read files in the home directory for these plus they merge the data found in the `./RICH/shared_settings` folder.  
 
