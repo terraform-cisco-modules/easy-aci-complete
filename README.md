@@ -36,15 +36,15 @@ Additionally because the `./RICH/Odin/` Nexus Dashboard Fabric Only supports pus
 * APIC Attributes: used if the controller_type is `apic`.
 * NDO Attributes: used if the controller_type is `ndo`.
 * management_epgs: necessary if you are using inband EPG's, and or the ooband EPG is not default.  Both true for our use case.
-* annotations: helpful but not required.  This is used on Tenant Objects that support the annotations attribute.  You can customize this according to anything desired to add, but by default the use case is the version of the easy_aci module is being added.
+* annotations: helpful, but not required.  This is used on Tenant Objects that support the annotations attribute.  You can customize this according to anything desired to add, but by default the use case is the version of the easy_aci module is being added.
 
-#### Note 1: that modules can be added or removed dependent on the use case.  The primary example shown is consuming/showing a full environment deployment.  But in the `./RICH/Odin/` example, it is just using the tenant modules.
+#### Note 1: Modules can be added or removed dependent on the use case.  The primary example shown is consuming/showing a full environment deployment.  But in the `./RICH/Odin/` example, it is just using the tenant modules.
 
 #### Note 2: The reason for the seperation of `built_in_tenants` vs `tenants` is to make sure objects are always created in common/mgmt first.  So they can be consumed by user tenants or Admin/Fabric etc (management EPGs for example).  If nothing is being configured in common/mgmt/infra the `built_in_tenant` is not necessary.)
 
 ## YAML Schema Notes for Autocompletion, Help, and Error Validation:
 
-If you would like to enable Autocompletion, Help Context, and Error Validation, perform the following configuration in Visual Studio Code.
+If you would like to enable Autocompletion, Help Context, and Error Validation, (HIGHLY RECOMMENDED) perform the following configuration in Visual Studio Code.
 
 ### Install the YAML extension by Red Hat
 `Extensions`: Search for YAML and Select the 'YAML Language Support by Red Hat'
