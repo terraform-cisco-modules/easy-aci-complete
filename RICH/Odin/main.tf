@@ -13,7 +13,7 @@ data "utils_yaml_merge" "model" {
 module "built_in_tenants" {
   source = "../../../terraform-aci-tenants"
   #source  = "terraform-cisco-modules/tenants/aci"
-  #version = "2.1.8"
+  #version = "2.1.9"
 
   for_each = {
     for v in lookup(local.model, "tenants", []) : v.name => v if length(regexall("^(common|infra|mgmt)$", v.name)) > 0
@@ -27,12 +27,6 @@ module "built_in_tenants" {
   switch          = lookup(local.model, "switch", {})
   templates       = lookup(local.model, "templates", {})
   tenant          = each.key
-  # Sensitive Variables for Tenant Policies
-  # AWS Secret Key - NDO
-  aws_secret_key = var.aws_secret_key
-  # Azure Client Secret - NDO
-  azure_client_secret = var.azure_client_secret
-  # L3Out Routing Protocol Security
 }
 
 module "tenants" {
@@ -41,7 +35,7 @@ module "tenants" {
   ]
   source = "../../../terraform-aci-tenants"
   #source  = "terraform-cisco-modules/tenants/aci"
-  #version = "2.1.8"
+  #version = "2.1.9"
 
   for_each = {
     for v in lookup(local.model, "tenants", []) : v.name => v if length(regexall("^(common|infra|mgmt)$", v.name)) == 0
@@ -53,9 +47,4 @@ module "tenants" {
   switch          = lookup(local.model, "switch", {})
   templates       = lookup(local.model, "templates", {})
   tenant          = each.key
-  # Sensitive Variables for Tenant Policies
-  # AWS Secret Key - NDO
-  aws_secret_key = var.aws_secret_key
-  # Azure Client Secret - NDO
-  azure_client_secret = var.azure_client_secret
 }

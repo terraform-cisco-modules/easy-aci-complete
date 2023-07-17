@@ -8659,8 +8659,8 @@
                 "ip_data_plane_learning": {
                     "type": "string",
                     "apicApi": "ipDPLearning",
-                    "default": "disabled",
-                    "description": "Choose whether to enable or disable IP address learning for this subnet. The possible values are:\n disabled: (default) - Disables IP address learning for this subnet.\n enabled - Enables IP address learning for this subnet.",
+                    "default": "enabled",
+                    "description": "Choose whether to enable or disable IP address learning for this subnet. The possible values are:\n disabled - Disables IP address learning for this subnet.\n enabled: (default) - Enables IP address learning for this subnet.",
                     "enum": [
                         "disabled",
                         "enabled"
