@@ -23,8 +23,8 @@ terraform {
 }
 
 provider "aci" {
-  cert_name   = var.cert_name
-  password    = var.apic_pass
+  cert_name   = var.certificate_name
+  password    = var.apic_password
   private_key = var.private_key
   url         = "https://${var.apic_hostname}"
   username    = var.apic_user
@@ -34,7 +34,7 @@ provider "aci" {
 provider "mso" {
   domain   = var.ndo_domain
   insecure = true
-  password = var.ndo_pass
+  password = var.ndo_password
   platform = "nd"
   url      = "https://${var.ndo_hostname}"
   username = var.ndo_user

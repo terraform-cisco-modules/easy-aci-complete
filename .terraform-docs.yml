@@ -8,19 +8,47 @@ content: |-
 
   # Easy ACI - Comprehensive example for ACI & NDO
 
-  ## Environment Variables
+  There are two examples in this Repository.  The first example is shown in the primary folders:
 
-  ### Terraform Cloud/Enterprise - Workspace Variables
-  - Add variable apicPass with the value of [your-apic-password]
+    * ./access-policies/
+    * ./admin/
+    * ./fabric-policies/
+    * ./switch/
+    * ./system_settings/
+    * ./tenants/
+    * ./virtual-networking/
 
-  ### Linux and Windows
-  ```bash
-  export TF_VAR_apicPass="<your-apic-password>"
-  ```
+  This is to show an example of how the module can be used with a single ACI Fabric.
 
-  ## Auto-completion Notes:
+  The more complex example is shown in the "./RICH/" Folder Structure.  This is what is being used for our lab in Richfield Ohio.  In these examples there are four sub-folders.
 
-  If you would like to enable Auto Completion in the Pools File for ip, mac, uuid, wwnn, and wwpn perform the following in Visual Studio Code.
+    * ./RICH/Asgard - The First ACI Fabric
+    * ./RICH/Wakanda - The Second ACI Fabric
+    * ./RICH/Odin - Nexus Dashboard Orchestrator managing the stretched Tenants Between the two Fabrics
+    * ./RICH/shared_settings - YAML Data that is the same between Asgard and Wakanda
+
+  The Structure of the YAML Files is very flexible.  You can have all the YAML Data in a single file or you can have it in multiple individual folders like is shown in this module.  The important part is that the `data.utils_yaml_merge.model` is configured to read the folders that you put the Data into.  So in the single Data Center example in the root of the data is reads everything from the root path.  In comparison, the Asgard, and Wakanda Fabrics read files in the home directory for these plus they merge the data found in the `./RICH/shared_settings` folder.  
+
+  Additionally because the `./RICH/Odin/` Nexus Dashboard Fabric Only supports pushing configuration with the tenants module currently note that only the `built_in_tenants`, and `tenants` modules are defined.  The additional function is it is pulling in the switch_profiles, from both sites, to build `EPG -> Static Path Bindings` in NDO.
+
+  ### Modify `variables.auto.tfvars` to match environment
+
+  `variables.auto.tfvars` contains Terraform variables that I felt fit better outside of the YAML Data Model.  These variables should be configured to be unique to the deployment environment, but examples are shown for the Richfield environemnt in the module.
+
+  #### Notes for the `variables.auto.tfvars`
+
+    * APIC Attributes: used if the controller_type is `apic`.  
+    * NDO Attributes: used if the controller_type is `ndo`.  
+    * management_epgs: necessary if you are using inband EPG's, and or the ooband EPG is not default.  Both true for our use case.
+    * annotations: helpful but not required.  This is used on Tenant Objects that support the annotations attribute.  You can customize this according to anything desired to add, but by default the use case is the version of the easy_aci module is being added.
+
+  #### Note 1: that modules can be added or removed dependent on the use case.  The primary example shown is consuming/showing a full environment deployment.  But in the `./RICH/Odin/` example, it is just using the tenant modules. 
+
+  #### Note 2: The reason for the seperation of `built_in_tenants` vs `tenants` is to make sure objects are always created in common/mgmt first.  So they can be consumed by user tenants or Admin/Fabric etc (management EPGs for example).  If nothing is being configured in common/mgmt/infra the `built_in_tenant` is not necessary.)
+
+  ## YAML Schema Notes for Autocompletion, Help, and Error Validation:
+
+  If you would like to enable Autocompletion, Help Context, and Error Validation, perform the following configuration in Visual Studio Code.
 
   ### Install the YAML extension by Red Hat
   `Extensions`: Search for YAML and Select the 'YAML Language Support by Red Hat'
@@ -33,7 +61,270 @@ content: |-
 
   Configure the following in `yaml.schemas`
   ```bash
-    "https://raw.githubusercontent.com/terraform-cisco-modules/easy-aci-complete/main/schemas/pools.json": "pools.yaml"
+  "https://raw.githubusercontent.com/terraform-cisco-modules/easy-aci-complete/main/yaml_schemas/easy_aci.json": ["easy-aci-complete/*/*.yaml", "easy-aci-complete/*/*/*/*.yaml"]
+  ```
+
+  ## Environment Variables
+
+  ### Terraform Cloud/Enterprise - Workspace Variables
+  - Add variable apicPass with the value of [your-apic-password]
+
+  ## [Cloud Posse tfenv](https://github.com/cloudposse/tfenv)
+
+  Command line utility to transform environment variables for use with Terraform. (e.g. HOSTNAME → TF_VAR_hostname)
+
+  Recently I adopted the tfenv runner to standardize environment variables with multiple orchestration tools.  tfenv makes it so you don't need to add TF_VAR_ to the variables when you add them to the environment.  But it doesn't work for windows would be the caveat.
+
+  In the export examples below, for the Linux Example, the 'TF_VAR_' is excluded because Cloud Posse tfenv is used to insert it during the run.
+
+  ## Minimum Sensitive Variables for ACI
+
+  ### Linux
+
+  Password Authentication
+
+  ```bash
+  export apic_password='<your-apic-password>'
+  ```
+
+  Certificate Authentication
+
+  ```bash
+  export certificate_name='<your-certificate_name>'
+  export private_key='<your-private_key>'
+  ```
+
+  ## Windows
+
+  ```powershell
+  $env:TF_VAR_apic_password='<your-apic-password>'
+  ```
+
+  ## Minimum Sensitive Variables for NDO
+
+  ### Linux
+
+  Password Authentication
+
+  ```bash
+  export ndo_password='<your-ndo-password>'
+  ```
+
+  ### Windows
+
+  ```powershell
+  $env:TF_VAR_ndo_password='<your-ndo-password>'
+  ```
+
+  ### Sensitive Variables for the Access Module:
+
+    * MCP Instance Key: If Desire is to Password Protect MCP traffic.
+    * VMM Password: vCenter Password for VMM Integration.
+
+  ```bash
+  export mcp_instance_key='<mcp_instance_key>'
+  ```
+  ```bash
+  export vmm_password='<vmm_password>'
+  ```
+
+  ### Sensitive Variables for the Admin Module:
+
+  #### Configuration Backup Sensitive Variables
+
+    * remote_password: For Password based Authentication.
+    * ssh_key_contents and ssh_key_passphrase: for SSH Key Based Authentication.
+
+  ```bash
+  export remote_password='<remote_password>'
+  ```
+  ```bash
+  export ssh_key_contents='<ssh_key_contents>'
+  export ssh_key_passphrase='<ssh_key_passphrase>'
+  ```
+
+  #### RADIUS Sensitive Variables
+
+    * radius_key: Key for Protecting RADIUS Server Communication.
+    * radius_monitoring_password: If Server Monitoring is Enabled, the Password to use with the test user account.
+
+  ```bash
+  # RADIUS Sensitive Variables
+  export radius_key='<radius_key>'
+  ```
+  ```bash
+  export radius_monitoring_password='<radius_monitoring_password>'
+  ```
+
+  #### Smart Callhome Sensitive Variables
+
+    * smtp_password: Only Required if the SMTP Server Requires Authentication.
+
+  ```bash
+  export smtp_password='<smtp_password>'
+  ```
+
+  #### TACACS+ Sensitive Variables
+
+    * tacacs_key: Key for Protecting TACACS Server Communication.
+    * tacacs_monitoring_password: If Server Monitoring is Enabled, the Password to use with the test user account.
+
+  ```bash
+  export tacacs_key='<tacacs_key>'
+  export tacacs_monitoring_password='<tacacs_monitoring_password>'
+  ```
+
+  ### Sensitive Variables for the Fabric Module:
+
+  ### Note: Multiple Instances.
+
+  Note that ntp_key, snmp_authorization, snmp_community, snmp_privacy_key have multiple instances.  This is only in the event you need multiple values for each variable.  If only one value is needed only define one value in the export.
+
+    * NTP Authentication Keys
+
+  ```bash
+  export ntp_key_1='<ntp_key_1>'
+  ```
+  ```bash
+  export ntp_key_2='<ntp_key_2>'
+  ```
+  ```bash
+  export ntp_key_3='<ntp_key_3>'
+  ```
+  ```bash
+  export ntp_key_4='<ntp_key_4>'
+  ```
+  ```bash
+  export ntp_key_5='<ntp_key_5>'
+  ```
+
+    * SNMP Communities
+
+  ```bash
+  export snmp_community_1='<snmp_community_1>'
+  ```
+  ```bash
+  export snmp_community_2='<snmp_community_2>'
+  ```
+  ```bash
+  export snmp_community_3='<snmp_community_3>'
+  ```
+  ```bash
+  export snmp_community_4='<snmp_community_4>'
+  ```
+  ```bash
+  export snmp_community_5='<snmp_community_5>'
+  ```
+
+    * SNMP Authorization Keys and Privacy Keys for SNMP Users
+
+  ```bash
+  export snmp_authorization_key_1='<snmp_authorization_key_1>'
+  ```
+  ```bash
+  export snmp_authorization_key_2='<snmp_authorization_key_2>'
+  ```
+  ```bash
+  export snmp_authorization_key_3='<snmp_authorization_key_3>'
+  ```
+  ```bash
+  export snmp_authorization_key_4='<snmp_authorization_key_4>'
+  ```
+  ```bash
+  export snmp_authorization_key_5='<snmp_authorization_key_5>'
+  ```
+  ```bash
+  export snmp_privacy_key_1='<snmp_privacy_key_1>'
+  ```
+  ```bash
+  export snmp_privacy_key_2='<snmp_privacy_key_2>'
+  ```
+  ```bash
+  export snmp_privacy_key_3='<snmp_privacy_key_3>'
+  ```
+  ```bash
+  export snmp_privacy_key_4='<snmp_privacy_key_4>'
+  ```
+  ```bash
+  export snmp_privacy_key_5='<snmp_privacy_key_5>'
+  ```
+
+  ### Sensitive Variables for the System Settings Module:
+
+  Global AES Passphrase Encryption Settings
+    * aes_passphrase: Used to Encrypt Configuration Backups to protect sensitive attributes.
+
+  ```bash
+  export aes_passphrase='<aes_passphrase>'
+  ```
+
+  ### Sensitive Variables for the Tenants Module:
+
+  ### NDO Secrets for AWS or Azure Site Authetnication
+
+  ```bash
+  export aws_secret_key='<aws_secret_key>'
+  ```
+
+  ```bash
+  export azure_client_secret='<azure_client_secret>'
+  ```
+
+  ### Routing Protocol Authentication
+
+    * bgp_password: Only requried for BGP Neighbor Authentication
+    * ospf_key: Only required for Neighbor Authentication
+
+  ```bash
+  export bgp_password_1='<bgp_password_1>'
+  ```
+  ```bash
+  export bgp_password_2='<bgp_password_2>'
+  ```
+  ```bash
+  export bgp_password_3='<bgp_password_3>'
+  ```
+  ```bash
+  export bgp_password_4='<bgp_password_4>'
+  ```
+  ```bash
+  export bgp_password_5='<bgp_password_5>'
+  ```
+
+
+  ```bash
+  export ospf_key_1='<ospf_key_1>'
+  ```
+  ```bash
+  export ospf_key_2='<ospf_key_2>'
+  ```
+  ```bash
+  export ospf_key_3='<ospf_key_3>'
+  ```
+  ```bash
+  export ospf_key_4='<ospf_key_4>'
+  ```
+  ```bash
+  export ospf_key_5='<ospf_key_5>'
+  ```
+
+
+    * vrf_snmp_community: Only required if the VRF Should use different Communities than the Global SNMP Values.  These Communities, that need to be added to the SNMP client_groups, will only be usable by the VRF when configured.
+
+  ```bash
+  export vrf_snmp_community_1='<vrf_snmp_community_1>'
+  ```
+  ```bash
+  export vrf_snmp_community_2='<vrf_snmp_community_2>'
+  ```
+  ```bash
+  export vrf_snmp_community_3='<vrf_snmp_community_3>'
+  ```
+  ```bash
+  export vrf_snmp_community_4='<vrf_snmp_community_4>'
+  ```
+  ```bash
+  export vrf_snmp_community_5='<vrf_snmp_community_5>'
   ```
 
   {{ .Requirements }}

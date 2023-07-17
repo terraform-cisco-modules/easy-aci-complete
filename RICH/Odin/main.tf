@@ -13,7 +13,7 @@ data "utils_yaml_merge" "model" {
 module "built_in_tenants" {
   source = "../../../terraform-aci-tenants"
   #source  = "terraform-cisco-modules/tenants/aci"
-  #version = "2.1.7"
+  #version = "2.1.8"
 
   for_each = {
     for v in lookup(local.model, "tenants", []) : v.name => v if length(regexall("^(common|infra|mgmt)$", v.name)) > 0
@@ -41,7 +41,7 @@ module "tenants" {
   ]
   source = "../../../terraform-aci-tenants"
   #source  = "terraform-cisco-modules/tenants/aci"
-  #version = "2.1.7"
+  #version = "2.1.8"
 
   for_each = {
     for v in lookup(local.model, "tenants", []) : v.name => v if length(regexall("^(common|infra|mgmt)$", v.name)) == 0

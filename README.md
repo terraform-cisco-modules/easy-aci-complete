@@ -4,19 +4,47 @@
 
 # Easy ACI - Comprehensive example for ACI & NDO
 
-## Environment Variables
+There are two examples in this Repository.  The first example is shown in the primary folders:
 
-### Terraform Cloud/Enterprise - Workspace Variables
-- Add variable apicPass with the value of [your-apic-password]
+* ./access-policies/
+* ./admin/
+* ./fabric-policies/
+* ./switch/
+* ./system_settings/
+* ./tenants/
+* ./virtual-networking/
 
-### Linux and Windows
-```bash
-export TF_VAR_apicPass="<your-apic-password>"
-```
+This is to show an example of how the module can be used with a single ACI Fabric.
 
-## Auto-completion Notes:
+The more complex example is shown in the "./RICH/" Folder Structure.  This is what is being used for our lab in Richfield Ohio.  In these examples there are four sub-folders.
 
-If you would like to enable Auto Completion in the Pools File for ip, mac, uuid, wwnn, and wwpn perform the following in Visual Studio Code.
+* ./RICH/Asgard - The First ACI Fabric
+* ./RICH/Wakanda - The Second ACI Fabric
+* ./RICH/Odin - Nexus Dashboard Orchestrator managing the stretched Tenants Between the two Fabrics
+* ./RICH/shared_settings - YAML Data that is the same between Asgard and Wakanda
+
+The Structure of the YAML Files is very flexible.  You can have all the YAML Data in a single file or you can have it in multiple individual folders like is shown in this module.  The important part is that the `data.utils_yaml_merge.model` is configured to read the folders that you put the Data into.  So in the single Data Center example in the root of the data is reads everything from the root path.  In comparison, the Asgard, and Wakanda Fabrics read files in the home directory for these plus they merge the data found in the `./RICH/shared_settings` folder.
+
+Additionally because the `./RICH/Odin/` Nexus Dashboard Fabric Only supports pushing configuration with the tenants module currently note that only the `built_in_tenants`, and `tenants` modules are defined.  The additional function is it is pulling in the switch_profiles, from both sites, to build `EPG -> Static Path Bindings` in NDO.
+
+### Modify `variables.auto.tfvars` to match environment
+
+`variables.auto.tfvars` contains Terraform variables that I felt fit better outside of the YAML Data Model.  These variables should be configured to be unique to the deployment environment, but examples are shown for the Richfield environemnt in the module.
+
+#### Notes for the `variables.auto.tfvars`
+
+* APIC Attributes: used if the controller_type is `apic`.
+* NDO Attributes: used if the controller_type is `ndo`.
+* management_epgs: necessary if you are using inband EPG's, and or the ooband EPG is not default.  Both true for our use case.
+* annotations: helpful but not required.  This is used on Tenant Objects that support the annotations attribute.  You can customize this according to anything desired to add, but by default the use case is the version of the easy_aci module is being added.
+
+#### Note 1: that modules can be added or removed dependent on the use case.  The primary example shown is consuming/showing a full environment deployment.  But in the `./RICH/Odin/` example, it is just using the tenant modules.
+
+#### Note 2: The reason for the seperation of `built_in_tenants` vs `tenants` is to make sure objects are always created in common/mgmt first.  So they can be consumed by user tenants or Admin/Fabric etc (management EPGs for example).  If nothing is being configured in common/mgmt/infra the `built_in_tenant` is not necessary.)
+
+## YAML Schema Notes for Autocompletion, Help, and Error Validation:
+
+If you would like to enable Autocompletion, Help Context, and Error Validation, perform the following configuration in Visual Studio Code.
 
 ### Install the YAML extension by Red Hat
 `Extensions`: Search for YAML and Select the 'YAML Language Support by Red Hat'
@@ -27,11 +55,272 @@ If you would like to enable Auto Completion in the Pools File for ip, mac, uuid,
 
 Click: `Edit in settings.json`
 
-Visual Studio Code => Settings => YAML Schema: edit settings.json
-```python
-    "yaml.schemas": {
-        "https://raw.githubusercontent.com/terraform-cisco-modules/easy-aci-complete/main/yaml_schemas/access.json": "/access-policies/*.yaml",
-    }
+Configure the following in `yaml.schemas`
+```bash
+"https://raw.githubusercontent.com/terraform-cisco-modules/easy-aci-complete/main/yaml_schemas/easy_aci.json": ["easy-aci-complete/*/*.yaml", "easy-aci-complete/*/*/*/*.yaml"]
+```
+
+## Environment Variables
+
+### Terraform Cloud/Enterprise - Workspace Variables
+- Add variable apicPass with the value of [your-apic-password]
+
+## [Cloud Posse tfenv](https://github.com/cloudposse/tfenv)
+
+Command line utility to transform environment variables for use with Terraform. (e.g. HOSTNAME → TF_VAR_hostname)
+
+Recently I adopted the tfenv runner to standardize environment variables with multiple orchestration tools.  tfenv makes it so you don't need to add TF_VAR_ to the variables when you add them to the environment.  But it doesn't work for windows would be the caveat.
+
+In the export examples below, for the Linux Example, the 'TF_VAR_' is excluded because Cloud Posse tfenv is used to insert it during the run.
+
+## Minimum Sensitive Variables for ACI
+
+### Linux
+
+Password Authentication
+
+```bash
+export apic_password='<your-apic-password>'
+```
+
+Certificate Authentication
+
+```bash
+export certificate_name='<your-certificate_name>'
+export private_key='<your-private_key>'
+```
+
+## Windows
+
+```powershell
+$env:TF_VAR_apic_password='<your-apic-password>'
+```
+
+## Minimum Sensitive Variables for NDO
+
+### Linux
+
+Password Authentication
+
+```bash
+export ndo_password='<your-ndo-password>'
+```
+
+### Windows
+
+```powershell
+$env:TF_VAR_ndo_password='<your-ndo-password>'
+```
+
+### Sensitive Variables for the Access Module:
+
+* MCP Instance Key: If Desire is to Password Protect MCP traffic.
+* VMM Password: vCenter Password for VMM Integration.
+
+```bash
+export mcp_instance_key='<mcp_instance_key>'
+```
+```bash
+export vmm_password='<vmm_password>'
+```
+
+### Sensitive Variables for the Admin Module:
+
+#### Configuration Backup Sensitive Variables
+
+* remote_password: For Password based Authentication.
+* ssh_key_contents and ssh_key_passphrase: for SSH Key Based Authentication.
+
+```bash
+export remote_password='<remote_password>'
+```
+```bash
+export ssh_key_contents='<ssh_key_contents>'
+export ssh_key_passphrase='<ssh_key_passphrase>'
+```
+
+#### RADIUS Sensitive Variables
+
+* radius_key: Key for Protecting RADIUS Server Communication.
+* radius_monitoring_password: If Server Monitoring is Enabled, the Password to use with the test user account.
+
+```bash
+# RADIUS Sensitive Variables
+export radius_key='<radius_key>'
+```
+```bash
+export radius_monitoring_password='<radius_monitoring_password>'
+```
+
+#### Smart Callhome Sensitive Variables
+
+* smtp_password: Only Required if the SMTP Server Requires Authentication.
+
+```bash
+export smtp_password='<smtp_password>'
+```
+
+#### TACACS+ Sensitive Variables
+
+* tacacs_key: Key for Protecting TACACS Server Communication.
+* tacacs_monitoring_password: If Server Monitoring is Enabled, the Password to use with the test user account.
+
+```bash
+export tacacs_key='<tacacs_key>'
+export tacacs_monitoring_password='<tacacs_monitoring_password>'
+```
+
+### Sensitive Variables for the Fabric Module:
+
+### Note: Multiple Instances.
+
+Note that ntp_key, snmp_authorization, snmp_community, snmp_privacy_key have multiple instances.  This is only in the event you need multiple values for each variable.  If only one value is needed only define one value in the export.
+
+* NTP Authentication Keys
+
+```bash
+export ntp_key_1='<ntp_key_1>'
+```
+```bash
+export ntp_key_2='<ntp_key_2>'
+```
+```bash
+export ntp_key_3='<ntp_key_3>'
+```
+```bash
+export ntp_key_4='<ntp_key_4>'
+```
+```bash
+export ntp_key_5='<ntp_key_5>'
+```
+
+* SNMP Communities
+
+```bash
+export snmp_community_1='<snmp_community_1>'
+```
+```bash
+export snmp_community_2='<snmp_community_2>'
+```
+```bash
+export snmp_community_3='<snmp_community_3>'
+```
+```bash
+export snmp_community_4='<snmp_community_4>'
+```
+```bash
+export snmp_community_5='<snmp_community_5>'
+```
+
+* SNMP Authorization Keys and Privacy Keys for SNMP Users
+
+```bash
+export snmp_authorization_key_1='<snmp_authorization_key_1>'
+```
+```bash
+export snmp_authorization_key_2='<snmp_authorization_key_2>'
+```
+```bash
+export snmp_authorization_key_3='<snmp_authorization_key_3>'
+```
+```bash
+export snmp_authorization_key_4='<snmp_authorization_key_4>'
+```
+```bash
+export snmp_authorization_key_5='<snmp_authorization_key_5>'
+```
+```bash
+export snmp_privacy_key_1='<snmp_privacy_key_1>'
+```
+```bash
+export snmp_privacy_key_2='<snmp_privacy_key_2>'
+```
+```bash
+export snmp_privacy_key_3='<snmp_privacy_key_3>'
+```
+```bash
+export snmp_privacy_key_4='<snmp_privacy_key_4>'
+```
+```bash
+export snmp_privacy_key_5='<snmp_privacy_key_5>'
+```
+
+### Sensitive Variables for the System Settings Module:
+
+Global AES Passphrase Encryption Settings
+* aes_passphrase: Used to Encrypt Configuration Backups to protect sensitive attributes.
+
+```bash
+export aes_passphrase='<aes_passphrase>'
+```
+
+### Sensitive Variables for the Tenants Module:
+
+### NDO Secrets for AWS or Azure Site Authetnication
+
+```bash
+export aws_secret_key='<aws_secret_key>'
+```
+
+```bash
+export azure_client_secret='<azure_client_secret>'
+```
+
+### Routing Protocol Authentication
+
+* bgp_password: Only requried for BGP Neighbor Authentication
+* ospf_key: Only required for Neighbor Authentication
+
+```bash
+export bgp_password_1='<bgp_password_1>'
+```
+```bash
+export bgp_password_2='<bgp_password_2>'
+```
+```bash
+export bgp_password_3='<bgp_password_3>'
+```
+```bash
+export bgp_password_4='<bgp_password_4>'
+```
+```bash
+export bgp_password_5='<bgp_password_5>'
+```
+
+
+```bash
+export ospf_key_1='<ospf_key_1>'
+```
+```bash
+export ospf_key_2='<ospf_key_2>'
+```
+```bash
+export ospf_key_3='<ospf_key_3>'
+```
+```bash
+export ospf_key_4='<ospf_key_4>'
+```
+```bash
+export ospf_key_5='<ospf_key_5>'
+```
+
+
+* vrf_snmp_community: Only required if the VRF Should use different Communities than the Global SNMP Values.  These Communities, that need to be added to the SNMP client_groups, will only be usable by the VRF when configured.
+
+```bash
+export vrf_snmp_community_1='<vrf_snmp_community_1>'
+```
+```bash
+export vrf_snmp_community_2='<vrf_snmp_community_2>'
+```
+```bash
+export vrf_snmp_community_3='<vrf_snmp_community_3>'
+```
+```bash
+export vrf_snmp_community_4='<vrf_snmp_community_4>'
+```
+```bash
+export vrf_snmp_community_5='<vrf_snmp_community_5>'
 ```
 
 ## Requirements
@@ -39,25 +328,25 @@ Visual Studio Code => Settings => YAML Schema: edit settings.json
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
-| <a name="requirement_aci"></a> [aci](#requirement\_aci) | >= 2.5.2 |
-| <a name="requirement_mso"></a> [mso](#requirement\_mso) | >= 0.7.1 |
-| <a name="requirement_utils"></a> [utils](#requirement\_utils) | >= 0.1.2 |
+| <a name="requirement_aci"></a> [aci](#requirement\_aci) | 2.9.0 |
+| <a name="requirement_mso"></a> [mso](#requirement\_mso) | 0.11.0 |
+| <a name="requirement_utils"></a> [utils](#requirement\_utils) | 0.2.5 |
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_utils"></a> [utils](#provider\_utils) | 0.2.2 |
+| <a name="provider_utils"></a> [utils](#provider\_utils) | 0.2.5 |
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_access"></a> [access](#module\_access) | terraform-cisco-modules/access/aci | 1.0.10 |
-| <a name="module_admin"></a> [admin](#module\_admin) | terraform-cisco-modules/admin/aci | 1.0.2 |
-| <a name="module_built_in_tenants"></a> [built\_in\_tenants](#module\_built\_in\_tenants) | terraform-cisco-modules/tenants/aci | 1.0.4 |
-| <a name="module_fabric"></a> [fabric](#module\_fabric) | terraform-cisco-modules/fabric/aci | 1.0.4 |
-| <a name="module_switch"></a> [switch](#module\_switch) | terraform-cisco-modules/switch/aci | 1.0.2 |
-| <a name="module_system_settings"></a> [system\_settings](#module\_system\_settings) | terraform-cisco-modules/system-settings/aci | 1.0.3 |
-| <a name="module_tenants"></a> [tenants](#module\_tenants) | terraform-cisco-modules/tenants/aci | 1.0.4 |
+| <a name="module_access"></a> [access](#module\_access) | terraform-cisco-modules/access/aci | 2.1.7 |
+| <a name="module_admin"></a> [admin](#module\_admin) | terraform-cisco-modules/admin/aci | 2.1.7 |
+| <a name="module_built_in_tenants"></a> [built\_in\_tenants](#module\_built\_in\_tenants) | terraform-cisco-modules/tenants/aci | 2.1.8 |
+| <a name="module_fabric"></a> [fabric](#module\_fabric) | terraform-cisco-modules/fabric/aci | 2.1.7 |
+| <a name="module_switch"></a> [switch](#module\_switch) | terraform-cisco-modules/switch/aci | 2.1.7 |
+| <a name="module_system_settings"></a> [system\_settings](#module\_system\_settings) | terraform-cisco-modules/system-settings/aci | 2.1.7 |
+| <a name="module_tenants"></a> [tenants](#module\_tenants) | terraform-cisco-modules/tenants/aci | 2.1.8 |
 
 ## NOTE:
 **When the Data is merged from the YAML files, it will run through the modules using for_each loop(s).  Sensitive Variables cannot be added to a for_each loop, instead use the variables below to add sensitive values for policies.**
@@ -66,19 +355,19 @@ Visual Studio Code => Settings => YAML Schema: edit settings.json
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_apicHostname"></a> [apicHostname](#input\_apicHostname) | Cisco APIC Hostname | `string` | `"apic.example.com"` | no |
-| <a name="input_apicPass"></a> [apicPass](#input\_apicPass) | Password for User based Authentication. | `string` | `"dummydummy"` | no |
-| <a name="input_apicUser"></a> [apicUser](#input\_apicUser) | Username for User based Authentication. | `string` | `"admin"` | no |
-| <a name="input_certName"></a> [certName](#input\_certName) | Cisco ACI Certificate Name for SSL Based Authentication | `string` | `""` | no |
-| <a name="input_privateKey"></a> [privateKey](#input\_privateKey) | Cisco ACI Private Key for SSL Based Authentication. | `string` | `""` | no |
+| <a name="input_apic_hostname"></a> [apic\_hostname](#input\_apic\_hostname) | Cisco APIC Hostname | `string` | `"apic.example.com"` | no |
+| <a name="input_apic_password"></a> [apic\_password](#input\_apic\_password) | Password for User based Authentication. | `string` | `"dummydummy"` | no |
+| <a name="input_apic_user"></a> [apic\_user](#input\_apic\_user) | Username for User based Authentication. | `string` | `"admin"` | no |
+| <a name="input_certificate_name"></a> [certificate\_name](#input\_certificate\_name) | Cisco ACI Certificate Name for SSL Based Authentication | `string` | `""` | no |
+| <a name="input_private_key"></a> [private\_key](#input\_private\_key) | Cisco ACI Private Key for SSL Based Authentication. | `string` | `""` | no |
 | <a name="input_apic_version"></a> [apic\_version](#input\_apic\_version) | The Version of ACI Running in the Environment. | `string` | `"5.2(4e)"` | no |
-| <a name="input_ndoDomain"></a> [ndoDomain](#input\_ndoDomain) | Authentication Domain for Nexus Dashboard Orchestrator Authentication. | `string` | `"local"` | no |
-| <a name="input_ndoHostname"></a> [ndoHostname](#input\_ndoHostname) | Cisco Nexus Dashboard Orchestrator Hostname | `string` | `"ndo.example.com"` | no |
-| <a name="input_ndoPass"></a> [ndoPass](#input\_ndoPass) | Password for Nexus Dashboard Orchestrator Authentication. | `string` | `"dummydummy"` | no |
-| <a name="input_ndoUser"></a> [ndoUser](#input\_ndoUser) | Username for Nexus Dashboard Orchestrator Authentication. | `string` | `"admin"` | no |
+| <a name="input_ndo_domain"></a> [ndo\_domain](#input\_ndo\_domain) | Default is `local`.  Authentication Domain for Nexus Dashboard Orchestrator Authentication.  Only required if the Auhthenciation domain is not local. | `string` | `"local"` | no |
+| <a name="input_ndo_hostname"></a> [ndo\_hostname](#input\_ndo\_hostname) | Cisco Nexus Dashboard Orchestrator Hostname | `string` | `"ndo.example.com"` | no |
+| <a name="input_ndo_password"></a> [ndo\_password](#input\_ndo\_password) | Password for Nexus Dashboard Orchestrator Authentication. | `string` | `"dummydummy"` | no |
+| <a name="input_ndo_user"></a> [ndo\_user](#input\_ndo\_user) | Username for Nexus Dashboard Orchestrator Authentication. | `string` | `"admin"` | no |
 | <a name="input_ndo_version"></a> [ndo\_version](#input\_ndo\_version) | The Version of Nexus Dashboard Orchestrator Running in the Environment. | `string` | `"5.2(1g)"` | no |
-| <a name="input_annotation"></a> [annotation](#input\_annotation) | The Version of this Script. | `string` | `"orchestrator:terraform:easy-aci-v2.0"` | no |
-| <a name="input_annotations"></a> [annotations](#input\_annotations) | The Version of this Script. | <pre>list(object(<br>    {<br>      key   = string<br>      value = string<br>    }<br>  ))</pre> | <pre>[<br>  {<br>    "key": "orchestrator",<br>    "value": "terraform:easy-aci:v2.0"<br>  }<br>]</pre> | no |
+| <a name="input_annotation"></a> [annotation](#input\_annotation) | Depricated.  Removing from Module. | `string` | `"orchestrator:terraform"` | no |
+| <a name="input_annotations"></a> [annotations](#input\_annotations) | The Version of this Script. | <pre>list(object(<br>    {<br>      key   = string<br>      value = string<br>    }<br>  ))</pre> | <pre>[<br>  {<br>    "key": "orchestrator",<br>    "value": "terraform:easy-aci:v2.1.8"<br>  }<br>]</pre> | no |
 | <a name="input_controller_type"></a> [controller\_type](#input\_controller\_type) | The Type of Controller for this Site.<br>- apic<br>- ndo | `string` | `"apic"` | no |
 | <a name="input_management_epgs"></a> [management\_epgs](#input\_management\_epgs) | The Management EPG's that will be used by the script.<br>- name: Name of the EPG<br>- type: Type of EPG<br>  * inb<br>  * oob | <pre>list(object(<br>    {<br>      name = string<br>      type = string<br>    }<br>  ))</pre> | <pre>[<br>  {<br>    "name": "default",<br>    "type": "oob"<br>  }<br>]</pre> | no |
 | <a name="input_mcp_instance_key"></a> [mcp\_instance\_key](#input\_mcp\_instance\_key) | The key or password to uniquely identify the MCP packets within this fabric. | `string` | `""` | no |
@@ -90,6 +379,12 @@ Visual Studio Code => Settings => YAML Schema: edit settings.json
 | <a name="input_remote_password"></a> [remote\_password](#input\_remote\_password) | Remote Host Password. | `string` | `""` | no |
 | <a name="input_ssh_key_contents"></a> [ssh\_key\_contents](#input\_ssh\_key\_contents) | SSH Private Key Based Authentication Contents. | `string` | `""` | no |
 | <a name="input_ssh_key_passphrase"></a> [ssh\_key\_passphrase](#input\_ssh\_key\_passphrase) | SSH Private Key Based Authentication Passphrase. | `string` | `""` | no |
+| <a name="input_apic_certificate_1"></a> [apic\_certificate\_1](#input\_apic\_certificate\_1) | APIC Certificate 1. | `string` | `"blah.txt"` | no |
+| <a name="input_apic_certificate_2"></a> [apic\_certificate\_2](#input\_apic\_certificate\_2) | APIC Certificate 2. | `string` | `"blah.txt"` | no |
+| <a name="input_apic_intermediate_plus_root_ca_1"></a> [apic\_intermediate\_plus\_root\_ca\_1](#input\_apic\_intermediate\_plus\_root\_ca\_1) | Intermediate and Root CA Certificate 1. | `string` | `"blah.txt"` | no |
+| <a name="input_apic_intermediate_plus_root_ca_2"></a> [apic\_intermediate\_plus\_root\_ca\_2](#input\_apic\_intermediate\_plus\_root\_ca\_2) | Intermediate and Root CA Certificate 2. | `string` | `"blah.txt"` | no |
+| <a name="input_apic_private_key_1"></a> [apic\_private\_key\_1](#input\_apic\_private\_key\_1) | APIC Private Key 1. | `string` | `"blah.txt"` | no |
+| <a name="input_apic_private_key_2"></a> [apic\_private\_key\_2](#input\_apic\_private\_key\_2) | APIC Private Key 2. | `string` | `"blah.txt"` | no |
 | <a name="input_ntp_key_1"></a> [ntp\_key\_1](#input\_ntp\_key\_1) | Key Assigned to NTP id 1. | `string` | `""` | no |
 | <a name="input_ntp_key_2"></a> [ntp\_key\_2](#input\_ntp\_key\_2) | Key Assigned to NTP id 2. | `string` | `""` | no |
 | <a name="input_ntp_key_3"></a> [ntp\_key\_3](#input\_ntp\_key\_3) | Key Assigned to NTP id 3. | `string` | `""` | no |

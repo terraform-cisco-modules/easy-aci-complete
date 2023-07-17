@@ -44,7 +44,7 @@ module "admin" {
   ]
   #source = "../../../terraform-aci-admin"
   source          = "terraform-cisco-modules/admin/aci"
-  version         = "2.1.6"
+  version         = "2.1.7"
   for_each        = { for v in ["default"] : v => v if length(lookup(local.model, "admin", {})) > 0 }
   admin           = lookup(local.model, "admin", {})
   annotations     = var.annotations
@@ -70,7 +70,7 @@ module "built_in_tenants" {
   ]
   #source = "../../../terraform-aci-tenants"
   source  = "terraform-cisco-modules/tenants/aci"
-  version = "2.1.7"
+  version = "2.1.8"
 
   for_each = {
     for v in lookup(local.model, "tenants", []) : v.name => v if length(regexall("^(common|infra|mgmt)$", v.name)) > 0
@@ -112,7 +112,7 @@ module "fabric" {
   ]
   #source = "../../../terraform-aci-fabric"
   source          = "terraform-cisco-modules/fabric/aci"
-  version         = "2.1.5"
+  version         = "2.1.7"
   for_each        = { for v in ["default"] : v => v if length(lookup(local.model, "fabric", {})) > 0 }
   fabric          = lookup(local.model, "fabric", {})
   management_epgs = var.management_epgs
@@ -183,7 +183,7 @@ module "tenants" {
   ]
   #source = "../../../terraform-aci-tenants"
   source  = "terraform-cisco-modules/tenants/aci"
-  version = "2.1.7"
+  version = "2.1.8"
 
   for_each = {
     for v in lookup(local.model, "tenants", []) : v.name => v if length(regexall("^(common|infra|mgmt)$", v.name)) == 0

@@ -9,7 +9,7 @@ variable "apic_hostname" {
   type        = string
 }
 
-variable "apic_pass" {
+variable "apic_password" {
   default     = "dummydummy"
   description = "Password for User based Authentication."
   sensitive   = true
@@ -22,7 +22,7 @@ variable "apic_user" {
   type        = string
 }
 
-variable "cert_name" {
+variable "certificate_name" {
   default     = ""
   description = "Cisco ACI Certificate Name for SSL Based Authentication"
   sensitive   = true
@@ -50,8 +50,7 @@ ________________________________________________________________________________
 */
 variable "ndo_domain" {
   default     = "local"
-  description = "Authentication Domain for Nexus Dashboard Orchestrator Authentication."
-  sensitive   = true
+  description = "Default is `local`.  Authentication Domain for Nexus Dashboard Orchestrator Authentication.  Only required if the Auhthenciation domain is not local."
   type        = string
 }
 
@@ -61,7 +60,7 @@ variable "ndo_hostname" {
   type        = string
 }
 
-variable "ndo_pass" {
+variable "ndo_password" {
   default     = "dummydummy"
   description = "Password for Nexus Dashboard Orchestrator Authentication."
   sensitive   = true
@@ -97,7 +96,7 @@ variable "annotations" {
   default = [
     {
       key   = "orchestrator"
-      value = "terraform:easy-aci:v2.0"
+      value = "terraform:easy-aci:v2.1.8"
     }
   ]
   description = "The Version of this Script."
