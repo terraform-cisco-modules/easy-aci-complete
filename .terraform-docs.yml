@@ -381,14 +381,31 @@ content: |-
 
   If you want to see documentation on Variables for Submodules use the links below:
 
-  [access-policies](https://github.com/terraform-cisco-modules/terraform-aci-access)
-  [admin](https://github.com/terraform-cisco-modules/terraform-aci-admin)
-  [fabric-policies](https://github.com/terraform-cisco-modules/terraform-aci-fabric)
-  [switch](https://github.com/terraform-cisco-modules/terraform-aci-switch)
-  [system-settings](https://github.com/terraform-cisco-modules/terraform-aci-system-settings)
-  [tenants](https://github.com/terraform-cisco-modules/terraform-aci-tenants)
+  ### [access-policies](https://github.com/terraform-cisco-modules/terraform-aci-access)
+
+  ### [admin](https://github.com/terraform-cisco-modules/terraform-aci-admin)
+
+  ### [fabric-policies](https://github.com/terraform-cisco-modules/terraform-aci-fabric)
+
+  ### [switch](https://github.com/terraform-cisco-modules/terraform-aci-switch)
+
+  ### [system-settings](https://github.com/terraform-cisco-modules/terraform-aci-system-settings)
+
+  ### [tenants](https://github.com/terraform-cisco-modules/terraform-aci-tenants)
 
   ## Terraform Registry
+
+  ### [access-policies](https://registry.terraform.io/modules/terraform-cisco-modules/access/aci/latest)
+
+  ### [admin](https://registry.terraform.io/modules/terraform-cisco-modules/admin/aci/latest)
+
+  ### [fabric-policies](https://registry.terraform.io/modules/terraform-cisco-modules/fabric/aci/latest)
+
+  ### [switch](https://registry.terraform.io/modules/terraform-cisco-modules/switch/aci/latest)
+
+  ### [system-settings](https://registry.terraform.io/modules/terraform-cisco-modules/system-settings/aci/latest)
+
+  ### [tenants](https://registry.terraform.io/modules/terraform-cisco-modules/tenants/aci/latest)
 
 
 output:
