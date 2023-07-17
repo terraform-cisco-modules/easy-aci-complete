@@ -85,15 +85,6 @@ In the export examples below, for the Linux Example, the 'TF_VAR_' is excluded b
 Additionally to Save time on typing commands I use the following aliases by editing the `.bashrc` for my environment.
 
 ```bash
-if [ -x /usr/bin/dircolors ]; then
-test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-alias ls='ls --color=auto'
-#alias dir='dir --color=auto'
-#alias vdir='vdir --color=auto'
-
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
 alias tfa='tfenv terraform apply main.plan'
 alias tfap='tfenv terraform apply -parallelism=1 main.plan'
 alias tfd='tfenv terraform destroy'
@@ -102,7 +93,6 @@ alias tfi='terraform init'
 alias tfp='tfenv terraform plan -out=main.plan'
 alias tfu='terraform init -upgrade'
 alias tfv='terraform validate'
-fi
 ```
 
 ## IMPORTANT: ALL EXAMPLES BELOW ASSUME USING `tfenv` in LINUX
