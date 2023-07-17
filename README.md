@@ -63,7 +63,14 @@ Configure the following in `yaml.schemas`
 ## Environment Variables
 
 ### Terraform Cloud/Enterprise - Workspace Variables
-- Add variable apicPass with the value of [your-apic-password]
+
+#### At a Minimum for APIC
+
+- Add variable `apic_password` with the value of [your-apic-password] and sensitive set to true
+
+#### At a Minimum for NDO
+
+- Add variable `ndo_password` with the value of [your-ndo-password] and sensitive set to true
 
 ## [Cloud Posse tfenv](https://github.com/cloudposse/tfenv)
 
