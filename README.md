@@ -80,6 +80,8 @@ Recently I adopted the `tfenv` runner to standardize environment variables with 
 
 In the export examples below, for the Linux Example, the 'TF_VAR_' is excluded because Cloud Posse tfenv is used to insert it during the run.
 
+### Aliases for `.bashrc`
+
 Additionally to Save time on typing commands I use the following aliases by editing the `.bashrc` for my environment.
 
 ```bash
