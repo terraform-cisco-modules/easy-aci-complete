@@ -87,7 +87,7 @@ Additionally to Save time on typing commands I use the following aliases by edit
 ```bash
 alias tfa='tfenv terraform apply main.plan'
 alias tfap='tfenv terraform apply -parallelism=1 main.plan'
-alias tfd='tfenv terraform destroy'
+alias tfd='terraform destroy'
 alias tff='terraform fmt'
 alias tfi='terraform init'
 alias tfp='tfenv terraform plan -out=main.plan'
