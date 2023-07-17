@@ -44,7 +44,7 @@ content: |-
 
   #### Note 1: Modules can be added or removed dependent on the use case.  The primary example shown is consuming/showing a full environment deployment.  But in the `./RICH/Odin/` example, it is just using the tenant modules. 
 
-  #### Note 2: The reason for the seperation of `built_in_tenants` vs `tenants` is to make sure objects are always created in common/mgmt first.  So they can be consumed by user tenants or Admin/Fabric etc (management EPGs for example).  If nothing is being configured in common/mgmt/infra the `built_in_tenant` is not necessary.)
+  #### Note 2: The reason for the seperation of `built_in_tenants` vs `tenants` is to make sure objects are always created in common/mgmt first.  So they can be consumed by user tenants or Admin/Fabric etc (management EPGs for example).  If nothing is being configured in common/mgmt/infra the `built_in_tenant` is not necessary.
 
   ## YAML Schema Notes for Autocompletion, Help, and Error Validation:
 
