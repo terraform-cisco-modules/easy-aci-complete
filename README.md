@@ -107,8 +107,6 @@ $env:TF_VAR_apic_password='<your-apic-password>'
 
 ### Linux
 
-Password Authentication
-
 ```bash
 export ndo_password='<your-ndo-password>'
 ```
@@ -124,11 +122,22 @@ $env:TF_VAR_ndo_password='<your-ndo-password>'
 * MCP Instance Key: If Desire is to Password Protect MCP traffic.
 * VMM Password: vCenter Password for VMM Integration.
 
+### Linux
+
 ```bash
 export mcp_instance_key='<mcp_instance_key>'
 ```
 ```bash
 export vmm_password='<vmm_password>'
+```
+
+### Windows
+
+```bash
+$env:TF_VAR_mcp_instance_key='<mcp_instance_key>'
+```
+```bash
+$env:TF_VAR_vmm_password='<vmm_password>'
 ```
 
 ### Sensitive Variables for the Admin Module:
@@ -138,6 +147,8 @@ export vmm_password='<vmm_password>'
 * remote_password: For Password based Authentication.
 * ssh_key_contents and ssh_key_passphrase: for SSH Key Based Authentication.
 
+### Linux
+
 ```bash
 export remote_password='<remote_password>'
 ```
@@ -146,17 +157,37 @@ export ssh_key_contents='<ssh_key_contents>'
 export ssh_key_passphrase='<ssh_key_passphrase>'
 ```
 
+### Windows
+
+```powershell
+$env:TF_VAR_remote_password='<remote_password>'
+```
+```powershell
+$env:TF_VAR_ssh_key_contents='<ssh_key_contents>'
+$env:TF_VAR_ssh_key_passphrase='<ssh_key_passphrase>'
+```
+
 #### RADIUS Sensitive Variables
 
 * radius_key: Key for Protecting RADIUS Server Communication.
 * radius_monitoring_password: If Server Monitoring is Enabled, the Password to use with the test user account.
 
+### Linux
+
 ```bash
-# RADIUS Sensitive Variables
 export radius_key='<radius_key>'
 ```
 ```bash
 export radius_monitoring_password='<radius_monitoring_password>'
+```
+
+### Windows
+
+```bash
+$env:TF_VAR_radius_key='<radius_key>'
+```
+```bash
+$env:TF_VAR_radius_monitoring_password='<radius_monitoring_password>'
 ```
 
 #### Smart Callhome Sensitive Variables
