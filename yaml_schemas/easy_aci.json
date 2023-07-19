@@ -11146,7 +11146,7 @@
                 "static_node_management_addresses": {
                     "type": "array",
                     "additionalProperties": {},
-                    "description": "(APIC Only) List of Static Node Management Addresses.  Only for Mgmt Tenant.\nRequired Attributes:\n  * node_id\n\nOptional Attributes:\n  * ipv4_address\n  * ipv4_gateway\n  * ipv6_address\n  * ipv6_gateway\n  * management_epg\n  * pod_id\nShould assign either `ipv4_address` and `ipv4_gateway` or `ipv6_address` and `ipv6_gateway`\nAPI Information:\n  * Classes: mgmtRsInBStNode or mgmtRsOoBStNode\n  * Distinguished Names:\n    - 'uni/tn-mgmt/mgmtp-default/inb-{management_epg}/rsinBStNode-[topology/pod-{pod_id}/node-{node_id}]'\n    - 'uni/tn-mgmt/mgmtp-default/oob-{management_epg}/rsooBStNode-[topology/pod-{pod_id}/node-{node_id}]'\nGUI Location:\n  * Tenants > mgmt > Node Management Addresses > Static Node Management Addresses",
+                    "description": "List of Static Node Management Addresses.  Only for Mgmt Tenant.\nRequired Attributes:\n  * node_id\n\nOptional Attributes:\n  * ipv4_address\n  * ipv4_gateway\n  * ipv6_address\n  * ipv6_gateway\n  * management_epg\n  * pod_id\nShould assign either `ipv4_address` and `ipv4_gateway` or `ipv6_address` and `ipv6_gateway`\nAPI Information:\n  * Classes: mgmtRsInBStNode or mgmtRsOoBStNode\n  * Distinguished Names:\n    - 'uni/tn-mgmt/mgmtp-default/inb-{management_epg}/rsinBStNode-[topology/pod-{pod_id}/node-{node_id}]'\n    - 'uni/tn-mgmt/mgmtp-default/oob-{management_epg}/rsooBStNode-[topology/pod-{pod_id}/node-{node_id}]'\nGUI Location:\n  * Tenants > mgmt > Node Management Addresses > Static Node Management Addresses",
                     "items": {
                         "$ref": "#/definitions/Tenants:NodeManagementAddresses:StaticNodeManagementAddresses"
                     },
@@ -11217,7 +11217,7 @@
                     "type": "integer",
                     "apicApi": "node-{node_id}",
                     "default": 1,
-                    "description": "APIC Node Identifier.",
+                    "description": "APIC/Switch Node Identifier.",
                     "minimum": 1,
                     "maximum": 9,
                     "title": "node_id - node-{node_id}"
