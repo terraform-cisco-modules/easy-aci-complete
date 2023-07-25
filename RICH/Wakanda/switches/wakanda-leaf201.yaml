@@ -118,6 +118,7 @@ switch:
           policy_group_type: bundle
         - interface: 1/53
         - interface: 1/54
+        - interface: 1/101
       name: asgard-leaf201
       node_type: leaf
       ooband_addressing:

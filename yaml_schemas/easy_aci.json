@@ -5925,7 +5925,7 @@
                 "two_slot_leaf": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Flag to inform the switch that the Interface Selectors should be in the format Eth1-001 instead of Eth1-01, in example.",
+                    "description": "Flag to inform the automation that the Interface Selectors should be in the format Eth1-001 instead of Eth1-01, in example.  Required when the switch has more than 99 ports.",
                     "title": "two_slot_leaf"
                 }
             },

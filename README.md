@@ -57,7 +57,10 @@ Click: `Edit in settings.json`
 
 Configure the following in `yaml.schemas`
 ```bash
-"https://raw.githubusercontent.com/terraform-cisco-modules/easy-aci-complete/main/yaml_schemas/easy_aci.json": ["easy-aci-complete/*/*.yaml", "easy-aci-complete/*/*/*/*.yaml"]
+"https://raw.githubusercontent.com/terraform-cisco-modules/easy-aci-complete/main/yaml_schemas/easy_aci.json": [
+    "easy-aci-complete/*/*.yaml",
+    "easy-aci-complete/*/*/*/*.yaml"
+]
 ```
 
 ## Environment Variables
@@ -418,11 +421,11 @@ export vrf_snmp_community_5='<vrf_snmp_community_5>'
 |------|--------|---------|
 | <a name="module_access"></a> [access](#module\_access) | terraform-cisco-modules/access/aci | 2.1.7 |
 | <a name="module_admin"></a> [admin](#module\_admin) | terraform-cisco-modules/admin/aci | 2.1.7 |
-| <a name="module_built_in_tenants"></a> [built\_in\_tenants](#module\_built\_in\_tenants) | terraform-cisco-modules/tenants/aci | 2.1.9 |
+| <a name="module_built_in_tenants"></a> [built\_in\_tenants](#module\_built\_in\_tenants) | terraform-cisco-modules/tenants/aci | 2.2.0 |
 | <a name="module_fabric"></a> [fabric](#module\_fabric) | terraform-cisco-modules/fabric/aci | 2.1.7 |
 | <a name="module_switch"></a> [switch](#module\_switch) | terraform-cisco-modules/switch/aci | 2.1.7 |
 | <a name="module_system_settings"></a> [system\_settings](#module\_system\_settings) | terraform-cisco-modules/system-settings/aci | 2.1.7 |
-| <a name="module_tenants"></a> [tenants](#module\_tenants) | terraform-cisco-modules/tenants/aci | 2.1.9 |
+| <a name="module_tenants"></a> [tenants](#module\_tenants) | terraform-cisco-modules/tenants/aci | 2.2.0 |
 
 ## NOTE:
 **When the Data is merged from the YAML files, it will run through the modules using for_each loop(s).  Sensitive Variables cannot be added to a for_each loop, instead use the variables below to add sensitive values for policies.**
