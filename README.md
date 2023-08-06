@@ -2,6 +2,16 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Developed by: Cisco](https://img.shields.io/badge/Developed%20by-Cisco-blue)](https://developer.cisco.com)
 
+# Archived
+
+This repository will be archived.  It is superseeded by a newer, more simplified Easy ACI, based on a YAML Schema Model.
+
+## [Easy ACI](https://github.com/terraform-cisco-modules/easy-aci)
+
+This Module will be archived in September as I am no longer maintaining it.  It is surperseeded above.
+
+The two models were so different I didn't merge them here.
+
 # Easy ACI - Comprehensive example for ACI & NDO
 
 There are two examples in this Repository.  The first example is shown in the primary folders:
